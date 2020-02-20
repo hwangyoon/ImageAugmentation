@@ -10,16 +10,11 @@
 #include "../ImageClass/Image.h"
 
 
-struct Pixel **build(int32_t rows, int32_t cols);
-
-
-void freebuild(struct Pixel **data);
-
-void rotate(Image *my_image);
+void rotate(Image *my_image);//поворот на 90 градусов
 
 void crop(Image *whole_image, Image *my_image,
-          int32_t x, int32_t y, int32_t cols, int32_t rows);
+          int32_t x, int32_t y, int32_t cols, int32_t rows);//вырезание куска из картинки
 
-void flip(Image *my_image);
+void flip(Image *my_image);//отражение относительно вертикали
 
 #endif //PROJECT_ALGO_H
