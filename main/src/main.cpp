@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "../ImageClass/Image.h"
-#include "../Algo/algo.h"
+// #include "../ImageClass/Image.h"
+//#include "../Algo/algo.h"
 
 using std::string;
 using std::cout;
