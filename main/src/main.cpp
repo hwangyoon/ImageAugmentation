@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
-
+#include <QImage>
+#include "../include/cropfrommiddle.h"
+#include "../include/horizontalflip.h"
+#include "../include/rotate90clockwise.h"
+#include "../include/verticalflip.h"
 using std::string;
 using std::cout;
 using std::cin;
@@ -42,6 +46,7 @@ string get_filename_from(const string &src) {
 int main() {
     string line;
     string name;
+
     // TODO: Узнать, что конкретно надо в интерфейсе, и написать это
     while (true) {
         std::getline(cin, line);
