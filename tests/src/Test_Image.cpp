@@ -1,10 +1,7 @@
-#include "tests/include/Test_Image.h"
+#include "tests/include/test_algo.h"
 
-QTEST_MAIN(Test_Image)
-//#include "test_image.moc"
-
-void Test_Image::test_geometry_methods() {
-    QImage img(":/resources/img/hello.png");
+void TestAlgo::TestGeometryMethods() {
+    QImage img(":/resource/img/hello.png");
     QSize size = img.size();
     QCOMPARE(size.width(), 1200);
     QCOMPARE(size.height(), 630);
@@ -14,7 +11,7 @@ void Test_Image::test_geometry_methods() {
     QCOMPARE(img.valid(QPoint(78, 73)), true);
 }
 
-void Test_Image::test_color_methods() {
+void TestAlgo::TestColorMethods() {
     //constructs an image with the given width, height and format.
     QImage img(50, 50, QImage::Format_RGB32);
     

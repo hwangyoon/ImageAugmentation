@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
-// #include "../ImageClass/Image.h"
-//#include "../Algo/algo.h"
-
+#include <QImage>
+#include "../include/cropfrommiddle.h"
+#include "../include/horizontalflip.h"
+#include "../include/rotate90clockwise.h"
+#include "../include/verticalflip.h"
 using std::string;
 using std::cout;
 using std::cin;
@@ -44,21 +46,6 @@ string get_filename_from(const string &src) {
 int main() {
     string line;
     string name;
-
-//    Image my_image1(5, 4), my_image2(4, 5);
-//
-//    rotate(&my_image2);
-//
-//    my_image1 = my_image2;
-//
-//    flip(&my_image2);
-//    flip(&my_image2);
-//    for (int i = 0; i < 5; i++)
-//        for (int j = 0; j < 4; j++) {
-//            if (my_image1.get(i, j).first_byte != my_image2.get(i, j).first_byte)
-//                cout << 'n';
-//        }
-
 
     // TODO: Узнать, что конкретно надо в интерфейсе, и написать это
     while (true) {
