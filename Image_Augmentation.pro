@@ -51,16 +51,21 @@ HEADERS += \
     main/include/rotate90clockwise.h \
     main/include/verticalflip.h \
     main/include/horizontalflip.h \
-    main/include/cropfrommiddle.h \
+    main/include/cropfrommiddle.h \ \
+    UI/uimain.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
     main/src/horizontalflip.cpp \
     main/src/verticalflip.cpp \
-    main/src/rotate90clockwise.cpp \
+    main/src/rotate90clockwise.cpp \ \
+    UI/uimain.cpp
 
 RESOURCES += \
     resource.qrc
+
+FORMS += \
+    UI/uimain.ui
 
 
 
