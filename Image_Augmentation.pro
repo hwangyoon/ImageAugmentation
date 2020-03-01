@@ -1,6 +1,7 @@
-QT += gui testlib
+QT += core gui testlib
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 console
+CONFIG += c++11
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -37,9 +38,17 @@ test_conf {
     TARGET = test_image
 
 } else {
-    SOURCES += \
-        main/src/main.cpp
-    TARGET = image_augmentation
+    gui_conf {
+        SOURCES += guidir/dialog.cpp \
+                    guidir/main.cpp
+        HEADERS += guidir/dialog.h
+        FORMS += guidir/dialog.ui
+        TARGET = gui
+    } else {
+        SOURCES += \
+            main/src/main.cpp
+        TARGET = image_augmentation
+    }
 }
 
 
@@ -61,6 +70,8 @@ SOURCES += \
 
 RESOURCES += \
     resource.qrc
+
+
 
 
 
