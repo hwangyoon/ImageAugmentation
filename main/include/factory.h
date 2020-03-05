@@ -1,4 +1,14 @@
-#ifndef FACTORY_H
-#define FACTORY_H
+#ifndef FABRIC_H
+#define FABRIC_H
 
-#endif // FACTORY_H
+#include <memory>
+#include "request.h"
+#include "algo.h"
+
+class factory {
+public:
+    factory() {}
+    std::unique_ptr<Algorithm> get_algo(Request* r);
+};
+
+#endif // FABRIC_H
