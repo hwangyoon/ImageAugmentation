@@ -8,6 +8,7 @@
 class factory {
 public:
     factory() {}
+    // returns pointer to the algorithm which should be used according to the request
     std::unique_ptr<Algorithm> get_algo(Request* r);
 };
 
