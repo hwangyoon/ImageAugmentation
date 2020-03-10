@@ -39,10 +39,12 @@ test_conf {
 
 } else {
     gui_conf {
-        SOURCES += guidir/dialog.cpp \
+        SOURCES += \
+                    guidir/mainwindow.cpp \
                     guidir/main.cpp
-        HEADERS += guidir/dialog.h
-        FORMS += guidir/dialog.ui
+        HEADERS += guidir/mainwindow.h
+        FORMS += \
+            guidir/mainwindow.ui
         TARGET = gui
     } else {
         SOURCES += \

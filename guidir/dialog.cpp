@@ -1,8 +1,8 @@
 #include "dialog.h"
-#include "ui_dialog.h"
+#include "ui_dialogx.h"
 
 Dialog::Dialog(QWidget *parent) :
-    QDialog(parent),
+    QMainWindow(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
