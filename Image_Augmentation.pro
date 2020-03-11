@@ -1,6 +1,7 @@
-QT += gui testlib
+QT += core gui testlib
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 console
+CONFIG += c++11
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -37,9 +38,19 @@ test_conf {
     TARGET = test_image
 
 } else {
-    SOURCES += \
-        main/src/main.cpp
-    TARGET = image_augmentation
+    gui_conf {
+        SOURCES += \
+                    guidir/mainwindow.cpp \
+                    guidir/main.cpp
+        HEADERS += guidir/mainwindow.h
+        FORMS += \
+            guidir/mainwindow.ui
+        TARGET = gui
+    } else {
+        SOURCES += \
+            main/src/main.cpp
+        TARGET = image_augmentation
+    }
 }
 
 
@@ -51,16 +62,20 @@ HEADERS += \
     main/include/rotate90clockwise.h \
     main/include/verticalflip.h \
     main/include/horizontalflip.h \
-    main/include/cropfrommiddle.h \
+    main/include/cropfrommiddle.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
     main/src/horizontalflip.cpp \
     main/src/verticalflip.cpp \
-    main/src/rotate90clockwise.cpp \
+    main/src/rotate90clockwise.cpp
 
 RESOURCES += \
     resource.qrc
+
+
+
+
 
 
 
