@@ -5,9 +5,9 @@
 #include "request.h"
 #include "algo.h"
 
-class factory {
+class Factory {
 public:
-    factory() {}
+    Factory() {}
     // returns pointer to the algorithm which should be used according to the request
     std::unique_ptr<Algorithm> get_algo(Request* r);
 };

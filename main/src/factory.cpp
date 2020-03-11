@@ -8,10 +8,9 @@
 #include <cassert>
 
 //to do: process wrong arguments
-std::unique_ptr<Algorithm> factory::get_algo(Request* r) {
+std::unique_ptr<Algorithm> Factory::get_algo(Request* r) {
     if (r->type == crop) {
         CropRequest* ptr = static_cast<CropRequest*> (r);
-        assert(ptr != nullptr);
         return std::make_unique<CropGivenPiece>(ptr->x, ptr->y, ptr->cols, ptr->rows);
     }
     if (r->type == hflip) {

@@ -1,11 +1,7 @@
 QT += core gui testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-<<<<<<< HEAD
-CONFIG += c++11
-=======
 CONFIG += c++17 console
->>>>>>> forgot to add some files
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -81,7 +77,7 @@ SOURCES += \
     main/src/verticalflip.cpp \
     main/src/rotate90clockwise.cpp \
     main/src/factory.cpp \
-    main/src/manager.cpp \
+    main/src/manager.cpp
 
 RESOURCES += \
     resource.qrc
