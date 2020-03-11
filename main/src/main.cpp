@@ -47,21 +47,7 @@ string get_filename_from(const string &src) {
 int main() {
     string line;
     string name;
-    QImage testingModel("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/small-one");
-   // QImage rotated("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/test-rot45.bmp");
-   QImage temp = testingModel;
-   // direction45 d =COUNTERCLOCKWISE45;
-   // Rotate45 proc(d);
-   VerticalFlip proc;
-   temp = proc.processImage(&testingModel);
-   // temp = proc.processImage(&testingModel);
-    temp.save("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/small-one_vert.bmp");
-    HorizontalFlip proc1;
-    temp = proc1.processImage(&testingModel);
-    temp.save("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/small-one_hor.bmp");
     // TODO: Узнать, что конкретно надо в интерфейсе, и написать это
-   // return 0;
-
     while (true) {
         std::getline(cin, line);
         switch (get_command_from(line)) {
