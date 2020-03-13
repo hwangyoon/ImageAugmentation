@@ -45,6 +45,7 @@ gui_conf {
     TARGET = gui
 }
 
+
 terminal_conf {
     SOURCES += main_terminal/src/main.cpp
     TARGET = image_augmentation_terminal
