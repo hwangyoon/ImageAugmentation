@@ -7,7 +7,7 @@ QImage Rotate45::processImage(QImage *workingModel) {
 
     for (int32_t i = 0; i < cols; i++) {
         for (int32_t j = 0; j < rows; j++) {
-            if(!direct) {
+            if(direct == CLOCKWISE45) {
                 rotatedPicture.setPixel(i-j+rows, i+j, workingModel->pixel(QPoint(i,j)));
                 rotatedPicture.setPixel(i-j+rows - 1, i+j, workingModel->pixel(QPoint(i,j)));
             }
