@@ -55,7 +55,6 @@ terminal_conf {
             main/src/main.cpp
         TARGET = image_augmentation
     }
->>>>>>> Add file for controller
 }
 
 commands_conf {
