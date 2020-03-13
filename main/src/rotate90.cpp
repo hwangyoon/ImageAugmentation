@@ -6,7 +6,7 @@ QImage Rotate90::processImage(QImage *workingModel) {
     QImage rotatedPicture(rows,cols,workingModel->format());
     for (int32_t i = 0; i < rows; i++) {
         for (int32_t j = 0; j < cols; j++) {
-            if(!direct)
+            if(direct == CLOCKWISE90)
                 rotatedPicture.setPixel(i, j, workingModel->pixel(QPoint(j,rows-i-1)));
             else
                 rotatedPicture.setPixel(i, j, workingModel->pixel(QPoint(cols-1-j,i)));
