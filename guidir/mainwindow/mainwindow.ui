@@ -61,14 +61,9 @@
           </item>
           <item>
            <widget class="QLabel" name="label_image">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
             <property name="text">
-             <string/>
+             <string>Здесь появится Ваша картинка ^^ 
+     (но сначала её стоит загрузить)</string>
             </property>
            </widget>
           </item>
@@ -152,7 +147,7 @@
            <enum>QLayout::SetMinAndMaxSize</enum>
           </property>
           <item>
-           <widget class="QTextEdit" name="textEdit_path_in"/>
+           <widget class="QTextEdit" name="textEdit_path"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_4">
@@ -179,7 +174,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="100,4,10">
           <item>
-           <widget class="QTextEdit" name="textEdit_path_out"/>
+           <widget class="QTextBrowser" name="textBrowser_message"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_7">
