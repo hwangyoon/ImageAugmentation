@@ -60,7 +60,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="label_image">
             <property name="text">
              <string>Здесь появится Ваша картинка ^^ 
      (но сначала её стоит загрузить)</string>
@@ -101,7 +101,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="200,4,50">
           <item>
-           <widget class="QTextBrowser" name="textBrowser_2"/>
+           <widget class="QTextBrowser" name="textBrowser_message"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_7">
@@ -144,7 +144,7 @@
            <enum>QLayout::SetMinAndMaxSize</enum>
           </property>
           <item>
-           <widget class="QTextEdit" name="textEdit_2"/>
+           <widget class="QTextEdit" name="textEdit_path"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_4">
@@ -171,12 +171,15 @@
        </layout>
       </item>
       <item>
-       <widget class="QTreeView" name="treeView">
+       <widget class="QListWidget" name="listWidget_algo">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>WhatsThisCursor</cursorShape>
         </property>
        </widget>
       </item>
