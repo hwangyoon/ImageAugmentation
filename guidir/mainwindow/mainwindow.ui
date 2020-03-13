@@ -109,11 +109,7 @@
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <item>
-<<<<<<< HEAD:guidir/mainwindow/mainwindow.ui
            <widget class="QTextBrowser" name="textBrowser_info"/>
-=======
-           <widget class="QTextBrowser" name="textBrowser_message"/>
->>>>>>> GUI done (we need only connect it):guidir/mainwindow.ui
           </item>
           <item>
            <spacer name="horizontalSpacer">
@@ -156,11 +152,7 @@
            <enum>QLayout::SetMinAndMaxSize</enum>
           </property>
           <item>
-<<<<<<< HEAD:guidir/mainwindow/mainwindow.ui
            <widget class="QTextEdit" name="textEdit_path_in"/>
-=======
-           <widget class="QTextEdit" name="textEdit_path"/>
->>>>>>> GUI done (we need only connect it):guidir/mainwindow.ui
           </item>
           <item>
            <spacer name="horizontalSpacer_4">
@@ -222,11 +214,7 @@
          </sizepolicy>
         </property>
         <property name="cursor" stdset="0">
-<<<<<<< HEAD:guidir/mainwindow/mainwindow.ui
          <cursorShape>PointingHandCursor</cursorShape>
-=======
-         <cursorShape>WhatsThisCursor</cursorShape>
->>>>>>> GUI done (we need only connect it):guidir/mainwindow.ui
         </property>
        </widget>
       </item>
