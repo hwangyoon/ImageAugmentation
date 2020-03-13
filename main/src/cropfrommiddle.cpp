@@ -1,5 +1,6 @@
 #include "../include/cropfrommiddle.h"
-
+#include <iostream>
+#include <cassert>
 QImage CropGivenPiece::processImage(QImage *workingModel) {
     QImage croppedImage(cols, rows, workingModel->format());
     for (int32_t i = 0; i < cols; i++) {
