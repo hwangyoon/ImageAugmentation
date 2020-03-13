@@ -23,8 +23,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-
-
 test_conf {
     SOURCES += \
         tests/src/Test_Image.cpp \
@@ -63,29 +61,26 @@ DISTFILES += \
 
 HEADERS += \
     main/include/algo.h \
-    main/include/rotate90clockwise.h \
     main/include/verticalflip.h \
     main/include/horizontalflip.h \
     main/include/cropfrommiddle.h \
     main/include/factory.h \
     main/include/manager.h \
     main/include/request.h
+    main/include/rotate45.h \
+    main/include/rotate90.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
     main/src/horizontalflip.cpp \
     main/src/verticalflip.cpp \
-    main/src/rotate90clockwise.cpp \
     main/src/factory.cpp \
     main/src/manager.cpp
+    main/src/rotate45.cpp \
+    main/src/rotate90.cpp
+    main/src/rotate90clockwise.cpp
 
 RESOURCES += \
     resource.qrc
-
-
-
-
-
-
 
 
