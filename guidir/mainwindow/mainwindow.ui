@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>857</width>
-    <height>577</height>
+    <width>1024</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,10000,2,4000,2,5">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1000000000,1,1,1,1,1">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinAndMaxSize</enum>
         </property>
@@ -99,12 +99,15 @@
          </spacer>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="200,4,50">
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="100,4,10">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
           <item>
-           <widget class="QTextBrowser" name="textBrowser_message"/>
+           <widget class="QTextBrowser" name="textBrowser_info"/>
           </item>
           <item>
-           <spacer name="horizontalSpacer_7">
+           <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -117,9 +120,9 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_process">
+           <widget class="QPushButton" name="pushButton_preview">
             <property name="text">
-             <string>PROCESS</string>
+             <string>PREVIEW</string>
             </property>
            </widget>
           </item>
@@ -168,6 +171,33 @@
           </item>
          </layout>
         </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="100,4,10">
+          <item>
+           <widget class="QTextBrowser" name="textBrowser_message"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_process">
+            <property name="text">
+             <string>PROCESS</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
        </layout>
       </item>
       <item>
@@ -179,7 +209,7 @@
          </sizepolicy>
         </property>
         <property name="cursor" stdset="0">
-         <cursorShape>WhatsThisCursor</cursorShape>
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
        </widget>
       </item>
@@ -192,7 +222,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>857</width>
+     <width>1024</width>
      <height>28</height>
     </rect>
    </property>

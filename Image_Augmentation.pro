@@ -40,11 +40,11 @@ test_conf {
 } else {
     gui_conf {
         SOURCES += \
-                    guidir/mainwindow.cpp \
+                    guidir/mainwindow/mainwindow.cpp \
                     guidir/main.cpp
-        HEADERS += guidir/mainwindow.h
+        HEADERS += guidir/mainwindow/mainwindow.h
         FORMS += \
-            guidir/mainwindow.ui
+            guidir/mainwindow/mainwindow.ui
         TARGET = gui
     } else {
         SOURCES += \
