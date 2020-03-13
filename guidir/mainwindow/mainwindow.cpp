@@ -31,26 +31,46 @@ void MainWindow::view_algo() {
     static QStringList LIST_ITEMS =
         QStringList() << "C++" << "Python" << "Java" << "C#" << "PHP" << "Ruby" << "JavaScript";
 
-    foreach( const QString& item, LIST_ITEMS ) {
-        QListWidgetItem* listItem = new QListWidgetItem( item );
-        listItem->setIcon( QPixmap( item + ".png" ) );
-        // Включаем возможность редактирования
-        listItem->setFlags( Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-        algo_list->addItem( listItem );
-    }
+    add_algo(LIST_ITEMS);
 
     algo_list->setSelectionMode( QListWidget::MultiSelection );
 
+}
+
+void MainWindow::add_algo(const QStringList& list)
+{
+    foreach( const QString& item, list ) {
+        QListWidgetItem* listItem = new QListWidgetItem( item );
+        // listItem->setIcon( QPixmap( item + ".png" ) );
+        listItem->setFlags( Qt::ItemIsEditable | Qt::ItemIsEnabled );
+        listItem->setFlags(listItem->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+        listItem->setCheckState(Qt::Unchecked); // AND initialize check state
+        ui->listWidget_algo->addItem( listItem );
+    }
 }
 
 void MainWindow::on_pushButton_process_clicked()
 {
     QListWidget *algo_list = ui->listWidget_algo;
     QString what_printed("");
-    foreach (const QListWidgetItem* item, algo_list->selectedItems()) {
+    QList<QListWidgetItem *> selectedItems = find_selected_items(*algo_list);
+    foreach (const QListWidgetItem* item, selectedItems) {
         what_printed += " " + item->text();
     }
     // Вернёт строчки алгоритмов, надо переделать в алгоритмы и передать контроллеру?
     QTextBrowser *view_message = ui->textBrowser_message;
     view_message->setText(what_printed);
+}
+
+QList<QListWidgetItem *> MainWindow::find_selected_items(QListWidget &list)
+{
+    QList<QListWidgetItem *> result;
+
+    for(int row = 0; row < list.count(); row++)
+    {
+             QListWidgetItem *item = list.item(row);
+             if (item->checkState() != Qt::Unchecked)
+                 result.push_back(item);
+    }
+    return result;
 }
