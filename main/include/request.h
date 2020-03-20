@@ -1,6 +1,7 @@
 #ifndef REQUEST_H
 #define REQUEST_H
-enum {crop, vflip, hflip, rotate};
+#include <QDir>
+enum {crop, vflip, hflip, rotate90, rotate45};
 
 class Request {
 public:
@@ -24,9 +25,45 @@ public:
     FlipHRequest() : Request(hflip) {}
 };
 
-class RotateRequest : public Request {
+class Rotate90Request : public Request {
 public:
-    RotateRequest() : Request(rotate) {}
+    Rotate90Request() : Request(rotate90) {}
+};
+
+class Rotate45Request : public Request {
+public:
+    Rotate45Request() : Request(rotate45) {}
+};
+
+class GlobalRequest {
+public:
+    GlobalRequest(QDir path_from_, QDir path_to_) : path_from(path_from_), path_to(path_to_) {}
+
+    void set_load_directory(QDir path_from_) {
+        path_from = path_from_;
+    }
+    void set_save_directory(QDir path_to_) {
+        path_to = path_to_;
+    }
+
+    QDir get_load_directory() {
+        return path_from;
+    }
+    QDir get_save_directory() {
+        return path_to;
+    }
+
+    void add_request(Request* r) {
+        requests.push_back(r);
+    }
+
+    std::vector<Request*> get_requests() {
+        return requests;
+    }
+private:
+    QDir path_from;
+    QDir path_to;
+    std::vector<Request*> requests;
 };
 
 #endif // REQUEST_H

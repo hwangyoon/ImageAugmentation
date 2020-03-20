@@ -1,11 +1,5 @@
 #include "../include/factory.h"
-#include "../include/algo.h"
-#include "../include/rotate90clockwise.h"
-#include "../include/verticalflip.h"
-#include "../include/horizontalflip.h"
-#include "../include/cropfrommiddle.h"
 #include <memory>
-#include <cassert>
 
 //to do: process wrong arguments
 std::unique_ptr<Algorithm> Factory::get_algo(Request* r) {
@@ -19,7 +13,11 @@ std::unique_ptr<Algorithm> Factory::get_algo(Request* r) {
     if (r->type == vflip) {
         return std::make_unique<VerticalFlip>();
     }
-    if (r->type == rotate) {
-        return std::make_unique<Rotate90Clockwise>();
+    if (r->type == rotate90) {
+        return std::make_unique<Rotate90>();
     }
+    if (r->type == rotate45) {
+        return std::make_unique<Rotate45>();
+    }
+    return std::make_unique<Rotate90>();
 }

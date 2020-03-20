@@ -5,7 +5,8 @@
 #include <QTextStream>
 #include "main/include/cropfrommiddle.h"
 #include "main/include/horizontalflip.h"
-#include "main/include/rotate90clockwise.h"
+#include "main/include/rotate90.h"
+#include "main/include/rotate45.h"
 #include "main/include/verticalflip.h"
 #include "main/include/request.h"
 #include "main/include/manager.h"
@@ -19,29 +20,27 @@ int main() {
     QString path_from; // file path the image is loaded from
     QString path_to; // file name the image is saved from
     AlgorithmManager m; //~interpretator
-    cin >> command >> path_from >> path_to;
-    if (command == "crop") {
-        int x, y, cols, rows;
-        cin >> x >> y >> cols >> rows;
-        CropRequest r(x, y, cols, rows);
-        std::vector<Request*> req;
-        req.push_back(&r);
-        m.process_requests(req, path_from, path_to);
-    } else if (command == "hflip") {
-        FlipHRequest r;
-        std::vector<Request*> req;
-        req.push_back(&r);
-        m.process_requests(req, path_from, path_to);
-    } else if (command == "vflip") {
-        FlipVRequest r;
-        std::vector<Request*> req;
-        req.push_back(&r);
-        m.process_requests(req, path_from, path_to);
-     } else if (command == "rot") {
-        RotateRequest r;
-        std::vector<Request*> req;
-        req.push_back(&r);
-        m.process_requests(req, path_from, path_to);
+    cin >> path_from >> path_to;
+    GlobalRequest request(path_from, path_to);
+    while (true) {
+        cin >> command;
+        if (command == "crop") {
+            int x, y, cols, rows;
+            cin >> x >> y >> cols >> rows;
+            request.add_request(new CropRequest(x, y, cols, rows));
+        } else if (command == "hflip") {
+            request.add_request(new FlipHRequest());
+        } else if (command == "vflip") {
+            request.add_request(new FlipVRequest());
+        } else if (command == "rot90") {
+            request.add_request(new Rotate90Request());
+        } else if (command == "rot45") {
+            request.add_request(new Rotate45Request());
+        } else if (command == "exit") {
+            m.process_requests(request);
+            break;
+        }
     }
+    return 0;
 }
 

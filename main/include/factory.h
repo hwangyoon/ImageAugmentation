@@ -4,6 +4,11 @@
 #include <memory>
 #include "request.h"
 #include "algo.h"
+#include "../include/verticalflip.h"
+#include "../include/horizontalflip.h"
+#include "../include/cropfrommiddle.h"
+#include "../include/rotate90.h"
+#include "../include/rotate45.h"
 
 class Factory {
 public:
