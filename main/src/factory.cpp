@@ -1,6 +1,6 @@
 #include "../include/factory.h"
 #include "../include/algo.h"
-#include "../include/rotate90clockwise.h"
+#include "../include/rotate90.h"
 #include "../include/verticalflip.h"
 #include "../include/horizontalflip.h"
 #include "../include/cropfrommiddle.h"
@@ -20,6 +20,6 @@ std::unique_ptr<Algorithm> Factory::get_algo(Request* r) {
         return std::make_unique<VerticalFlip>();
     }
     if (r->type == rotate) {
-        return std::make_unique<Rotate90Clockwise>();
+        return std::make_unique<Rotate90>();
     }
 }
