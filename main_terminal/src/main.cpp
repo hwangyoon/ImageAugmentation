@@ -5,7 +5,7 @@
 #include <QTextStream>
 #include "main/include/cropfrommiddle.h"
 #include "main/include/horizontalflip.h"
-#include "main/include/rotate90clockwise.h"
+//#include "main/include/rotate90clockwise.h"
 #include "main/include/verticalflip.h"
 #include "main/include/request.h"
 #include "main/include/manager.h"
