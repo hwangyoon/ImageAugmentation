@@ -90,7 +90,7 @@ void TestAlgo::TestRotate90ClockwiseSquare() {
     testingModel.setPixel(1,1,whiteColor);
 
     QImage temp = testingModel;
-    Rotate90Clockwise proc;
+    Rotate90 proc;
     temp = proc.processImage(&testingModel);
 
     QImage rotated(2, 2, QImage::Format_RGB32);
@@ -106,7 +106,7 @@ void TestAlgo::TestRotate90ClockwiseRectangle() {
     QImage testingModel("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/small-one.bmp");
     QImage rotated("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/test-rot1.bmp");
     QImage temp = testingModel;
-    Rotate90Clockwise proc;
+    Rotate90 proc;
     temp = proc.processImage(&testingModel);
 
     QCOMPARE(temp,rotated);

@@ -1,6 +1,6 @@
 #include "../include/rotate90.h"
 
-QImage Rotate90::processImage(QImage *workingModel) {
+QImage Rotate90::processImage(const QImage *workingModel) {
     int32_t cols = workingModel->width();
     int32_t rows = workingModel->height();
     QImage rotatedPicture(rows,cols,workingModel->format());

@@ -1,0 +1,10 @@
+.qmake.stash
+*.o
+gui
+image_augmentation
+Image_Augmentation.pro.user
+Makefile
+moc_*
+test_image
+.idea
+cmake-build-debug/

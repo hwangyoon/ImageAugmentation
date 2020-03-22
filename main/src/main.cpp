@@ -48,6 +48,13 @@ int main() {
     string line;
     string name;
     // TODO: Узнать, что конкретно надо в интерфейсе, и написать это
+    QImage img("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/house.jpg");
+    const QImage *temp = &img;
+    Direction45 d = COUNTERCLOCKWISE45;
+    Rotate45 proc(d);
+    QImage buf;
+    buf=proc.processImage(temp);
+    buf.save("/home/lizazhemchuzhina/Project/ImageAugmentation/samples/house_1.jpg");
     while (true) {
         std::getline(cin, line);
         switch (get_command_from(line)) {
