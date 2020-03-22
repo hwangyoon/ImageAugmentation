@@ -1,7 +1,6 @@
 QT += core gui testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-
 CONFIG += c++17 console
 CONFIG -= app_bundle
 
@@ -51,27 +50,10 @@ terminal_conf {
     TARGET = image_augmentation_terminal
 }
 
-
-} else {
-    gui_conf {
-        SOURCES += \
-                    guidir/mainwindow.cpp \
-                    guidir/main.cpp
-        HEADERS += guidir/mainwindow.h
-        FORMS += \
-            guidir/mainwindow.ui
-        TARGET = gui
-    } else {
-        SOURCES += \
-            main/src/main.cpp
-        TARGET = image_augmentation
-    }
-
 commands_conf {
     SOURCES += \
         main/src/main.cpp
     TARGET = image_augmentation
-
 }
 
 DISTFILES += \
@@ -87,7 +69,6 @@ HEADERS += \
     main/include/request.h
     main/include/rotate45.h \
     main/include/rotate90.h
-    main/include/cropfrommiddle.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -101,5 +82,3 @@ SOURCES += \
 
 RESOURCES += \
     resource.qrc
-
-
