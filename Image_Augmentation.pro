@@ -1,7 +1,8 @@
 QT += core gui testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+
+CONFIG += c++17 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -34,6 +35,22 @@ test_conf {
     DISTFILES += \
         img/hello.png
     TARGET = test_image
+}
+gui_conf {
+    SOURCES += \
+                guidir/mainwindow.cpp \
+                guidir/main.cpp
+    HEADERS += guidir/mainwindow.h
+    FORMS += \
+        guidir/mainwindow.ui
+    TARGET = gui
+}
+
+terminal_conf {
+    SOURCES += main_terminal/src/main.cpp
+    TARGET = image_augmentation_terminal
+}
+
 
 } else {
     gui_conf {
@@ -49,8 +66,13 @@ test_conf {
             main/src/main.cpp
         TARGET = image_augmentation
     }
-}
 
+commands_conf {
+    SOURCES += \
+        main/src/main.cpp
+    TARGET = image_augmentation
+
+}
 
 DISTFILES += \
     img/hello.png
@@ -60,6 +82,9 @@ HEADERS += \
     main/include/verticalflip.h \
     main/include/horizontalflip.h \
     main/include/cropfrommiddle.h \
+    main/include/factory.h \
+    main/include/manager.h \
+    main/include/request.h
     main/include/rotate45.h \
     main/include/rotate90.h
     main/include/cropfrommiddle.h
@@ -68,6 +93,8 @@ SOURCES += \
     main/src/cropfrommiddle.cpp \
     main/src/horizontalflip.cpp \
     main/src/verticalflip.cpp \
+    main/src/factory.cpp \
+    main/src/manager.cpp
     main/src/rotate45.cpp \
     main/src/rotate90.cpp
     main/src/rotate90clockwise.cpp
