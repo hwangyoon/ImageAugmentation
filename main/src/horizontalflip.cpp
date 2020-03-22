@@ -1,6 +1,6 @@
 #include "../include/horizontalflip.h"
 
-QImage HorizontalFlip::processImage(QImage *workingModel) {
+QImage HorizontalFlip::processImage(const QImage *workingModel) {
     int32_t cols = workingModel->width();
     int32_t rows = workingModel->height();
     QImage horizontalFlippedPicture(cols,rows,workingModel->format());

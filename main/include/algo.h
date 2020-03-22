@@ -10,7 +10,7 @@
 
 class Algorithm {
 public:
-    virtual QImage processImage(QImage *workingModel) = 0;
+    virtual QImage processImage(const QImage *workingModel) = 0;
 };
 
 #endif //PROJECT_ALGO_H

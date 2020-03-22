@@ -5,6 +5,6 @@
 
 class HorizontalFlip: public Algorithm {
 public:
-    QImage processImage(QImage *workingModel);
+    QImage processImage(const QImage *workingModel);
 };
 #endif // HORIZONTALFLIP_H

@@ -5,6 +5,6 @@
 
 class VerticalFlip: public Algorithm{
 public:
-    QImage processImage(QImage *workingModel);
+    QImage processImage(const QImage *workingModel);
 };
 #endif // VERTICALFLIP_H
