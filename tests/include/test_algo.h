@@ -5,7 +5,7 @@
 #include "../../main/include/cropfrommiddle.h"
 #include "../../main/include/horizontalflip.h"
 #include "../../main/include/verticalflip.h"
-#include "../../main/include/rotate90clockwise.h"
+#include "../../main/include/rotate90.h"
 class TestAlgo: public QObject
 {
     Q_OBJECT

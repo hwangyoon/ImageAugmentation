@@ -1,7 +1,7 @@
 QT += core gui testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -23,8 +23,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-
-
 test_conf {
     SOURCES += \
         tests/src/Test_Image.cpp \
@@ -36,49 +34,52 @@ test_conf {
     DISTFILES += \
         img/hello.png
     TARGET = test_image
-
-} else {
-    gui_conf {
-        SOURCES += \
-                    guidir/mainwindow/mainwindow.cpp \
-                    guidir/main.cpp \
-                    guidir/guicontroller/guicontroller.cpp
-        HEADERS += guidir/mainwindow/mainwindow.h \
-                   guidir/guicontroller/guicontroller.h
-        FORMS += \
-            guidir/mainwindow/mainwindow.ui
-        TARGET = gui
-    } else {
-        SOURCES += \
-            main/src/main.cpp
-        TARGET = image_augmentation
-    }
+}
+gui_conf {
+    SOURCES += \
+                guidir/mainwindow/mainwindow.cpp \
+                guidir/main.cpp \
+                guidir/guicontroller/guicontroller.cpp
+    HEADERS += guidir/mainwindow/mainwindow.h \
+               guidir/guicontroller/guicontroller.h
+    FORMS += \
+        guidir/mainwindow/mainwindow.ui
+    TARGET = gui
+}
+terminal_conf {
+    SOURCES += main_terminal/src/main.cpp
+    TARGET = image_augmentation_terminal
 }
 
+commands_conf {
+    SOURCES += \
+        main/src/main.cpp
+    TARGET = image_augmentation
+}
 
 DISTFILES += \
     img/hello.png
 
 HEADERS += \
     main/include/algo.h \
-    main/include/rotate90clockwise.h \
     main/include/verticalflip.h \
     main/include/horizontalflip.h \
-    main/include/cropfrommiddle.h
+    main/include/cropfrommiddle.h \
+    main/include/factory.h \
+    main/include/manager.h \
+    main/include/request.h \
+    main/include/rotate45.h \
+    main/include/rotate90.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
     main/src/horizontalflip.cpp \
     main/src/verticalflip.cpp \
-    main/src/rotate90clockwise.cpp
+    main/src/factory.cpp \
+    main/src/manager.cpp \
+    main/src/rotate45.cpp \
+    main/src/rotate90.cpp
+
 
 RESOURCES += \
     resource.qrc
-
-
-
-
-
-
-
-
