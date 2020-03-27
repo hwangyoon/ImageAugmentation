@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     view_algo();
+    QString info = "Привет ^^ \n Как пользоваться этим приложением?.. \n Правильный ответ - никак";
+    QTextBrowser *view_message = ui->textBrowser_info;
+    view_message->setText(info);
 }
 
 MainWindow::~MainWindow()
@@ -16,9 +19,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_load_clicked()
 {
-    QTextEdit *text_path = ui->textEdit_path;
-    QString path = text_path->toPlainText();
-    text_path->setText("");
+    QTextEdit *text_path_in = ui->textEdit_path_in;
+    QString path_in = text_path_in->toPlainText();
+    text_path_in->setText("");
     // Тут надо path передать как путь Controller'у, он даст QImage
     QImage image;
     QLabel *label = ui->label_image;
@@ -58,7 +61,7 @@ void MainWindow::on_pushButton_process_clicked()
         what_printed += " " + item->text();
     }
     // Вернёт строчки алгоритмов, надо переделать в алгоритмы и передать контроллеру?
-    QTextBrowser *view_message = ui->textBrowser_message;
+    QTextBrowser *view_message = ui->textBrowser_info;
     view_message->setText(what_printed);
 }
 

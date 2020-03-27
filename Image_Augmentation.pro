@@ -35,20 +35,27 @@ test_conf {
         img/hello.png
     TARGET = test_image
 }
-gui_conf {
-    SOURCES += \
-                guidir/mainwindow.cpp \
-                guidir/main.cpp
-    HEADERS += guidir/mainwindow.h
-    FORMS += \
-        guidir/mainwindow.ui
-    TARGET = gui
-}
-
 
 terminal_conf {
     SOURCES += main_terminal/src/main.cpp
     TARGET = image_augmentation_terminal
+} else {
+    gui_conf {
+        SOURCES += \
+                    guidir/mainwindow/mainwindow.cpp \
+                    guidir/main.cpp \
+                    guidir/guicontroller/guicontroller.cpp
+        HEADERS += guidir/mainwindow/mainwindow.h \
+                   guidir/guicontroller/guicontroller.h
+        FORMS += \
+            guidir/mainwindow/mainwindow.ui
+        TARGET = gui
+    } else {
+        SOURCES += \
+            main/src/main.cpp
+        TARGET = image_augmentation
+    }
+>>>>>>> Add file for controller
 }
 
 commands_conf {
