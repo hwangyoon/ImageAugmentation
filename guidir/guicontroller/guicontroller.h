@@ -2,6 +2,7 @@
 #define GUICONTROLLER_H
 
 #include <vector>
+<<<<<<< HEAD
 #include <QImage>
 #include <QString>
 #include "../../main/include/request.h"
