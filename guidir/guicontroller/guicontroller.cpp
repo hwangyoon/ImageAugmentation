@@ -1,5 +1,6 @@
 #include "guicontroller.h"
 
+<<<<<<< HEAD
 GuiController::GuiController(): request()
 {
 }
@@ -61,3 +62,8 @@ void GuiController::save_path_to(QString new_path_to)
 {
     request.set_save_directory(new_path_to);
 }
+=======
+GuiController::GuiController()
+{
+}
+>>>>>>> Add file for controller
