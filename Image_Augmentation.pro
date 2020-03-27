@@ -41,8 +41,10 @@ test_conf {
     gui_conf {
         SOURCES += \
                     guidir/mainwindow/mainwindow.cpp \
-                    guidir/main.cpp
-        HEADERS += guidir/mainwindow/mainwindow.h
+                    guidir/main.cpp \
+                    guidir/guicontroller/guicontroller.cpp
+        HEADERS += guidir/mainwindow/mainwindow.h \
+                   guidir/guicontroller/guicontroller.h
         FORMS += \
             guidir/mainwindow/mainwindow.ui
         TARGET = gui
