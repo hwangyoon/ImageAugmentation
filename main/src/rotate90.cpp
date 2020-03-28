@@ -16,3 +16,16 @@ QImage Rotate90::processImage(const QImage *workingModel) {
 
     return rotatedPicture;
 }
+Rotate90Builder::Rotate90Builder() {
+    direct = CLOCKWISE90;
+}
+Rotate90Builder Rotate90Builder::setDirection(Direction90 d) {
+    this->direct=d;
+    return *this;
+}
+
+Rotate90 Rotate90Builder::build() {
+    Rotate90 *algo = new Rotate90();
+    algo->direct = this->direct;
+    return *algo;
+}

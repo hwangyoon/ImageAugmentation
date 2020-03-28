@@ -18,3 +18,18 @@ QImage Rotate45::processImage(const QImage *workingModel) {
     }
     return rotatedPicture;
 }
+
+Rotate45Builder::Rotate45Builder() {
+    direct = CLOCKWISE45;
+}
+
+Rotate45Builder Rotate45Builder::setDirection(Direction45 d) {
+    this->direct=d;
+    return *this;
+}
+
+Rotate45 Rotate45Builder::build() {
+    Rotate45 *algo = new Rotate45();
+    algo->direct = this->direct;
+    return *algo;
+}
