@@ -5,7 +5,7 @@ enum Direction45 {CLOCKWISE45,COUNTERCLOCKWISE45};
 class Rotate45: public Algorithm {
 public:
     QImage processImage(const QImage *workingModel);
-    Rotate45()=default;
+    Rotate45() = default;
 private:
     Direction45 direct;
     friend class Rotate45Builder;
