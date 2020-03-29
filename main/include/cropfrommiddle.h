@@ -26,6 +26,12 @@ public:
     CropGivenPieceBuilder setY(int upperLeftYInPercent);
     CropGivenPieceBuilder setCols(int downRightXInPercent);
     CropGivenPieceBuilder setRows(int downRightYInPercent);
+public:
+    CropGivenPieceBuilder() = default;
+    CropGivenPieceBuilder setX(int startXInPercent);
+    CropGivenPieceBuilder setY(int startYInPercent);
+    CropGivenPieceBuilder setCols(int colsInPercent);
+    CropGivenPieceBuilder setRows(int rowsInPercent);
     CropGivenPiece build();
 };
 #endif // CROPFROMMIDDLE_H

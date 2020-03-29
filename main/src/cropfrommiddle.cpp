@@ -1,5 +1,4 @@
 #include "../include/cropfrommiddle.h"
-#include <iostream>
 QImage CropGivenPiece::processImage(const QImage *workingModel) {
     upperLeftXInPercent = upperLeftXInPercent * workingModel->width() / 100.0;
     upperLeftYInPercent = upperLeftYInPercent * workingModel->height() / 100.0;
