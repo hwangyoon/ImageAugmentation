@@ -9,7 +9,6 @@ class RGBTone: public Algorithm {
 private:
     Color colorForTone;
     int32_t degreeOfTone;
-    const int32_t DEFAULT_degreeOfTone = 50;
     RGBTone() = default;
 public:
     friend class RGBToneBuilder;

@@ -10,22 +10,35 @@ QImage RGBTone::processImage(const QImage *workingModel) {
             int green = qGreen(currentColor);
             int red = qRed(currentColor);
             int blue = qBlue(currentColor);
+            int newTone;
             if(colorForTone == RED) {
-                if(red + degreeOfTone > 255)
-                    degreeOfTone = DEFAULT_degreeOfTone;
-                QRgb newColor = qRgb(red + degreeOfTone, green, blue);
+                if(red + degreeOfTone > 255) {
+                    newTone = 255;
+                }
+                else {
+                    newTone = red + degreeOfTone;
+                }
+                QRgb newColor = qRgb(newTone, green, blue);
                 tonedPicture.setPixelColor(QPoint(i, j), newColor);
             }
             if(colorForTone == GREEN) {
-                if(green + degreeOfTone > 255)
-                    degreeOfTone = DEFAULT_degreeOfTone;
-                QRgb newColor = qRgb(red, green + degreeOfTone, blue);
+                if(green + degreeOfTone > 255) {
+                    newTone = 255;
+                }
+                else {
+                    newTone = green + degreeOfTone;
+                }
+                QRgb newColor = qRgb(red, newTone, blue);
                 tonedPicture.setPixelColor(QPoint(i, j), newColor);
             }
             if(colorForTone == BLUE) {
-                if(blue + degreeOfTone > 255)
-                    degreeOfTone = DEFAULT_degreeOfTone;
-                QRgb newColor = qRgb(red, green, blue + degreeOfTone);
+                if(blue + degreeOfTone > 255) {
+                    newTone = 255;
+                }
+                else {
+                    newTone = blue + degreeOfTone;
+                }
+                QRgb newColor = qRgb(red, green, newTone);
                 tonedPicture.setPixelColor(QPoint(i, j), newColor);
             }
         }
@@ -45,11 +58,13 @@ RGBToneBuilder RGBToneBuilder::setdDegreeOfTone(int degreeOfTone) {
     return *this;
 }
 RGBTone RGBToneBuilder::build() {
-    if(this->degreeOfTone.isNull())
+    if(this->degreeOfTone.isNull()) {
         this->degreeOfTone = this->DEFAULT_degreeOfTone;
+    }
 
-    if(this->degreeOfTone < 0 || this->degreeOfTone > 255)
+    if(this->degreeOfTone < 0 || this->degreeOfTone > 255) {
         throw std::out_of_range("Invalid input: please set field in 0...255");
+    }
 
     RGBTone *algo = new RGBTone();
     algo->colorForTone = this->colorForTone;
