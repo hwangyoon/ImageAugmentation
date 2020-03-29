@@ -12,7 +12,7 @@ QImage Rotate45::processImage(const QImage *workingModel) {
             }
             else {
                 rotatedPicture.setPixel(i + j,j - i + cols, workingModel->pixel(QPoint(i,j)));
-                rotatedPicture.setPixel(i + j,j - i + cols - 1, workingModel->pixel(QPoint(i,j)));
+                rotatedPicture.setPixel(i + j,j - i + cols - 1,workingModel->pixel(QPoint(i,j)));
             }
         }
     }

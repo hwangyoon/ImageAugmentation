@@ -6,8 +6,8 @@
 #include <exception>
 class CropGivenPiece: public Algorithm {
 private:
-    int32_t startXInPercent, startYInPercent;//coordinates in percent of upper left corner
-    int32_t colsInPercent, rowsInPercent;//width and height in percent of cropping piece
+    int32_t upperLeftXInPercent, upperLeftYInPercent;//coordinates in percent of upper left corner
+    int32_t downRightXInPercent, downRightYInPercent;//width and height in percent of cropping piece
     CropGivenPiece() = default;
 public:
     QImage processImage(const QImage *workingModel);
@@ -16,10 +16,16 @@ public:
 
 class CropGivenPieceBuilder {
 private:
-    QVariant startXInPercent, startYInPercent;//coordinates in percent of upper left corner
-    QVariant colsInPercent, rowsInPercent;//width and height in percent of cropping piece
-    const int32_t DEFAULT_startXInPercent = 40, DEFAULT_startYInPercent = 40;
-    const int32_t DEFAULT_colsInPercent = 70, DEFAULT_rowsInPercent = 70;
+    QVariant upperLeftXInPercent, upperLeftYInPercent;//coordinates in percent of upper left corner
+    QVariant downRightXInPercent, downRightYInPercent;//width and height in percent of cropping piece
+    const int32_t DEFAULT_upperLeftXInPercent = 40, DEFAULT_upperLeftYInPercent = 40;
+    const int32_t DEFAULT_downRightXInPercent = 70, DEFAULT_downRightYInPercent = 70;
+public:
+    CropGivenPieceBuilder() = default;
+    CropGivenPieceBuilder setX(int upperLeftXInPercent);
+    CropGivenPieceBuilder setY(int upperLeftYInPercent);
+    CropGivenPieceBuilder setCols(int downRightXInPercent);
+    CropGivenPieceBuilder setRows(int downRightYInPercent);
 public:
     CropGivenPieceBuilder() = default;
     CropGivenPieceBuilder setX(int startXInPercent);

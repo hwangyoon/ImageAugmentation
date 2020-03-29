@@ -1,67 +1,68 @@
 #include "../include/cropfrommiddle.h"
 QImage CropGivenPiece::processImage(const QImage *workingModel) {
-    startXInPercent = startXInPercent * workingModel->width() / 100.0;
-    startYInPercent = startYInPercent * workingModel->height() / 100.0;
-    colsInPercent = colsInPercent * workingModel->width() / 100.0 - startYInPercent;
-    rowsInPercent = rowsInPercent * workingModel->height() / 100.0 - startXInPercent;
+    upperLeftXInPercent = upperLeftXInPercent * workingModel->width() / 100.0;
+    upperLeftYInPercent = upperLeftYInPercent * workingModel->height() / 100.0;
+    downRightXInPercent = downRightXInPercent * workingModel->width() / 100.0 - upperLeftXInPercent;
+    downRightYInPercent = downRightYInPercent * workingModel->height() / 100.0 - upperLeftYInPercent;
 
-    QImage croppedImage(colsInPercent, rowsInPercent, workingModel->format());
-    for (int32_t i = 0; i < colsInPercent - 1; i++) {
-        for (int32_t j = 0; j < rowsInPercent - 1; j++) {
-            croppedImage.setPixel(i, j, workingModel->pixel(QPoint(i + startXInPercent, j + startYInPercent)));
+    QImage croppedImage(downRightXInPercent - 1, downRightYInPercent - 1, workingModel->format());
+    for (int32_t i = 0; i < downRightXInPercent - 1; i++) {
+        for (int32_t j = 0; j < downRightYInPercent - 1; j++) {
+            croppedImage.setPixel(i, j, workingModel->pixel(QPoint(i + upperLeftXInPercent, j + upperLeftYInPercent)));
         }
     }
     return croppedImage;
 }
 
 CropGivenPieceBuilder CropGivenPieceBuilder::setX(int x) {
-    this->startXInPercent = x;
+    this->upperLeftXInPercent = x;
     return *this;
 }
 
 CropGivenPieceBuilder CropGivenPieceBuilder::setY(int y) {
-    this->startYInPercent = y;
+    this->upperLeftYInPercent = y;
     return *this;
 }
 
 CropGivenPieceBuilder CropGivenPieceBuilder::setCols(int cols) {
-    this->colsInPercent = cols;
+    this->downRightXInPercent = cols;
     return *this;
 }
 
 CropGivenPieceBuilder CropGivenPieceBuilder::setRows(int rows) {
-    this->rowsInPercent = rows;
+    this->downRightYInPercent = rows;
     return *this;
 }
 
 CropGivenPiece CropGivenPieceBuilder::build() {
     int count = 0;
-    if(this->startXInPercent.isNull())
+    if(this->upperLeftXInPercent.isNull())
         count++;
-    if(this->startYInPercent.isNull())
+    if(this->upperLeftYInPercent.isNull())
         count++;
-    if(this->colsInPercent.isNull())
+    if(this->downRightXInPercent.isNull())
         count++;
-    if(this->rowsInPercent.isNull())
+    if(this->downRightYInPercent.isNull())
         count++;
     if(count == 4) {
-        this->startXInPercent = this->DEFAULT_startXInPercent;
-        this->startYInPercent = this->DEFAULT_startYInPercent;
-        this->colsInPercent = this->DEFAULT_colsInPercent;
-        this->rowsInPercent = this->DEFAULT_rowsInPercent;
+        this->upperLeftXInPercent = this->DEFAULT_upperLeftXInPercent;
+        this->upperLeftYInPercent = this->DEFAULT_upperLeftYInPercent;
+        this->downRightXInPercent = this->DEFAULT_downRightXInPercent;
+        this->downRightYInPercent = this->DEFAULT_downRightYInPercent;
     }
     if(count > 0 && count < 4)
         throw std::invalid_argument("Few arguments");
 
-    if((this->startXInPercent < 0 || this->startXInPercent > 100)||
-           (this->startYInPercent < 0 || this->startYInPercent > 100)||
-           (this->colsInPercent < 0 || this->colsInPercent > 100)||
-           (this->rowsInPercent < 0 || this->rowsInPercent > 100))
+    if((this->upperLeftXInPercent < 0 || this->upperLeftXInPercent > 100)||
+           (this->upperLeftYInPercent < 0 || this->upperLeftYInPercent > 100)||
+           (this->downRightXInPercent < 0 || this->downRightXInPercent > 100)||
+           (this->downRightYInPercent < 0 || this->downRightYInPercent > 100)||
+           (this->downRightXInPercent == 0) || (this->downRightYInPercent == 0))
         throw std::out_of_range("Invalid input: please set field in 0...100");
     CropGivenPiece *algo = new CropGivenPiece();
-    algo->startXInPercent = this->startXInPercent.toInt();
-    algo->startYInPercent = this->startYInPercent.toInt();
-    algo->colsInPercent = this->colsInPercent.toInt();
-    algo->rowsInPercent = this->rowsInPercent.toInt();
+    algo->upperLeftXInPercent = this->upperLeftXInPercent.toInt();
+    algo->upperLeftYInPercent = this->upperLeftYInPercent.toInt();
+    algo->downRightXInPercent = this->downRightXInPercent.toInt();
+    algo->downRightYInPercent = this->downRightYInPercent.toInt();
     return *algo;
 }
