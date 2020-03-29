@@ -12,8 +12,6 @@ QImage Rotate90::processImage(const QImage *workingModel) {
                 rotatedPicture.setPixel(i, j, workingModel->pixel(QPoint(cols - 1 - j, i)));
         }
     }
-
-
     return rotatedPicture;
 }
 Rotate90Builder::Rotate90Builder() {
@@ -25,7 +23,7 @@ Rotate90Builder Rotate90Builder::setDirection(Direction90 d) {
 }
 
 Rotate90 Rotate90Builder::build() {
-    Rotate90 *algo = new Rotate90();
-    algo->direct = this->direct;
-    return *algo;
+    Rotate90 algo;
+    algo.direct = this->direct;
+    return algo;
 }

@@ -68,7 +68,8 @@ HEADERS += \
     main/include/manager.h \
     main/include/request.h \
     main/include/rotate45.h \
-    main/include/rotate90.h
+    main/include/rotate90.h \
+    main/include/imagewriter.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -77,8 +78,8 @@ SOURCES += \
     main/src/factory.cpp \
     main/src/manager.cpp \
     main/src/rotate45.cpp \
-    main/src/rotate90.cpp
-
+    main/src/rotate90.cpp \
+    main/src/imagewriter.cpp
 
 RESOURCES += \
     resource.qrc

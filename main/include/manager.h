@@ -3,14 +3,16 @@
 #include <QImage>
 #include <QString>
 #include "factory.h"
+#include "imagewriter.h"
 
 class AlgorithmManager {
 public:
-    AlgorithmManager() = default;
-    //takes vector of requests for a single picture, one request == one algorithm
-    void process_requests(std::vector<Request*>& r, QString path_from, QString path_to);
+    AlgorithmManager() {}
+    void process_requests(GlobalRequest r);
+    QImage preview(GlobalRequest r);
 private:
     Factory f;
+    ImageWriter imgwriter;
 };
 
 #endif // MANAGER_H

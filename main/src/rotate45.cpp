@@ -6,7 +6,7 @@ QImage Rotate45::processImage(const QImage *workingModel) {
     QImage rotatedPicture(rows + cols, cols + rows, workingModel->format());
     for (int32_t i = 0; i < cols; i++) {
         for (int32_t j = 0; j < rows; j++) {
-            if(direct == CLOCKWISE45) {
+            if (direct == CLOCKWISE45) {
                 rotatedPicture.setPixel(i - j + rows, i + j, workingModel->pixel(QPoint(i,j)));
                 rotatedPicture.setPixel(i - j + rows - 1, i + j, workingModel->pixel(QPoint(i,j)));
             }
@@ -29,7 +29,7 @@ Rotate45Builder Rotate45Builder::setDirection(Direction45 d) {
 }
 
 Rotate45 Rotate45Builder::build() {
-    Rotate45 *algo = new Rotate45();
-    algo->direct = this->direct;
-    return *algo;
+    Rotate45 algo;
+    algo.direct = this->direct;
+    return algo;
 }
