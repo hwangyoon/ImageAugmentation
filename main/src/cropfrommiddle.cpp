@@ -1,36 +1,36 @@
 #include "../include/cropfrommiddle.h"
 QImage CropGivenPiece::processImage(const QImage *workingModel) {
-    upperLeftXInPercent = upperLeftXInPercent * workingModel->width() / 100.0;
-    upperLeftYInPercent = upperLeftYInPercent * workingModel->height() / 100.0;
-    downRightXInPercent = downRightXInPercent * workingModel->width() / 100.0 - upperLeftXInPercent;
-    downRightYInPercent = downRightYInPercent * workingModel->height() / 100.0 - upperLeftYInPercent;
+    int upperLeftX = upperLeftXInPercent * workingModel->width() / 100.0;
+    int upperLeftY = upperLeftYInPercent * workingModel->height() / 100.0;
+    int downRightX = downRightXInPercent * workingModel->width() / 100.0 - upperLeftX;
+    int downRightY = downRightYInPercent * workingModel->height() / 100.0 - upperLeftY;
 
-    QImage croppedImage(downRightXInPercent - 1, downRightYInPercent - 1, workingModel->format());
-    for (int32_t i = 0; i < downRightXInPercent - 1; i++) {
-        for (int32_t j = 0; j < downRightYInPercent - 1; j++) {
-            croppedImage.setPixel(i, j, workingModel->pixel(QPoint(i + upperLeftXInPercent, j + upperLeftYInPercent)));
+    QImage croppedImage(downRightX - 1, downRightY - 1, workingModel->format());
+    for (int32_t i = 0; i < downRightX - 1; i++) {
+        for (int32_t j = 0; j < downRightY - 1; j++) {
+            croppedImage.setPixel(i, j, workingModel->pixel(QPoint(i + upperLeftX, j + upperLeftY)));
         }
     }
     return croppedImage;
 }
 
-CropGivenPieceBuilder CropGivenPieceBuilder::setX(int x) {
-    this->upperLeftXInPercent = x;
+CropGivenPieceBuilder CropGivenPieceBuilder::setUpperLeftXInPercent(int upperLeftXInPercent) {
+    this->upperLeftXInPercent = upperLeftXInPercent;
     return *this;
 }
 
-CropGivenPieceBuilder CropGivenPieceBuilder::setY(int y) {
-    this->upperLeftYInPercent = y;
+CropGivenPieceBuilder CropGivenPieceBuilder::setUpperLeftYInPercent(int upperLeftYInPercent) {
+    this->upperLeftYInPercent = upperLeftYInPercent;
     return *this;
 }
 
-CropGivenPieceBuilder CropGivenPieceBuilder::setCols(int cols) {
-    this->downRightXInPercent = cols;
+CropGivenPieceBuilder CropGivenPieceBuilder::setDownRightXInPercent(int downRightXInPercent) {
+    this->downRightXInPercent = downRightXInPercent;
     return *this;
 }
 
-CropGivenPieceBuilder CropGivenPieceBuilder::setRows(int rows) {
-    this->downRightYInPercent = rows;
+CropGivenPieceBuilder CropGivenPieceBuilder::setDownRightYInPercent(int downRightYInPercent) {
+    this->downRightYInPercent = downRightYInPercent;
     return *this;
 }
 
@@ -65,4 +65,5 @@ CropGivenPiece CropGivenPieceBuilder::build() {
     algo->downRightXInPercent = this->downRightXInPercent.toInt();
     algo->downRightYInPercent = this->downRightYInPercent.toInt();
     return *algo;
+
 }
