@@ -28,4 +28,5 @@ public:
     CropGivenPieceBuilder setDownRightYInPercent(int downRightYInPercent);
     CropGivenPiece build();
 };
+
 #endif // CROPFROMMIDDLE_H

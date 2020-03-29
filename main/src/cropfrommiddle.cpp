@@ -65,4 +65,5 @@ CropGivenPiece CropGivenPieceBuilder::build() {
     algo->downRightXInPercent = this->downRightXInPercent.toInt();
     algo->downRightYInPercent = this->downRightYInPercent.toInt();
     return *algo;
+
 }
