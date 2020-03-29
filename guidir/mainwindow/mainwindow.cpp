@@ -7,7 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     view_algo();
-    QString info = "Привет ^^ \n Как пользоваться этим приложением?.. \n Правильный ответ - никак";
+    QString info = "Привет ^^ \nКак пользоваться этим приложением?.. (мотать вниз для ответа) \n\
+                     - Чтобы загрузить картику надо ввести в первое поле адрес загружаемой картинки и нажать на кнопку LOAD \n\
+                     - Чтобы начать обработку надо ввести во второе поле место для сохранения и нажать на кнопку PROCESS \n\
+                     - Чтобы обработка не была пустым копированием надо выбрать алгоритмы в списке справа\
+(то, как они будут выглядеть можно посмотреть, нажав на кнопку PREVIEW)";
     QTextBrowser *view_message = ui->textBrowser_info;
     view_message->setText(info);
 }
@@ -52,17 +56,26 @@ void MainWindow::add_algo(const QStringList& list)
     }
 }
 
-void MainWindow::on_pushButton_process_clicked()
+QList<QListWidgetItem *> MainWindow::process_list(QListWidget &list)
 {
-    QListWidget *algo_list = ui->listWidget_algo;
     QString what_printed("");
-    QList<QListWidgetItem *> selectedItems = find_selected_items(*algo_list);
+    QList<QListWidgetItem *> selectedItems = find_selected_items(list);
     foreach (const QListWidgetItem* item, selectedItems) {
         what_printed += " " + item->text();
     }
-    // Вернёт строчки алгоритмов, надо переделать в алгоритмы и передать контроллеру?
     QTextBrowser *view_message = ui->textBrowser_info;
     view_message->setText(what_printed);
+    return selectedItems;
+}
+
+void MainWindow::on_pushButton_process_clicked()
+{
+    //передам process_list();
+}
+
+void MainWindow::on_pushButton_preview_clicked()
+{
+    //передам process_list();
 }
 
 QList<QListWidgetItem *> MainWindow::find_selected_items(QListWidget &list)
