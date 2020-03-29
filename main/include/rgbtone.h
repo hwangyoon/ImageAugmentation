@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <exception>
 enum Color {RED, GREEN, BLUE};
+
 class RGBTone: public Algorithm {
 private:
     Color colorForTone;

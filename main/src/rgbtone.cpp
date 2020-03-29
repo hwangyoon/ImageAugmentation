@@ -28,7 +28,6 @@ QImage RGBTone::processImage(const QImage *workingModel) {
                 QRgb newColor = qRgb(red, green, blue + degreeOfTone);
                 tonedPicture.setPixelColor(QPoint(i, j), newColor);
             }
-
         }
     }
     return tonedPicture;
