@@ -22,16 +22,10 @@ private:
     const int32_t DEFAULT_downRightXInPercent = 70, DEFAULT_downRightYInPercent = 70;
 public:
     CropGivenPieceBuilder() = default;
-    CropGivenPieceBuilder setX(int upperLeftXInPercent);
-    CropGivenPieceBuilder setY(int upperLeftYInPercent);
-    CropGivenPieceBuilder setCols(int downRightXInPercent);
-    CropGivenPieceBuilder setRows(int downRightYInPercent);
-public:
-    CropGivenPieceBuilder() = default;
-    CropGivenPieceBuilder setX(int startXInPercent);
-    CropGivenPieceBuilder setY(int startYInPercent);
-    CropGivenPieceBuilder setCols(int colsInPercent);
-    CropGivenPieceBuilder setRows(int rowsInPercent);
+    CropGivenPieceBuilder setUpperLeftXInPercent(int upperLeftXInPercent);
+    CropGivenPieceBuilder setUpperLeftYInPercent(int upperLeftYInPercent);
+    CropGivenPieceBuilder setDownRightXInPercent(int downRightXInPercent);
+    CropGivenPieceBuilder setDownRightYInPercent(int downRightYInPercent);
     CropGivenPiece build();
 };
 #endif // CROPFROMMIDDLE_H
