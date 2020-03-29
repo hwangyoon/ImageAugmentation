@@ -2,12 +2,12 @@
 QImage CropGivenPiece::processImage(const QImage *workingModel) {
     int upperLeftX = upperLeftXInPercent * workingModel->width() / 100.0;
     int upperLeftY = upperLeftYInPercent * workingModel->height() / 100.0;
-    int downRightX = downRightXInPercent * workingModel->width() / 100.0 - upperLeftX;
-    int downRightY = downRightYInPercent * workingModel->height() / 100.0 - upperLeftY;
+    int width = downRightXInPercent * workingModel->width() / 100.0 - upperLeftX;
+    int height = downRightYInPercent * workingModel->height() / 100.0 - upperLeftY;
 
-    QImage croppedImage(downRightX - 1, downRightY - 1, workingModel->format());
-    for (int32_t i = 0; i < downRightX - 1; i++) {
-        for (int32_t j = 0; j < downRightY - 1; j++) {
+    QImage croppedImage(width - 1, height - 1, workingModel->format());
+    for (int32_t i = 0; i < width - 1; i++) {
+        for (int32_t j = 0; j < height - 1; j++) {
             croppedImage.setPixel(i, j, workingModel->pixel(QPoint(i + upperLeftX, j + upperLeftY)));
         }
     }
