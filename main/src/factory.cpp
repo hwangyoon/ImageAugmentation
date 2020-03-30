@@ -8,10 +8,23 @@
 #include <cassert>
 
 //to do: process wrong arguments
-std::unique_ptr<Algorithm> Factory::get_algo(Request* r) {
+std::unique_ptr<Algorithm> Factory::get_algo(std::shared_ptr<Request> r) {
     if (r->type == crop) {
-        CropRequest* ptr = static_cast<CropRequest*> (r);
-        return std::make_unique<CropGivenPiece>(ptr->x, ptr->y, ptr->cols, ptr->rows);
+        CropGivenPieceBuilder builder;
+        std::shared_ptr<CropRequest> ptr = std::static_pointer_cast<CropRequest> (r);
+        if (ptr->x != -INT_MAX) {
+            builder.setX(ptr->x);
+        }
+        if (ptr->x != -INT_MAX) {
+            builder.setY(ptr->y);
+        }
+        if (ptr->x != -INT_MAX) {
+            builder.setCols(ptr->cols);
+        }
+        if (ptr->x != -INT_MAX) {
+            builder.setRows(ptr->rows);
+        }
+        return std::make_unique<CropGivenPiece>(builder.build());
     }
     if (r->type == hflip) {
         return std::make_unique<HorizontalFlip>();
@@ -19,7 +32,12 @@ std::unique_ptr<Algorithm> Factory::get_algo(Request* r) {
     if (r->type == vflip) {
         return std::make_unique<VerticalFlip>();
     }
-    if (r->type == rotate) {
-        return std::make_unique<Rotate90>();
+    if (r->type == rotate90) {
+        Rotate90Builder builder;
+        return std::make_unique<Rotate90>(builder.build());
+    }
+    if (r->type == rotate45) {
+        Rotate45Builder builder;
+        return std::make_unique<Rotate45>(builder.build());
     }
 }
