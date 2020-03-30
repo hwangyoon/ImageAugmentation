@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QPoint>
 #include <QRgb>
+#include <QColor>
 
 class Algorithm {
 public:
