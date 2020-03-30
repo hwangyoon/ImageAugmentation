@@ -12,7 +12,8 @@ public:
 
 class CropRequest : public Request {
 public:
-    CropRequest(int x_, int y_, int cols_, int rows_) : Request(crop), x(x_), y(y_), cols(cols_), rows(rows_) {}
+    CropRequest(int x_ = -INT_MAX, int y_ = -INT_MAX, int cols_ = -INT_MAX, int rows_ = -INT_MAX) :
+        Request(crop), x(x_), y(y_), cols(cols_), rows(rows_) {}
     int x, y, cols, rows; // x, y - coordinates of upper left corner; cols, rows - width and height of cropping piece
 };
 

@@ -12,10 +12,18 @@ std::unique_ptr<Algorithm> Factory::get_algo(std::shared_ptr<Request> r) {
     if (r->type == crop) {
         CropGivenPieceBuilder builder;
         std::shared_ptr<CropRequest> ptr = std::static_pointer_cast<CropRequest> (r);
-        builder.setX(ptr->x);
-        builder.setY(ptr->y);
-        builder.setCols(ptr->cols);
-        builder.setRows(ptr->rows);
+        if (ptr->x != -INT_MAX) {
+            builder.setX(ptr->x);
+        }
+        if (ptr->x != -INT_MAX) {
+            builder.setY(ptr->y);
+        }
+        if (ptr->x != -INT_MAX) {
+            builder.setCols(ptr->cols);
+        }
+        if (ptr->x != -INT_MAX) {
+            builder.setRows(ptr->rows);
+        }
         return std::make_unique<CropGivenPiece>(builder.build());
     }
     if (r->type == hflip) {
