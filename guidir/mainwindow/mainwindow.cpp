@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
 (то, как они будут выглядеть можно посмотреть, нажав на кнопку PREVIEW)";
     QTextBrowser *view_message = ui->textBrowser_info;
     view_message->setText(info);
+    QLabel *label = ui->label_image;
+    QString what_printed = "Здесь появится Ваша картинка ^^ \n     (но сначала её стоит загрузить)";
+    label->setText(what_printed);
 }
 
 MainWindow::~MainWindow()
@@ -27,16 +30,19 @@ void MainWindow::on_pushButton_load_clicked()
     QString path_in = text_path_in->toPlainText();
     text_path_in->setText("");
     // Тут надо path передать как путь Controller'у, он даст QImage
-    QImage image;
+    // Забили на это, сами загрузим
     QLabel *label = ui->label_image;
-    label->setPixmap(QPixmap::fromImage(image)); // Здесь картинка включилась (надеюсь)
+    QPixmap *p=new QPixmap(path_in);
+    QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
+    label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
+    text_path_in->setText("DONE");
 }
 
 void MainWindow::view_algo() {
     QListWidget *algo_list = ui->listWidget_algo;
 
     static QStringList LIST_ITEMS =
-        QStringList() << "C++" << "Python" << "Java" << "C#" << "PHP" << "Ruby" << "JavaScript";
+        QStringList() << "Crop from middle" << "Horizontal flip" << "Rotate 45 dg" << "Rotate 90 dg" << "Vertical flip";
 
     add_algo(LIST_ITEMS);
 
