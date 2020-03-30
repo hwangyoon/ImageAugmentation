@@ -69,7 +69,9 @@ HEADERS += \
     main/include/request.h \
     main/include/rotate45.h \
     main/include/rotate90.h \
-    main/include/imagewriter.h
+    main/include/imagewriter.h \
+    main/include/rgbtone.h \
+    main/include/whiteblack.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -79,7 +81,9 @@ SOURCES += \
     main/src/manager.cpp \
     main/src/rotate45.cpp \
     main/src/rotate90.cpp \
-    main/src/imagewriter.cpp
+    main/src/imagewriter.cpp \
+    main/src/rgbtone.cpp \
+    main/src/whiteblack.cpp
 
 RESOURCES += \
     resource.qrc
