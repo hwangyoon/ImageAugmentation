@@ -23,7 +23,7 @@ struct Pixel { // может произойти переполнение, поэ
         return *this;
     }
 
-    Pixel& operator^=(const Pixel& other) { // прибавить квадрат. Это логично(?)
+    Pixel powSquare(const Pixel& other) {
         red += other.red * other.red;
         green += other.green * other.green;
         blue += other.blue * other.blue;
@@ -59,24 +59,24 @@ struct Pixel { // может произойти переполнение, поэ
 
 std::pair<long long, QRgb> getVarianceMittelwert(const QImage* workingModel, int xUpperLeft, int yUpperLeft,
                                                   int xDownRight, int yDownRight) {
-    Pixel Variance, Mittelwert;
+    Pixel variance, mittelwert;
     int count = 0;
     for (int32_t i = xUpperLeft; i < xDownRight; i++) {
         for (int32_t j = yUpperLeft; j < yDownRight; j++) {
-            Variance ^= Pixel(workingModel->pixel(QPoint(i, j)));
-            Mittelwert += Pixel(workingModel->pixel(QPoint(i, j)));
-            ++count;
+            variance = variance.powSquare((Pixel(workingModel->pixel(QPoint(i, j)))));
+            mittelwert += Pixel(workingModel->pixel(QPoint(i, j)));
+            count++;
         }
     }
     if (count == 0) {
         return {INT64_MAX, qRgb(255, 255, 255)};
     }
 
-    Variance /= count;
-    Mittelwert /= count;
+    variance /= count;
+    mittelwert /= count;
 
-    Variance -= Mittelwert.getSquare();
-    return std::make_pair(Variance.getSum(), Mittelwert.getRgb());
+    variance -= mittelwert.getSquare();
+    return std::make_pair(variance.getSum(), mittelwert.getRgb());
 }
 
 QImage Kuwahara::processImage(const QImage* workingModel) {
