@@ -11,10 +11,9 @@ QImage Lightening::processImage(const QImage *workingModel) {
             int hue = currentColor.hslHue();
             int saturation = currentColor.hslSaturation();
             int newLight;
-            if(lightening + degreeOfLightening > 255) {
+            if (lightening + degreeOfLightening > 255) {
                  newLight = 255;
-               }
-             else {
+               } else {
                  newLight = lightening + degreeOfLightening;
               }
               QColor newColor;
@@ -31,11 +30,11 @@ LighteningBuilder LighteningBuilder::setdDegreeOfLightening(int degreeOfLighteni
     return *this;
 }
 Lightening LighteningBuilder::build() {
-    if(this->degreeOfLightening.isNull()) {
+    if (this->degreeOfLightening.isNull()) {
         this->degreeOfLightening = this->DEFAULT_degreeOfLightening;
     }
 
-    if(this->degreeOfLightening < 0 || this->degreeOfLightening > 255) {
+    if (this->degreeOfLightening < 0 || this->degreeOfLightening > 255) {
         throw std::out_of_range("Invalid input: please set field in 0...255");
     }
 
