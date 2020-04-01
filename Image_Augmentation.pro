@@ -71,7 +71,8 @@ HEADERS += \
     main/include/rotate90.h \
     main/include/rgbtone.h \
     main/include/whiteblack.h \
-    main/include/kuwahara.h
+    main/include/kuwahara.h \
+    main/include/lightening.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -83,7 +84,8 @@ SOURCES += \
     main/src/rotate90.cpp \
     main/src/rgbtone.cpp \
     main/src/whiteblack.cpp \
-    main/src/kuwahara.cpp
+    main/src/kuwahara.cpp \
+    main/src/lightening.cpp
 
 
 RESOURCES += \
