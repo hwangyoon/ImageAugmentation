@@ -17,3 +17,8 @@ QImage WhiteBlack::processImage(const QImage *workingModel) {
     }
     return whiteBlackPicture;
 }
+
+WhiteBlack WhiteBlackBuilder::build() {
+    WhiteBlack* algo = new WhiteBlack();
+    return *algo;
+}

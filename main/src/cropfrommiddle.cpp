@@ -58,7 +58,7 @@ CropGivenPiece CropGivenPieceBuilder::build() {
            (this->downRightXInPercent < 0 || this->downRightXInPercent > 100)||
            (this->downRightYInPercent < 0 || this->downRightYInPercent > 100)||
            (this->downRightXInPercent == 0) || (this->downRightYInPercent == 0))
-        throw std::out_of_range("Invalid input: please set field in 0...100");
+        throw std::invalid_argument("Invalid input: please set field in 0...100");
     CropGivenPiece *algo = new CropGivenPiece();
     algo->upperLeftXInPercent = this->upperLeftXInPercent.toInt();
     algo->upperLeftYInPercent = this->upperLeftYInPercent.toInt();

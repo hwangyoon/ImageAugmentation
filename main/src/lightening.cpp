@@ -35,7 +35,7 @@ Lightening LighteningBuilder::build() {
     }
 
     if (this->degreeOfLightening < 0 || this->degreeOfLightening > 255) {
-        throw std::out_of_range("Invalid input: please set field in 0...255");
+        throw std::invalid_argument("Invalid input: please set field in 0...255");
     }
 
     Lightening *algo = new Lightening();
