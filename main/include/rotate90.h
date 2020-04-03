@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef ROTATE90CLOCKWISE_H
 #define ROTATE90CLOCKWISE_H
 #include "algo.h"

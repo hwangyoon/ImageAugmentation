@@ -13,3 +13,8 @@ QImage HorizontalFlip::processImage(const QImage *workingModel) {
      }
     return horizontalFlippedPicture;
 }
+
+HorizontalFlip HorizontalFlipBuilder::build() {
+    HorizontalFlip* algo = new HorizontalFlip();
+    return *algo;
+}

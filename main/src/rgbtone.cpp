@@ -63,7 +63,7 @@ RGBTone RGBToneBuilder::build() {
     }
 
     if(this->degreeOfTone < 0 || this->degreeOfTone > 255) {
-        throw std::out_of_range("Invalid input: please set field in 0...255");
+        throw std::invalid_argument("Invalid input: please set field in 0...255");
     }
 
     RGBTone *algo = new RGBTone();

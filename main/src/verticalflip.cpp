@@ -13,3 +13,8 @@ QImage VerticalFlip::processImage(const QImage *workingModel) {
      }
     return verticalFlippedPicture;
 }
+
+VerticalFlip VerticalFlipBuilder::build() {
+    VerticalFlip* algo = new VerticalFlip();
+    return *algo;
+}

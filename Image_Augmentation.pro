@@ -75,7 +75,8 @@ HEADERS += \
     main/include/kuwahara.h \
     main/include/lightening.h \
     main/include/gaussiannoise.h \
-    main/include/dithering.h
+    main/include/dithering.h \
+    main/include/pixel.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \

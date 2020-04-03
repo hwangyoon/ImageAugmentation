@@ -1,8 +1,8 @@
+
 #ifndef DITHERING_H
 #define DITHERING_H
 
 #include "algo.h"
-
 class Dithering : public Algorithm {
 public:
     friend class DitheringBuilder;

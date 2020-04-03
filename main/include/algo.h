@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef PROJECT_ALGO_H
 #define PROJECT_ALGO_H
 
