@@ -13,24 +13,26 @@ std::unique_ptr<Algorithm> Factory::get_algo(std::shared_ptr<Request> r) {
         CropGivenPieceBuilder builder;
         std::shared_ptr<CropRequest> ptr = std::static_pointer_cast<CropRequest> (r);
         if (ptr->x != -INT_MAX) {
-            builder.setX(ptr->x);
+            builder.setUpperLeftXInPercent(ptr->x);
         }
         if (ptr->x != -INT_MAX) {
-            builder.setY(ptr->y);
+            builder.setUpperLeftYInPercent(ptr->y);
         }
         if (ptr->x != -INT_MAX) {
-            builder.setCols(ptr->cols);
+            builder.setDownRightXInPercent(ptr->cols);
         }
         if (ptr->x != -INT_MAX) {
-            builder.setRows(ptr->rows);
+            builder.setDownRightYInPercent(ptr->rows);
         }
         return std::make_unique<CropGivenPiece>(builder.build());
     }
     if (r->type == hflip) {
-        return std::make_unique<HorizontalFlip>();
+        HorizontalFlipBuilder builder;
+        return std::make_unique<HorizontalFlip>(builder.build());
     }
     if (r->type == vflip) {
-        return std::make_unique<VerticalFlip>();
+        VerticalFlipBuilder builder;
+        return std::make_unique<VerticalFlip>(builder.build());
     }
     if (r->type == rotate90) {
         Rotate90Builder builder;
