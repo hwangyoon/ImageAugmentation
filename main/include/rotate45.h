@@ -8,19 +8,19 @@ public:
     QImage processImage(const QImage *workingModel);
     friend class Rotate45Builder;
 private:
-    QImage& blur_left_upper_angle(QImage& img,
-                                  int len, int height);
-    QImage& blur_right_upper_angle(QImage& img,
-                                  int len, int height);
-    QImage& blur_left_bottom_angle(QImage& img,
-                                  int len, int height);
-    QImage& blur_right_bottom_angle(QImage& img,
-                                  int len, int height);
-    QImage& blur(QImage& img,
-                 QPoint LeftUpperAngle,
-                 QPoint RightUpperAngle,
-                 QPoint RightBottomAngle,
-                 QPoint LeftBottomAngle);
+    QImage& blurLeftUpperAngle(QImage& image,
+                                  int length, int height);
+    QImage& blurRightUpperAngle(QImage& image,
+                                  int length, int height);
+    QImage& blurLeftBottomAngle(QImage& image,
+                                  int length, int height);
+    QImage& blurRightBottomAngle(QImage& image,
+                                  int length, int height);
+    QImage& blur(QImage& image,
+                 QPoint leftUpperAngle,
+                 QPoint rightUpperAngle,
+                 QPoint rightBottomAngle,
+                 QPoint leftBottomAngle);
     Direction45 direct;
     Rotate45() = default;
 };

@@ -20,7 +20,7 @@ QImage Rotate45::processImage(const QImage *workingModel) {
     return rotatedPicture;
 }
 
-static std::pair<double, double> find_coord(QPoint A, QPoint B, QPoint S) {
+static std::pair<double, double> findCoord(QPoint A, QPoint B, QPoint S) {
     double a = (A.y() - B.y());
     double b = (B.x() - A.x());
     double c = (A.x()*B.y() - B.x()*A.y());
@@ -29,92 +29,101 @@ static std::pair<double, double> find_coord(QPoint A, QPoint B, QPoint S) {
                           (a*c1 - b*c)/(a*a + b*b));
 }
 
-QImage& Rotate45::blur_left_upper_angle(QImage& img,
-                              int len, int height) {
+QImage& Rotate45::blurLeftUpperAngle(QImage& image,
+                              int length, int height) {
     int xp, yp;
-    double tan_angle = static_cast<double>(len)/height;
-    for (xp = 0; xp < len; xp++) {
-        yp = (len - xp) / tan_angle;
+    double tanAngle = static_cast<double>(length)/height;
+    for (xp = 0; xp < length; xp++) {
+        yp = (length - xp) / tanAngle;
         int yp_new = yp;
         while (yp_new >= 0) {
-            std::pair<double, double> coord = find_coord(QPoint(0, height), QPoint(len, 0), QPoint(xp, yp_new));
-            QRgb value = img.pixel(QPoint(ceil(coord.first), ceil(coord.second)));
-            img.setPixel(xp, yp_new, value);
+            std::pair<double, double> coord = findCoord(QPoint(0, height),
+                                                         QPoint(length, 0),
+                                                         QPoint(xp, yp_new));
+            QRgb value = image.pixel(QPoint(ceil(coord.first), ceil(coord.second)));
+            image.setPixel(xp, yp_new, value);
             --yp_new;
         }
     }
+    return image;
 }
 
-QImage& Rotate45::blur_right_upper_angle(QImage& img,
-                              int len, int height) {
+QImage& Rotate45::blurRightUpperAngle(QImage& image,
+                              int length, int height) {
     int xp, yp;
-    double tan_angle = static_cast<double>(len)/height;
-    for (xp = img.width() - len; xp < img.width(); xp++) {
-        yp = (xp - img.width() + len) / tan_angle;
+    double tanAngle = static_cast<double>(length)/height;
+    for (xp = image.width() - length; xp < image.width(); xp++) {
+        yp = (xp - image.width() + length) / tanAngle;
         int yp_new = yp;
         while (yp_new >= 0) {
-            std::pair<double, double> coord = find_coord(QPoint(img.width(), height), QPoint(img.width() - len, 0), QPoint(xp, yp_new));
-            QRgb value = img.pixel(QPoint(floor(coord.first), ceil(coord.second)));
-            img.setPixel(xp, yp_new, value);
+            std::pair<double, double> coord = findCoord(QPoint(image.width(), height),
+                                                         QPoint(image.width() - length, 0),
+                                                         QPoint(xp, yp_new));
+            QRgb value = image.pixel(QPoint(floor(coord.first), ceil(coord.second)));
+            image.setPixel(xp, yp_new, value);
             --yp_new;
         }
     }
-    return img;
+    return image;
 }
 
-QImage& Rotate45::blur_left_bottom_angle(QImage& img,
-                              int len, int height) {
+QImage& Rotate45::blurLeftBottomAngle(QImage& image,
+                              int length, int height) {
     int xp, yp;
-    double tan_angle = static_cast<double>(height)/len;
-    for (xp = 0; xp < len; xp++) {
-        yp = img.height() - (len - xp) * tan_angle;
+    double tanAngle = static_cast<double>(height)/length;
+    for (xp = 0; xp < length; xp++) {
+        yp = image.height() - (length - xp) * tanAngle;
         int yp_new = yp;
-        while (yp_new < img.height()) {
-            std::pair<double, double> coord = find_coord(QPoint(0, img.height() - height), QPoint(len, img.height()), QPoint(xp, yp_new));
-            QRgb value = img.pixel(QPoint(ceil(coord.first), floor(coord.second)));
-            img.setPixel(xp, yp_new, value);
+        while (yp_new < image.height()) {
+            std::pair<double, double> coord = findCoord(QPoint(0, image.height() - height),
+                                                         QPoint(length, image.height()),
+                                                         QPoint(xp, yp_new));
+            QRgb value = image.pixel(QPoint(ceil(coord.first), floor(coord.second)));
+            image.setPixel(xp, yp_new, value);
             ++yp_new;
         }
     }
-    return img;
+    return image;
 }
 
-QImage& Rotate45::blur_right_bottom_angle(QImage& img,
-                              int len, int height) {
+QImage& Rotate45::blurRightBottomAngle(QImage& image,
+                              int length, int height) {
     int xp, yp;
-    double tan_angle = static_cast<double>(height)/len;
-    for (xp = img.width() - len; xp < img.width(); xp++) {
-        yp = img.height() - (xp - img.width() + len) * tan_angle;
+    double tanAngle = static_cast<double>(height)/length;
+    for (xp = image.width() - length; xp < image.width(); xp++) {
+        yp = image.height() - (xp - image.width() + length) * tanAngle;
         int yp_new = yp;
-        while (yp_new < img.height()) {
-            std::pair<double, double> coord = find_coord(QPoint(img.width() - len, img.height()), QPoint(img.width(), img.height() - height), QPoint(xp, yp_new));
-            QRgb value = img.pixel(QPoint(floor(coord.first), floor(coord.second)));
-            img.setPixel(xp, yp_new, value);
+        while (yp_new < image.height()) {
+            std::pair<double, double> coord = findCoord(QPoint(image.width() - length, image.height()),
+                                                         QPoint(image.width(), image.height() - height),
+                                                         QPoint(xp, yp_new));
+            QRgb value = image.pixel(QPoint(floor(coord.first), floor(coord.second)));
+            image.setPixel(xp, yp_new, value);
             ++yp_new;
         }
     }
-    return img;
+    return image;
 }
 
-QImage& Rotate45::blur(QImage& img,
-                       QPoint LeftUpperAngle,
-                       QPoint RightUpperAngle,
-                       QPoint RightBottomAngle,
-                       QPoint LeftBottomAngle) {
+QImage& Rotate45::blur(QImage& image,
+                       QPoint leftUpperAngle,
+                       QPoint rightUpperAngle,
+                       QPoint rightBottomAngle,
+                       QPoint leftBottomAngle) {
     const int Inaccuracy = 5;
-    blur_left_upper_angle(img,
-                          LeftUpperAngle.x() - LeftBottomAngle.x() + Inaccuracy,
-                          LeftBottomAngle.y() - LeftUpperAngle.y() + Inaccuracy);
-    blur_right_upper_angle(img,
-                           RightUpperAngle.x() - LeftUpperAngle.x() + Inaccuracy,
-                           RightUpperAngle.y() - LeftUpperAngle.y() + Inaccuracy);
-    blur_left_bottom_angle(img,
-                           RightBottomAngle.x() - LeftBottomAngle.x() + Inaccuracy,
-                           RightBottomAngle.y() - LeftBottomAngle.y() + Inaccuracy);
-    blur_right_bottom_angle(img,
-                            RightUpperAngle.x() - RightBottomAngle.x() + Inaccuracy,
-                            RightBottomAngle.y() - RightUpperAngle.y() + Inaccuracy);
-    return img;
+    blurLeftUpperAngle(image,
+                          leftUpperAngle.x() - leftBottomAngle.x() + Inaccuracy,
+                          leftBottomAngle.y() - leftUpperAngle.y() + Inaccuracy);
+    blurRightUpperAngle(image,
+                           rightUpperAngle.x() - leftUpperAngle.x() + Inaccuracy,
+                           rightUpperAngle.y() - leftUpperAngle.y() + Inaccuracy);
+    blurLeftBottomAngle(image,
+                           rightBottomAngle.x() - leftBottomAngle.x() + Inaccuracy,
+                           rightBottomAngle.y() - leftBottomAngle.y() + Inaccuracy);
+    blurRightBottomAngle(image,
+                            rightUpperAngle.x() - rightBottomAngle.x() + Inaccuracy,
+                            rightBottomAngle.y() - rightUpperAngle.y() + Inaccuracy);
+    return image;
 }
 
 Rotate45Builder::Rotate45Builder() {
