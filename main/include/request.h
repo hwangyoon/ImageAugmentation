@@ -4,7 +4,8 @@
 #include <memory>
 #include "rotate90.h"
 #include "rotate45.h"
-enum {crop, vflip, hflip, rotate90, rotate45};
+#include "rgbtone.h"
+enum {crop, vflip, hflip, rotate90, rotate45, dithering, gaussiannoise, kuwahara, light, rgb, whiteblack};
 
 class Request {
 public:
@@ -35,10 +36,52 @@ public:
     Direction90 d;
 };
 
+class KuwaharaRequest : public Request {
+public:
+    KuwaharaRequest(int32_t degreeOfBlur_ = 5) : Request(kuwahara), degreeOfBlur(degreeOfBlur_) {}
+    int32_t degreeOfBlur;
+};
+
+class RGBToneRequest : public Request {
+public:
+    RGBToneRequest(int32_t degreeOfTone_ = 50, Color color_ = RED) : Request(rgb),
+                                                                     degreeOfTone(degreeOfTone_),
+                                                                     color(color_) {}
+    int32_t degreeOfTone;
+    Color color;
+};
+
+class LighteningRequest : public Request {
+public:
+    LighteningRequest(int32_t degreeOfLightening_ = 50) : Request(light),
+                                                          degreeOfLightening(degreeOfLightening_) {}
+    int32_t degreeOfLightening;
+};
+
 class Rotate45Request : public Request {
 public:
     Rotate45Request(Direction45 d_ = CLOCKWISE45) : Request(rotate45), d(d_) {}
     Direction45 d;
+};
+
+class DitheringRequest : public Request {
+public:
+    DitheringRequest() : Request(dithering) {}
+};
+
+class WhiteBlackRequest : public Request {
+public:
+    WhiteBlackRequest() : Request(whiteblack) {}
+};
+
+class GaussianNoiseRequest : public Request {
+public:
+    GaussianNoiseRequest(int32_t degreeOfNoise_ = 40, bool mono_ = false) :
+                                                             Request(gaussiannoise),
+                                                             degreeOfNoise(degreeOfNoise_),
+                                                             mono(mono_) {}
+    int32_t degreeOfNoise;
+    bool mono;
 };
 
 class GlobalRequest {
