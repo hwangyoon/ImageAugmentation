@@ -2,6 +2,8 @@
 #define REQUEST_H
 #include <QDir>
 #include <memory>
+#include "rotate90.h"
+#include "rotate45.h"
 enum {crop, vflip, hflip, rotate90, rotate45};
 
 class Request {
@@ -29,12 +31,14 @@ public:
 
 class Rotate90Request : public Request {
 public:
-    Rotate90Request() : Request(rotate90) {}
+    Rotate90Request(Direction90 d_ = CLOCKWISE90) : Request(rotate90), d(d_) {}
+    Direction90 d;
 };
 
 class Rotate45Request : public Request {
 public:
-    Rotate45Request() : Request(rotate45) {}
+    Rotate45Request(Direction45 d_ = CLOCKWISE45) : Request(rotate45), d(d_) {}
+    Direction45 d;
 };
 
 class GlobalRequest {
