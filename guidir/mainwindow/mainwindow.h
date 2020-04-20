@@ -5,6 +5,7 @@
 #include <QPlainTextEdit>
 #include <QListWidget>
 #include <QTextBrowser>
+#include "../guicontroller/guicontroller.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,6 +32,8 @@ private:
     void add_algo(const QStringList& list);
     QList<QListWidgetItem *> find_selected_items(QListWidget &list);
     QList<QListWidgetItem *> process_list(QListWidget &list);
+    GuiController controller;
+    QStringList make_txt_list(QList<QListWidgetItem*> list);
 };
 
 #endif // MAINWINDOW_H
