@@ -35,6 +35,7 @@ void MainWindow::on_pushButton_load_clicked()
     QPixmap *p=new QPixmap(path_in);
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
+    controller.save_path_in(path_in);
     //text_path_in->setText("DONE");
 }
 
