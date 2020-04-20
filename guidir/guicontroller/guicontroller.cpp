@@ -16,6 +16,18 @@ std::shared_ptr<Request> GuiController::get_request_from_str(QString name)
         return std::make_shared<Rotate90Request>();
     } else if (name == "Rotate 45 dg") {
         return std::make_shared<Rotate45Request>();
+    } else if (name == "Dithering") {
+        return std::make_shared<DitheringRequest>();
+    } else if (name == "GaussianNoise") {
+        return std::make_shared<GaussianNoiseRequest>();
+    } else if (name == "Kuwahara") {
+        return std::make_shared<KuwaharaRequest>();
+    } else if (name == "Lightening") {
+        return std::make_shared<LighteningRequest>();
+    } else if (name == "RGBTone") {
+        return std::make_shared<RGBToneRequest>();
+    } else if (name == "WhiteBlack") {
+        return std::make_shared<WhiteBlackRequest>();
     } else {
         return nullptr;
     }
@@ -39,7 +51,13 @@ QImage GuiController::make_request_preview(QStringList algo_list)
 
     return manager.preview(request);
 }
+
 void GuiController::save_path_in(QString new_path_in)
 {
     request.set_load_directory(new_path_in);
+}
+
+void GuiController::save_path_to(QString new_path_to)
+{
+    request.set_save_directory(new_path_to);
 }

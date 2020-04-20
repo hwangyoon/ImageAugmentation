@@ -19,6 +19,7 @@ public:
     void make_request(QStringList algo_list);
     QImage make_request_preview(QStringList algo_list);
     void save_path_in(QString new_path_in);
+    void save_path_to(QString new_path_to);
 };
 
 #endif // GUICONTROLLER_H
