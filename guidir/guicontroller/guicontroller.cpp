@@ -1,6 +1,6 @@
 #include "guicontroller.h"
 
-GuiController::GuiController():request()
+GuiController::GuiController(): request()
 {
 }
 
