@@ -10,12 +10,13 @@
 class GuiController
 {
 private:
-    std::vector<Request*> request_list;
+    GlobalRequest request;
     AlgorithmManager manager;
-    QString path_in;
+
+    std::shared_ptr<Request> get_request_from_str(QString name);
 public:
     GuiController();
-    QImage make_request(QStringList algo_list);
+    void make_request(QStringList algo_list);
     QImage make_request_preview(QStringList algo_list);
     void save_path_in(QString new_path_in);
 };
