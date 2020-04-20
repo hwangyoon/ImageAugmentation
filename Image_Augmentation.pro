@@ -73,7 +73,11 @@ HEADERS += \
     main/include/imagewriter.h \
     main/include/rgbtone.h \
     main/include/whiteblack.h \
-    main/include/kuwahara.h
+    main/include/kuwahara.h \
+    main/include/lightening.h \
+    main/include/gaussiannoise.h \
+    main/include/dithering.h \
+    main/include/pixel.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -86,7 +90,10 @@ SOURCES += \
     main/src/imagewriter.cpp \
     main/src/rgbtone.cpp \
     main/src/whiteblack.cpp \
-    main/src/kuwahara.cpp
+    main/src/kuwahara.cpp \
+    main/src/lightening.cpp \
+    main/src/gaussiannoise.cpp \
+    main/src/dithering.cpp
 
 RESOURCES += \
     resource.qrc

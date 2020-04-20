@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef CROPFROMMIDDLE_H
 #define CROPFROMMIDDLE_H
 #include "algo.h"

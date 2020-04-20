@@ -14,6 +14,9 @@
 #include "main/include/verticalflip.h"
 #include "main/include/request.h"
 #include "main/include/manager.h"
+#include "main/include/dithering.h"
+#include "main/include/kuwahara.h"
+#include "main/include/rgbtone.h"
 #include <memory>
 
 QTextStream cout(stdout);
@@ -51,7 +54,9 @@ int main(int argc, char *argv[]) {
     //check if such option was given
     if (parser.isSet(algorithmsOption)) {
         //qPrintable(str) returns str as a const char*
-        fprintf(stdout, "%s\n", qPrintable("crop | hflip | vflip | rotate90 | rotate45"));
+        fprintf(stdout, "%s\n", qPrintable("crop | hflip | vflip | rotate90 | rotate45 |"
+                                           "dithering | gaussnoise | kuwahara | lightening |"
+                                           "rgbtone | whiteblack"));
         return 0;
     }
 
@@ -125,6 +130,41 @@ int main(int argc, char *argv[]) {
             int rows = array.at(3).toInt();
             request.add_request(std::make_shared<CropRequest>(x, y, cols, rows));
         }
+        if (sett2.contains("gaussiannoise")) {
+            QJsonValue value = sett2.value("gaussiannoise");
+            QJsonArray array = value.toArray();
+            int32_t degree = array.at(0).toInt();
+            bool mono = array.at(1).toBool();
+            request.add_request(std::make_shared<GaussianNoiseRequest>(degree, mono));
+        }
+        if (sett2.contains("rgbtone")) {
+            QJsonValue value = sett2.value("rgbtone");
+            QJsonArray array = value.toArray();
+            int32_t degree = array.at(0).toInt();
+            Color color;
+            if (array.at(1).toString() == "RED") {
+                color = RED;
+            }
+            if (array.at(1).toString() == "GREEN") {
+                color = GREEN;
+            }
+            if (array.at(1).toString() == "BLUE") {
+                color = BLUE;
+            }
+            request.add_request(std::make_shared<RGBToneRequest>(degree, color));
+        }
+        if (sett2.contains("kuwahara")) {
+            QJsonValue value = sett2.value("kuwahara");
+            QJsonArray array = value.toArray();
+            int32_t degreeOfBlur = array.at(0).toInt();
+            request.add_request(std::make_shared<KuwaharaRequest>(degreeOfBlur));
+        }
+        if (sett2.contains("lightening")) {
+            QJsonValue value = sett2.value("lightening");
+            QJsonArray array = value.toArray();
+            int32_t degreeOfLightening = array.at(0).toInt();
+            request.add_request(std::make_shared<LighteningRequest>(degreeOfLightening));
+        }
         if (sett2.contains("enable")) {
             QJsonValue value = sett2.value("enable");
             QJsonArray array = value.toArray();
@@ -134,6 +174,12 @@ int main(int argc, char *argv[]) {
                 }
                 if (algo.toString() == "vflip") {
                     request.add_request(std::make_shared<FlipVRequest>());
+                }
+                if (algo.toString() == "dithering") {
+                    request.add_request(std::make_shared<DitheringRequest>());
+                }
+                if (algo.toString() == "whiteblack") {
+                    request.add_request(std::make_shared<WhiteBlackRequest>());
                 }
             }
         }
@@ -152,17 +198,35 @@ int main(int argc, char *argv[]) {
     if (!disabledValues.contains("crop")) {
         request.add_request(std::make_shared<CropRequest>());
     }
+    if (!disabledValues.contains("dithering")) {
+        request.add_request(std::make_shared<DitheringRequest>());
+    }
+    if (!disabledValues.contains("kuwahara")) {
+        request.add_request(std::make_shared<KuwaharaRequest>());
+    }
+    if (!disabledValues.contains("gaussnoise")) {
+        request.add_request(std::make_shared<GaussianNoiseRequest>());
+    }
     if (!disabledValues.contains("hflip")) {
         request.add_request(std::make_shared<FlipHRequest>());
     }
     if (!disabledValues.contains("vflip")) {
         request.add_request(std::make_shared<FlipVRequest>());
     }
+    if (!disabledValues.contains("whiteblack")) {
+        request.add_request(std::make_shared<WhiteBlackRequest>());
+    }
     if (!disabledValues.contains("rotate90")) {
         request.add_request(std::make_shared<Rotate90Request>());
     }
     if (!disabledValues.contains("rotate45")) {
         request.add_request(std::make_shared<Rotate45Request>());
+    }
+    if (!disabledValues.contains("lightening")) {
+        request.add_request(std::make_shared<LighteningRequest>());
+    }
+    if (!disabledValues.contains("rgbtone")) {
+        request.add_request(std::make_shared<RGBToneRequest>());
     }
     AlgorithmManager m;
     m.process_requests(request);
