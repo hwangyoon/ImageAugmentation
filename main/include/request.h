@@ -44,6 +44,7 @@ public:
 class GlobalRequest {
 public:
     GlobalRequest(QDir path_from_, QDir path_to_) : path_from(path_from_), path_to(path_to_) {}
+    GlobalRequest() = default;
     ~GlobalRequest() = default;
     void set_load_directory(QDir path_from_) {
         path_from = path_from_;
