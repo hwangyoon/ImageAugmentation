@@ -35,7 +35,7 @@ void MainWindow::on_pushButton_load_clicked()
     QPixmap *p=new QPixmap(path_in);
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
-    text_path_in->setText("DONE");
+    //text_path_in->setText("DONE");
 }
 
 void MainWindow::view_algo() {
@@ -77,11 +77,26 @@ QList<QListWidgetItem *> MainWindow::process_list(QListWidget &list)
 void MainWindow::on_pushButton_process_clicked()
 {
     //передам process_list();
+    controller.make_request(make_txt_list(find_selected_items(*ui->listWidget_algo)));
+}
+
+QStringList MainWindow::make_txt_list(QList<QListWidgetItem*> list) {
+    QStringList txt_list;
+    foreach(QListWidgetItem* line, list) {
+        txt_list << line->text();
+    }
+    return txt_list;
 }
 
 void MainWindow::on_pushButton_preview_clicked()
 {
     //передам process_list();
+    QLabel *label = ui->label_image;
+    QStringList txt_algo = make_txt_list(find_selected_items(*ui->listWidget_algo));
+    QImage image = controller.make_request_preview(txt_algo);
+    QPixmap p = QPixmap::fromImage(image);
+    QPixmap p1(p.scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
+    label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
 }
 
 QList<QListWidgetItem *> MainWindow::find_selected_items(QListWidget &list)

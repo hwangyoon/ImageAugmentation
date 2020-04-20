@@ -1,17 +1,45 @@
 #include "guicontroller.h"
 
-GuiController::GuiController()
+GuiController::GuiController():request()
 {
 }
 
-QImage GuiController::make_request(QStringList algo_list)
+std::shared_ptr<Request> GuiController::get_request_from_str(QString name)
 {
+    if (name == "Crop from middle") {
+        return std::make_shared<CropRequest>();
+    } else if (name == "Horizontal flip") {
+        return std::make_shared<FlipHRequest>();
+    } else if (name == "Vertical flip") {
+        return std::make_shared<FlipVRequest>();
+    } else if (name == "Rotate 90 dg") {
+        return std::make_shared<Rotate90Request>();
+    } else if (name == "Rotate 45 dg") {
+        return std::make_shared<Rotate45Request>();
+    } else {
+        return nullptr;
+    }
+}
+
+void GuiController::make_request(QStringList algo_list)
+{
+    foreach (QString algo, algo_list) {
+        std::shared_ptr<Request> request_ = get_request_from_str(algo);
+        if (request_ != nullptr)
+            request.add_request(request_);
+    }
+    manager.process_requests(request);
 }
 QImage GuiController::make_request_preview(QStringList algo_list)
 {
+    foreach (QString algo, algo_list) {
+        std::shared_ptr<Request> request_ = get_request_from_str(algo);
+        request.add_request(request_);
+    }
 
+    return manager.preview(request);
 }
 void GuiController::save_path_in(QString new_path_in)
 {
-    path_in = new_path_in;
+    request.set_load_directory(new_path_in);
 }
