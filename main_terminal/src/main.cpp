@@ -49,6 +49,10 @@ int main(int argc, char *argv[]) {
     QCommandLineOption algorithmsOption(QStringList() << "a" << "algorithms",
                                      "Possible algorithms");
     parser.addOption(algorithmsOption);
+    QCommandLineOption formatOption(QStringList() << "f" << "format",
+                                     "Specify format.",
+                                     "format");
+    parser.addOption(formatOption);
     parser.process(app);
 
     //check if such option was given
@@ -189,11 +193,18 @@ int main(int argc, char *argv[]) {
     }
 
     const QStringList disabledValues = parser.values(disableOption);
-    if (!disabledValues.contains("crop") && !disabledValues.contains("hflip") &&
-        !disabledValues.contains("vflip") && !disabledValues.contains("rotate90") &&
-        !disabledValues.contains("rotate45") && !disabledValues.empty()) {
-        fprintf(stderr, "%s\n", qPrintable("Wrong option value"));
-        parser.showHelp(1);
+    if (parser.isSet(formatOption)) {
+        const QString fileFormat = parser.value(formatOption);
+        request.setFileFomat(fileFormat);
+    }
+    for (auto algorithm : disabledValues) {
+        if (algorithm != "crop" && algorithm != "dithering" && algorithm != "kuwahara" &&
+            algorithm != "gaussnoise" && algorithm != "hflip" && algorithm != "vflip" &&
+            algorithm != "whiteblack" && algorithm != "rotate90" && algorithm != "lightening" &&
+            algorithm != "rgbtone") {
+            fprintf(stderr, "%s\n", qPrintable("Wrong option value"));
+            parser.showHelp(1);
+        }
     }
     if (!disabledValues.contains("crop")) {
         request.add_request(std::make_shared<CropRequest>());

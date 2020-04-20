@@ -3,14 +3,19 @@
 #include <QDir>
 #include <memory>
 #include <QImage>
+#include <unordered_map>
+#include "request.h"
 
 class ImageWriter {
 public:
-    ImageWriter() { srand(time(NULL)); }
-    void save_to_directory(QDir path_to_, std::vector<std::shared_ptr<QImage>> images, QString format = ".jpg");
+    ImageWriter();
+    void save_to_directory(QDir path_to_,
+                           std::vector<std::pair<std::shared_ptr<QImage>, int>>,
+                           QString format);
     void save_to_file(QDir path_to, QImage& img);
 private:
     QString generate_string(std::size_t n);
+    std::unordered_map<int, QString> algoNames;
 };
 
 #endif // IMAGEWRITER_H

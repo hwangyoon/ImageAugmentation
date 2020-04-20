@@ -5,7 +5,7 @@
 #include "rotate90.h"
 #include "rotate45.h"
 #include "rgbtone.h"
-enum {crop, vflip, hflip, rotate90, rotate45, dithering, gaussiannoise, kuwahara, light, rgb, whiteblack};
+enum algoType{crop, vflip, hflip, rotate90, rotate45, dithering, gaussiannoise, kuwahara, light, rgb, whiteblack};
 
 class Request {
 public:
@@ -101,6 +101,12 @@ public:
     QDir get_save_directory() {
         return path_to;
     }
+    void setFileFomat(const QString format) {
+        fileFormat = format;
+    }
+    QString getFileFormat() {
+        return fileFormat;
+    }
 
     void add_request(std::shared_ptr<Request> r) {
         requests.push_back(r);
@@ -113,6 +119,7 @@ public:
 private:
     QDir path_from;
     QDir path_to;
+    QString fileFormat = "jpg";
     std::vector<std::shared_ptr<Request>> requests;
 };
 
