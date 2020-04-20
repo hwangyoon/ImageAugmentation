@@ -43,7 +43,8 @@ void MainWindow::view_algo() {
     QListWidget *algo_list = ui->listWidget_algo;
 
     static QStringList LIST_ITEMS =
-        QStringList() << "Crop from middle" << "Horizontal flip" << "Rotate 45 dg" << "Rotate 90 dg" << "Vertical flip";
+        QStringList() << "Crop from middle" << "Horizontal flip" << "Rotate 45 dg" << "Rotate 90 dg" << "Vertical flip" << "Dithering" << "GaussianNoise"
+                      << "Kuwahara" << "Lightening" << "RGBTone" << "WhiteBlack" ;
 
     add_algo(LIST_ITEMS);
 
@@ -78,6 +79,10 @@ QList<QListWidgetItem *> MainWindow::process_list(QListWidget &list)
 void MainWindow::on_pushButton_process_clicked()
 {
     //передам process_list();
+    QTextEdit *text_path_to = ui->textEdit_path_out;
+    QString path_to = text_path_to->toPlainText();
+    controller.save_path_to(path_to);
+    text_path_to->setText("");
     controller.make_request(make_txt_list(find_selected_items(*ui->listWidget_algo)));
 }
 
