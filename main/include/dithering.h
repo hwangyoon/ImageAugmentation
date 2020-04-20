@@ -1,4 +1,3 @@
-
 #ifndef DITHERING_H
 #define DITHERING_H
 

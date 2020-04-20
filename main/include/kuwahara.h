@@ -1,4 +1,3 @@
-
 #ifndef MAIN_KUWAHARA_HPP
 #define MAIN_KUWAHARA_HPP
 
