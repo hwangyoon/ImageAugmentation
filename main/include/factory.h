@@ -14,7 +14,7 @@ class Factory {
 public:
     Factory() {}
     // returns pointer to the algorithm which should be used according to the request
-    std::unique_ptr<Algorithm> get_algo(std::shared_ptr<Request> r);
+    std::unique_ptr<Algorithm> getAlgo(std::shared_ptr<Request> r);
 };
 
 #endif // FABRIC_H

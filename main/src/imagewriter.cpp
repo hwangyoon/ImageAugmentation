@@ -19,14 +19,6 @@ ImageWriter::ImageWriter() {
     algoNames[rgb] = "rgb";
 }
 
-QString ImageWriter::generate_string(std::size_t n) {
-    QString str = "/";
-    for (std::size_t i = 0; i < n; i++) {
-        str += (rand()%('z' - 'a' + 1) + 'a');
-    }
-    return str;
-}
-
 void ImageWriter::countFileNames(QDir directory,
                                  QMap<QString, int>& fileNameNumber) {
     QStringList filter;
@@ -51,11 +43,11 @@ void ImageWriter::countFileNames(QDir directory,
     }
 }
 
-void ImageWriter::save_to_directory(QDir path_to_,
+void ImageWriter::saveToDirectory(QDir pathTo_,
                                     std::vector<std::pair<std::shared_ptr<QImage>, int>> images,
                                     QString format) {
     QMap<QString, int> fileNameNumber;
-    countFileNames(path_to_, fileNameNumber);
+    countFileNames(pathTo_, fileNameNumber);
     for (auto i : images) {
         QString algoName = algoNames[i.second];
         if (fileNameNumber.find(algoName) != fileNameNumber.end()) {
@@ -63,10 +55,6 @@ void ImageWriter::save_to_directory(QDir path_to_,
         } else {
             algoName += ("_" + QString::number(1) + ".");
         }
-        i.first->save(path_to_.absolutePath() + "/" + algoName + format);
+        i.first->save(pathTo_.absolutePath() + "/" + algoName + format);
     }
-}
-
-void save_to_file(QDir path_to_, QImage& img) {
-    img.save(path_to_.absolutePath());
 }
