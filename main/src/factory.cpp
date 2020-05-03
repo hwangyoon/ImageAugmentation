@@ -13,21 +13,21 @@
 #include <cassert>
 
 //to do: process wrong arguments
-std::unique_ptr<Algorithm> Factory::get_algo(std::shared_ptr<Request> r) {
+std::unique_ptr<Algorithm> Factory::getAlgo(std::shared_ptr<Request> r) {
     if (r->type == crop) {
         CropGivenPieceBuilder builder;
         std::shared_ptr<CropRequest> ptr = std::static_pointer_cast<CropRequest> (r);
-        if (ptr->x != -INT_MAX) {
-            builder.setUpperLeftXInPercent(ptr->x);
+        if (ptr->isSetUpperLeftXInPercent) {
+            builder.setUpperLeftXInPercent(ptr->upperLeftXInPercent);
         }
-        if (ptr->x != -INT_MAX) {
-            builder.setUpperLeftYInPercent(ptr->y);
+        if (ptr->isSetUpperLeftYInPercent) {
+            builder.setUpperLeftYInPercent(ptr->upperLeftYInPercent);
         }
-        if (ptr->x != -INT_MAX) {
-            builder.setDownRightXInPercent(ptr->cols);
+        if (ptr->isSetDownRightXInPercent) {
+            builder.setDownRightXInPercent(ptr->downRightXInPercent);
         }
-        if (ptr->x != -INT_MAX) {
-            builder.setDownRightYInPercent(ptr->rows);
+        if (ptr->isSetDownRightYInPercent) {
+            builder.setDownRightYInPercent(ptr->downRightYInPercent);
         }
         return std::make_unique<CropGivenPiece>(builder.build());
     }
@@ -35,8 +35,12 @@ std::unique_ptr<Algorithm> Factory::get_algo(std::shared_ptr<Request> r) {
         GaussianNoiseBuilder builder;
         std::shared_ptr<GaussianNoiseRequest> ptr =
                 std::static_pointer_cast<GaussianNoiseRequest> (r);
-        builder.setDegreeOfNoise(ptr->degreeOfNoise);
-        builder.setMono(ptr->mono);
+        if (ptr->isSetDegreeOfNoise) {
+            builder.setDegreeOfNoise(ptr->degreeOfNoise);
+        }
+        if (ptr->isSetMono) {
+            builder.setMono(ptr->mono);
+        }
         return std::make_unique<GaussianNoise>(builder.build());
     }
     if (r->type == dithering) {
@@ -47,22 +51,30 @@ std::unique_ptr<Algorithm> Factory::get_algo(std::shared_ptr<Request> r) {
         KuwaharaBuilder builder;
         std::shared_ptr<KuwaharaRequest> ptr =
                 std::static_pointer_cast<KuwaharaRequest> (r);
-        builder.setDegreeOfBlur(ptr->degreeOfBlur);
+        if (ptr->isSetDegreeOfBlur) {
+            builder.setDegreeOfBlur(ptr->degreeOfBlur);
+        }
         return std::make_unique<Kuwahara>(builder.build());
     }
     if (r->type == light) {
         LighteningBuilder builder;
         std::shared_ptr<LighteningRequest> ptr =
                 std::static_pointer_cast<LighteningRequest> (r);
-        builder.setdDegreeOfLightening(ptr->degreeOfLightening);
+        if (ptr->isSetDegreeOfLightening) {
+            builder.setdDegreeOfLightening(ptr->degreeOfLightening);
+        }
         return std::make_unique<Lightening>(builder.build());
     }
     if (r->type == rgb) {
         RGBToneBuilder builder;
         std::shared_ptr<RGBToneRequest> ptr =
                 std::static_pointer_cast<RGBToneRequest> (r);
-        builder.setdDegreeOfTone(ptr->degreeOfTone);
-        builder.setColor(ptr->color);
+        if (ptr->isSetDegreeOfTone) {
+            builder.setdDegreeOfTone(ptr->degreeOfTone);
+        }
+        if (ptr->isSetColor) {
+            builder.setColor(ptr->color);
+        }
         return std::make_unique<RGBTone>(builder.build());
     }
     if (r->type == hflip) {
