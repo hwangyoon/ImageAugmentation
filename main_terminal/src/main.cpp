@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
             request.setFileFormat(fileFormat);
         }
         AlgorithmManager m;
-        m.process_requests(request);
+        m.processRequests(request);
         return 0;
     }
 
@@ -193,7 +193,7 @@ int main(int argc, char *argv[]) {
     }
     addNotDisabledAlgorithms(parser, request);
     AlgorithmManager m;
-    m.process_requests(request);
+    m.processRequests(request);
     return 0;
 }
 
