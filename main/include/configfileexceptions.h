@@ -4,7 +4,7 @@
 #include <exception>
 #include <QString>
 
-class configFileException : public std::exception {
+class ConfigFileException : public std::exception {
 protected:
     const char* message = "Unexpected error with config file";
 public:
@@ -13,47 +13,47 @@ public:
     }
 };
 
-class fileNotFoundException : public configFileException {
+class FileNotFoundException : public ConfigFileException {
 public:
-    fileNotFoundException() { message = "Error: source file/directory not found"; }
+    FileNotFoundException() { message = "Error: source file/directory not found"; }
 };
 
-class fileNotReadableException : public configFileException {
+class FileNotReadableException : public ConfigFileException {
 public:
-    fileNotReadableException() { message = "Error: unable to read file"; }
-    fileNotReadableException(QString error) { message = qPrintable("Error: unable to read file: " + error); }
+    FileNotReadableException() { message = "Error: unable to read file"; }
+    FileNotReadableException(QString error) { message = qPrintable("Error: unable to read file: " + error); }
 };
 
-class emptyFileException : public configFileException {
+class EmptyFileException : public ConfigFileException {
 public:
-    emptyFileException() {
+    EmptyFileException() {
         message = "Error: no data is currently available for reading from file";
     }
 };
 
-class keyNotGivenException : public configFileException {
+class KeyNotGivenException : public ConfigFileException {
 public:
-    keyNotGivenException() { message = "Error: key was not provided"; }
-    keyNotGivenException(QString key) { message = qPrintable("Error: key "+ key + " is not provided"); }
+    KeyNotGivenException() { message = "Error: key was not provided"; }
+    KeyNotGivenException(QString key) { message = qPrintable("Error: key "+ key + " is not provided"); }
 };
 
-class wrongNumberOfArgumentsException : public configFileException {
+class WrongNumberOfArgumentsException : public ConfigFileException {
 public:
-    wrongNumberOfArgumentsException() { message = "Error: wrong number of arguments provided"; }
-    wrongNumberOfArgumentsException(QString key) {
+    WrongNumberOfArgumentsException() { message = "Error: wrong number of arguments provided"; }
+    WrongNumberOfArgumentsException(QString key) {
         message = qPrintable("Error: wrong number of arguments provided in " + key);
     }
 };
 
-class wrongValueException : public configFileException {
+class WrongValueException : public ConfigFileException {
 public:
-    wrongValueException() { message = "Error: wrong value"; }
-    wrongValueException(QString key) { message = qPrintable("Error: wrong value for key " + key); }
+    WrongValueException() { message = "Error: wrong value"; }
+    WrongValueException(QString key) { message = qPrintable("Error: wrong value for key " + key); }
 };
 
-class unrecognisedKeyException : public configFileException {
+class UnrecognisedKeyException : public ConfigFileException {
 public:
-    unrecognisedKeyException() { message = "Error: unrecognised key"; }
-    unrecognisedKeyException(QString key) { message = qPrintable("Error: unrecognised key " + key); }
+    UnrecognisedKeyException() { message = "Error: unrecognised key"; }
+    UnrecognisedKeyException(QString key) { message = qPrintable("Error: unrecognised key " + key); }
 };
 #endif // CONFIGFILEEXCEPTIONS_H

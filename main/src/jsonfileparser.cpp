@@ -3,22 +3,22 @@
 
 void JsonParser::checkConfigFileCorrect(QFile& file) const {
     if (!file.exists()){
-        throw fileNotFoundException();
+        throw FileNotFoundException();
     }
     QFileDevice::FileError err = QFileDevice::NoError;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         //specify error
         err = file.error();
-        throw fileNotReadableException(QString(err));
+        throw FileNotReadableException(QString(err));
     }
     QString settings = file.readAll();
     if (file.error() != QFile::NoError) {
         file.close();
-        throw fileNotReadableException();
+        throw FileNotReadableException();
     }
     if (settings.isEmpty()) {
         file.close();
-        throw emptyFileException();
+        throw EmptyFileException();
     }
     file.close();
 }
@@ -26,7 +26,7 @@ void JsonParser::checkConfigFileCorrect(QFile& file) const {
 QJsonValue JsonParser::getValue(const QJsonObject& data, const QString& key) {
     QJsonValue value = data[key];
     if (value.isUndefined()) {
-        throw keyNotGivenException(QString(key));
+        throw KeyNotGivenException(QString(key));
     }
     return value;
 }
@@ -39,7 +39,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
     file.close();
     QJsonDocument doc = QJsonDocument::fromJson(settings.toUtf8());
     if (doc.isNull()) {
-        throw fileNotReadableException();
+        throw FileNotReadableException();
     }
     QJsonObject data = doc.object();
     if (data.contains("rotate90")) {
@@ -48,7 +48,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         } else if (data.value("rotate90").toString() == "COUNTERCLOCKWISE90") {
             request.addRequest(std::make_shared<Rotate90Request>(COUNTERCLOCKWISE90));
         } else {
-            throw wrongValueException("rotate90");
+            throw WrongValueException("rotate90");
         }
     }
     if (data.contains("rotate45")) {
@@ -57,7 +57,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         } else if (data.value("rotate45").toString() == "COUNTERCLOCKWISE45") {
             request.addRequest(std::make_shared<Rotate45Request>(COUNTERCLOCKWISE45));
         } else {
-            throw wrongValueException("rotate45");
+            throw WrongValueException("rotate45");
         }
     }
     if (data.contains("crop")) {
@@ -67,7 +67,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         int downRightXInPercent = getValue(crop, "downRightXInPercent").toInt();
         int downRightYInPercent = getValue(crop, "downRightYInPercent").toInt();
         if (crop.size() != 4) {
-            throw wrongNumberOfArgumentsException("crop");
+            throw WrongNumberOfArgumentsException("crop");
         }
         request.addRequest(std::make_shared<CropRequest>(upperLeftXInPercent,
                                                           upperLeftYInPercent,
@@ -79,7 +79,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         QVariant degree;
         QVariant mono;
         if (gaussnoise.size() == 0 || gaussnoise.size() > 2) {
-            throw wrongNumberOfArgumentsException("gaussiannoise");
+            throw WrongNumberOfArgumentsException("gaussiannoise");
         }
         if (gaussnoise.contains("degreeOfNoise")) {
             degree = gaussnoise["degreeOfNoise"].toInt();
@@ -102,7 +102,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         QVariant degree;
         QVariant color;
         if (rgbtone.size() == 0 || rgbtone.size() > 2) {
-            throw wrongNumberOfArgumentsException("rgbtone");
+            throw WrongNumberOfArgumentsException("rgbtone");
         }
         if (rgbtone.contains("degreeOfTone")) {
             degree = rgbtone["degreeOfTone"].toInt();
@@ -144,7 +144,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         QJsonObject kuwahara = data["kuwahara"].toObject();
         QVariant degree;
         if (kuwahara.size() != 1) {
-            throw wrongNumberOfArgumentsException("kuwahara");
+            throw WrongNumberOfArgumentsException("kuwahara");
         }
         degree = getValue(kuwahara, "degreeOfBlur").toInt();
         request.addRequest(std::make_shared<KuwaharaRequest>(degree.toInt()));
@@ -153,7 +153,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
         QJsonObject lightening = data["lightening"].toObject();
         QVariant degree;
         if (lightening.size() != 1) {
-            throw wrongNumberOfArgumentsException("lightening");
+            throw WrongNumberOfArgumentsException("lightening");
         }
         degree = getValue(lightening, "degreeOfLightening").toInt();
         request.addRequest(std::make_shared<LighteningRequest>(degree.toInt()));
@@ -171,7 +171,7 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
             } else if (algo.toString() == "whiteblack") {
                 request.addRequest(std::make_shared<WhiteBlackRequest>());
             } else {
-                throw unrecognisedKeyException();
+                throw UnrecognisedKeyException();
             }
         }
     }
