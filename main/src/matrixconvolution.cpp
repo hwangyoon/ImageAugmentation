@@ -1,11 +1,9 @@
-
 #include "../include/matrixconvolution.h"
 #include <random>
 #include "../include/gaussiannoise.h"
 #include "../include/pixel.h"
 
-static Pixel
-countPixel(const QImage* workingModel, const std::vector<std::vector<double>>& matrix, int x, int y, int cols,
+Pixel MatrixConvolution::countPixel(const QImage* workingModel, const std::vector<std::vector<double>>& matrix, int x, int y, int cols,
            int rows, int offset) {
     Pixel result;
     Pixel adding;
@@ -28,8 +26,9 @@ countPixel(const QImage* workingModel, const std::vector<std::vector<double>>& m
             div += matrix[i][j];
         }
     }
-    if (div < 1)
+    if (div < 1) {
         div = 1;
+    }
     return result/div;
 }
 
@@ -49,58 +48,59 @@ QImage MatrixConvolution::processImage(const QImage* workingModel) {
 std::vector<std::vector<double>> MatrixConvolutionBuilder::getMatrix() {
     std::vector<std::vector<double>> matrix;
     switch (mode_) {
-        case ConvolutionMode::blur_ :
+        case ConvolutionMode::blur:
             matrix = {{1, 1, 1},
                       {1, 1, 1},
                       {1, 1, 1}};
             break;
-        case ConvolutionMode::sharpen_ :
+        case ConvolutionMode::sharpen:
             matrix = {{0,  -1, 0},
                       {-1, 5,  -1},
                       {0,  -1, 0}};
             break;
-        case ConvolutionMode::embross_ :
+        case ConvolutionMode::embross:
             matrix = {{-2, -1, 0},
                       {-1, 1,  1},
                       {0,  1,  2}};
             break;
-        case ConvolutionMode::negative_ :
+        case ConvolutionMode::negative:
             matrix = {{-1}};
             offset_ = 256;
             break;
-        case ConvolutionMode::light_blur_ :
+        case ConvolutionMode::lightBlur:
             matrix = {{1, 1, 0},
                       {1, 1, 0},
                       {0, 0, 0}};
             break;
-        case ConvolutionMode::light_sharpen_ :
+        case ConvolutionMode::lightSharpen:
             matrix = {{-1, 0, 0},
                       {0,  2, 0},
                       {0,  0, 0}};
             break;
-        case ConvolutionMode::light_embross_ :
+        case ConvolutionMode::lightEmbross:
             matrix = {{1, 0, 0},
                       {0, 1, 0},
                       {0, 0, -1}};
             break;
-        case ConvolutionMode::gauss_blur_ :
+        case ConvolutionMode::gaussBlur:
             std::random_device rd;
             std::mt19937 gen(rd());
-            std::binomial_distribution<> d(degree_ -1, 0.5);
+            std::binomial_distribution<> d(degree_-1, binom);
 
             matrix.assign(degree_, std::vector<double>(degree_, 0));
-            for (int i = 0; i < 100000; i++) {
+            for (int i = 0; i < maxIter; i++) {
                 int x = d(gen);
                 int y = d(gen);
                 matrix[x][y]++;
             }
-            for (auto& rows : matrix)
-                for (auto& value : rows)
-                    value /= 100000;
+            for (auto& rows : matrix) {
+                for (auto& value : rows) {
+                    value /= maxIter;
+                }
+            }
     }
     return matrix;
 }
-
 
 MatrixConvolutionBuilder MatrixConvolutionBuilder::setWorkingMode(ConvolutionMode mode) {
     mode_ = mode;
@@ -112,10 +112,9 @@ MatrixConvolutionBuilder MatrixConvolutionBuilder::setWorkingDegree(int degree) 
     return *this;
 }
 
-
 MatrixConvolution MatrixConvolutionBuilder::build() {
-    if(this->degree_ < 0 || this->degree_ > 30) {
-        throw std::invalid_argument("Invalid input: please set field in 0...30");
+    if(this->degree_ < 0 || this->degree_ > this->maxDegree) {
+        throw std::invalid_argument("Invalid input: please set field in 0...70");
     }
 
     auto* algo = new MatrixConvolution();
