@@ -1,5 +1,6 @@
 #ifndef PIXEL_H
 #define PIXEL_H
+
 #include <QRgb>
 
 
@@ -16,9 +17,14 @@ struct Pixel {
     Pixel(long long red, long long green, long long blue)
             : red(red), green(green), blue(blue) {}
 
+    Pixel(double red, double green, double blue)
+            : red(red), green(green), blue(blue) {}
+
     explicit Pixel(QRgb colour)
             : red(qRed(colour)), green(qGreen(colour)), blue(qBlue(colour)) {}
+
     Pixel(int power, bool mono);
+
     Pixel& operator+=(const Pixel& other) {
         red += other.red;
         green += other.green;
@@ -33,12 +39,22 @@ struct Pixel {
         return *this;
     }
 
-    Pixel& operator/=(int x) {
+    template<class T>
+    Pixel& operator/=(T x) {
         red /= x;
         green /= x;
         blue /= x;
         return *this;
     }
+
+    template<class T>
+    Pixel& operator*=(T x) {
+        red *= x;
+        green *= x;
+        blue *= x;
+        return *this;
+    }
+
     Pixel powSquare(const Pixel& other) {
         red += other.red * other.red;
         green += other.green * other.green;
@@ -50,11 +66,13 @@ struct Pixel {
         return Pixel(red - other.red, green - other.green, blue - other.blue);
     }
 
-    Pixel operator*(int x) const {
+    template<class T>
+    Pixel operator*(T x) const {
         return Pixel(red * x, green * x, blue * x);
     }
 
-    Pixel operator/(int x) const {
+    template<class T>
+    Pixel operator/(T x) const {
         return Pixel(red / x, green / x, blue / x);
     }
 
@@ -63,10 +81,10 @@ struct Pixel {
     }
 
     Pixel getSquare() const {
-       return Pixel(red * red, green * green, blue * blue);
-   }
+        return Pixel(red * red, green * green, blue * blue);
+    }
 
-     QRgb getRgb() {
+    QRgb getRgb() {
         if (red > 255)
             red = 255;
         if (red < 0)
@@ -85,32 +103,38 @@ struct Pixel {
         return qRgb(red, green, blue);
     }
 
-     QRgb getRgbWithoutShift() const {
+    QRgb getRgbWithoutShift() const {
         return qRgb(red, green, blue);
     }
-     long long getSum() const {
-         return red + green + blue;
-     }
+
+    long long getSum() const {
+        return red + green + blue;
+    }
+
     Pixel round() const {
         int redRound, greenRound, blueRound;
         if (255 - red > red) {
             redRound = 0;
-        } else {
+        }
+        else {
             redRound = 255;
         }
 
         if (255 - green > green) {
             greenRound = 0;
-        } else {
+        }
+        else {
             greenRound = 255;
         }
         if (255 - blue > blue) {
             blueRound = 0;
-        } else {
+        }
+        else {
             blueRound = 255;
         }
         return Pixel(redRound, greenRound, blueRound);
     }
 
 };
+
 #endif // PIXEL_H
