@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include "request.h"
 #include "configfileexceptions.h"
+#include "enumconvolution.h"
 class JsonParser {
 public:
     JsonParser() = default;

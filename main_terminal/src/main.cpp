@@ -77,6 +77,7 @@ void addNotDisabledAlgorithms(const QCommandLineParser& parser, GlobalRequest& r
     }
     if (!disabledValues.contains("gaussnoise")) {
         request.addRequest(std::make_shared<GaussianNoiseRequest>());
+        request.addRequest(std::make_shared<GaussianNoiseRequest>(40, true));
     }
     if (!disabledValues.contains("hflip")) {
         request.addRequest(std::make_shared<FlipHRequest>());
@@ -88,19 +89,30 @@ void addNotDisabledAlgorithms(const QCommandLineParser& parser, GlobalRequest& r
         request.addRequest(std::make_shared<WhiteBlackRequest>());
     }
     if (!disabledValues.contains("rotate90")) {
-        request.addRequest(std::make_shared<Rotate90Request>());
+        request.addRequest(std::make_shared<Rotate90Request>(CLOCKWISE90));
+        request.addRequest(std::make_shared<Rotate90Request>(COUNTERCLOCKWISE90));
     }
     if (!disabledValues.contains("rotate45")) {
-        request.addRequest(std::make_shared<Rotate45Request>());
+        request.addRequest(std::make_shared<Rotate45Request>(CLOCKWISE45));
+        request.addRequest(std::make_shared<Rotate45Request>(COUNTERCLOCKWISE45));
     }
     if (!disabledValues.contains("lightening")) {
         request.addRequest(std::make_shared<LighteningRequest>());
     }
-    if (!disabledValues.contains("rgbtone")) {
-        request.addRequest(std::make_shared<RGBToneRequest>());
-    }
     if (!disabledValues.contains("convolution")) {
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>());
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, blur));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, negative));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, sharpen));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, embross));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, lightBlur));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, lightSharpen));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, lightEmbross));
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, gaussBlur));
+    }
+    if (!disabledValues.contains("rgbtone")) {
+        request.addRequest(std::make_shared<RGBToneRequest>(50, RED));
+        request.addRequest(std::make_shared<RGBToneRequest>(50, GREEN));
+        request.addRequest(std::make_shared<RGBToneRequest>(50, BLUE));
     }
 }
 
@@ -134,6 +146,14 @@ int main(int argc, char *argv[]) {
                                      "Specify format of output images: png/jpg/gif/bmp/dib",
                                      "format");
     parser.addOption(formatOption);
+    //set option that will allow user to define maximum number of images made
+    QCommandLineOption limitOption(QStringList() << "l" << "limit",
+                                     "Specify maximum number of images made (default 20)", "number");
+    parser.addOption(limitOption);
+    //set option that will allow user to define possible depths of overlay
+    QCommandLineOption depthOption(QStringList() << "o" << "overlay",
+                                     "Specify possible depths of overlay (default 1)", "number");
+    parser.addOption(depthOption);
 
     //addPositionalArgument(name, description)
     parser.addPositionalArgument("source", "Source file.");
@@ -174,6 +194,14 @@ int main(int argc, char *argv[]) {
             const QString fileFormat = parser.value(formatOption);
             request.setFileFormat(fileFormat);
         }
+        if (parser.isSet(depthOption)) {
+            const QStringList depthValues = parser.values(depthOption);
+            std::vector<int32_t> allDepths;
+            for (auto depth : depthValues) {
+                allDepths.push_back(depth.toInt());
+            }
+            request.setDepthOfOverlay(allDepths);
+        }
         AlgorithmManager m;
         m.processRequests(request);
         return 0;
@@ -184,6 +212,18 @@ int main(int argc, char *argv[]) {
     if (parser.isSet(formatOption)) {
         const QString fileFormat = parser.value(formatOption);
         request.setFileFormat(fileFormat);
+    }
+    if (parser.isSet(limitOption)) {
+        const QString limit = parser.value(limitOption);
+        request.setLimitOfPictures(limit.toInt());
+    }
+    if (parser.isSet(depthOption)) {
+        const QStringList depthValues = parser.values(depthOption);
+        std::vector<int32_t> allDepths;
+        for (auto depth : depthValues) {
+            allDepths.push_back(depth.toInt());
+        }
+        request.setDepthOfOverlay(allDepths);
     }
     if (!checkDisabledOptionValueCorrectness(parser)) {
         parser.showHelp(1);

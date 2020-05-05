@@ -18,6 +18,7 @@ ImageWriter::ImageWriter() {
     algoNames[light] = "lightening";
     algoNames[rgb] = "rgb";
     algoNames[convolution] = "matrixconvolution";
+    algoNames[combined] = "combined";
 }
 
 void ImageWriter::countFileNames(QDir directory,
@@ -56,8 +57,10 @@ void ImageWriter::saveToDirectory(QDir pathTo_,
     for (auto i : images) {
         QString algoName = algoNames[i.second];
         if (fileNameNumber.find(algoName) != fileNameNumber.end()) {
-            algoName += ("_" + QString::number(fileNameNumber[algoName] + 1) + ".");
+            fileNameNumber[algoName] = fileNameNumber[algoName] + 1;
+            algoName += ("_" + QString::number(fileNameNumber[algoName]) + ".");
         } else {
+            fileNameNumber[algoName] = 1;
             algoName += ("_" + QString::number(1) + ".");
         }
         i.first->save(pathTo_.absolutePath() + "/" + algoName + format);

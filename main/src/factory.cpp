@@ -103,10 +103,20 @@ std::unique_ptr<Algorithm> Factory::getAlgo(std::shared_ptr<Request> r) {
     }
     if (r->type == rotate90) {
         Rotate90Builder builder;
+        std::shared_ptr<Rotate90Request> ptr =
+                std::static_pointer_cast<Rotate90Request> (r);
+        if (ptr->isSetDirection) {
+            builder.setDirection(ptr->d);
+        }
         return std::make_unique<Rotate90>(builder.build());
     }
     if (r->type == rotate45) {
         Rotate45Builder builder;
+        std::shared_ptr<Rotate45Request> ptr =
+                std::static_pointer_cast<Rotate45Request> (r);
+        if (ptr->isSetdirection45) {
+            builder.setDirection(ptr->d);
+        }
         return std::make_unique<Rotate45>(builder.build());
     }
 }

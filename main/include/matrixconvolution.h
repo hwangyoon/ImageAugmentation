@@ -22,7 +22,7 @@ private:
 
 class MatrixConvolutionBuilder {
 private:
-    ConvolutionMode mode_ = ConvolutionMode::gaussBlur;
+    ConvolutionMode mode_ = ConvolutionMode::blur;
     int offset_ = 0;
     int32_t degree_ = 30;
     const int32_t maxDegree = 70;
