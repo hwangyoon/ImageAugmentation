@@ -78,7 +78,8 @@ HEADERS += \
     main/include/dithering.h \
     main/include/pixel.h \
     main/include/matrixconvolution.h \
-    main/include/enumconvolution.h
+    main/include/enumconvolution.h \
+    main/include/randomcrop.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -95,7 +96,8 @@ SOURCES += \
     main/src/lightening.cpp \
     main/src/gaussiannoise.cpp \
     main/src/dithering.cpp \
-    main/src/matrixconvolution.cpp
+    main/src/matrixconvolution.cpp \
+    main/src/randomcrop.cpp
 
 RESOURCES += \
     resource.qrc
