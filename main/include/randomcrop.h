@@ -4,29 +4,25 @@
 #include "algo.h"
 #include <QVariant>
 #include <exception>
-class randomCrop: public Algorithm {
+#include <random>
+class RandomCrop : public Algorithm {
 private:
-    int32_t upperLeftXInPercent, upperLeftYInPercent;//coordinates in percent of upper left corner
-    int32_t downRightXInPercent, downRightYInPercent;//width and height in percent of cropping piece
-    randomCrop() = default;
+    int32_t widthInPercent, heightInPercent;
+    RandomCrop() = default;
 public:
     QImage processImage(const QImage *workingModel);
-    friend class randomCropBuilder;
+    friend class RandomCropBuilder;
 };
 
-class randomCropBuilder {
+class RandomCropBuilder {
 private:
-    QVariant upperLeftXInPercent, upperLeftYInPercent;//coordinates in percent of upper left corner
-    QVariant downRightXInPercent, downRightYInPercent;//width and height in percent of cropping piece
-    const int32_t DEFAULT_upperLeftXInPercent = 40, DEFAULT_upperLeftYInPercent = 40;
-    const int32_t DEFAULT_downRightXInPercent = 70, DEFAULT_downRightYInPercent = 70;
+    QVariant widthInPercent, heightInPercent;
+    const int32_t DEFAULT_widthInPercent = 40, DEFAULT_heightInPercent = 70;
 public:
-    randomCropBuilder() = default;
-    randomCropBuilder setUpperLeftXInPercent(int upperLeftXInPercent);
-    randomCropBuilder setUpperLeftYInPercent(int upperLeftYInPercent);
-    randomCropBuilder setDownRightXInPercent(int downRightXInPercent);
-    randomCropBuilder setDownRightYInPercent(int downRightYInPercent);
-    randomCrop build();
+    RandomCropBuilder() = default;
+    RandomCropBuilder setUpperLeftXInPercent(int widthInPercent);
+    RandomCropBuilder setUpperLeftYInPercent(int heightInPercent);
+    RandomCrop build();
 };
 
 #endif // RANDOMCROP_H
