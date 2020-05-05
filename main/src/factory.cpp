@@ -77,6 +77,18 @@ std::unique_ptr<Algorithm> Factory::getAlgo(std::shared_ptr<Request> r) {
         }
         return std::make_unique<RGBTone>(builder.build());
     }
+    if (r->type == convolution) {
+        MatrixConvolutionBuilder builder;
+        std::shared_ptr<MatrixConvolutionRequest> ptr =
+                std::static_pointer_cast<MatrixConvolutionRequest> (r);
+        if (ptr->isSetWorkingDegree) {
+            builder.setWorkingDegree(ptr->degree);
+        }
+        if (ptr->isSetWorkingMode) {
+            builder.setWorkingMode(ptr->mode);
+        }
+        return std::make_unique<MatrixConvolution>(builder.build());
+    }
     if (r->type == hflip) {
         HorizontalFlipBuilder builder;
         return std::make_unique<HorizontalFlip>(builder.build());

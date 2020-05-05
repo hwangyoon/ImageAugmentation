@@ -74,6 +74,46 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
                                                           downRightXInPercent,
                                                           downRightYInPercent));
     }
+    if (data.contains("convolution")) {
+        QJsonObject convolution = data["convolution"].toObject();
+        QVariant degree;
+        QVariant mode;
+        if (convolution.contains("degree")) {
+            degree = convolution["degree"].toInt();
+        }
+        if (convolution.contains("convolutionMode")) {
+            mode = convolution["convolutionMode"].toString();
+        }
+        auto req = std::make_shared<MatrixConvolutionRequest>();
+        if (!degree.isNull()) {
+            req->setWorkingDegree(degree.toInt());
+        }
+        if (!mode.isNull()) {
+            QString mode_ = mode.toString();
+            if (mode_ == "blur") {
+                req->setWorkingMode(blur);
+            } else if (mode_ == "negative") {
+                 req->setWorkingMode(negative);
+            } else if (mode_ == "negative") {
+                req->setWorkingMode(negative);
+            } else if (mode_ == "sharpen") {
+                req->setWorkingMode(sharpen);
+            } else if (mode_ == "embross") {
+                req->setWorkingMode(embross);
+            } else if (mode_ == "lightBlur") {
+                req->setWorkingMode(lightBlur);
+            } else if (mode_ == "lightSharpen") {
+                req->setWorkingMode(lightSharpen);
+            } else if (mode_ == "lightEmbross") {
+                req->setWorkingMode(lightEmbross);
+            } else if (mode_ == "gaussBlur") {
+                req->setWorkingMode(gaussBlur);
+            } else {
+                throw WrongValueException("convolutionMode");
+            }
+        }
+        request.addRequest(req);
+    }
     if (data.contains("gaussiannoise")) {
         QJsonObject gaussnoise = data["gaussiannoise"].toObject();
         QVariant degree;

@@ -26,9 +26,9 @@ QTextStream cout(stdout);
 QTextStream cin(stdin);
 
 std::set<QString> algoNames{"crop", "dithering", "kuwahara",
-                                      "gaussnoise", "hflip", "vflip",
-                                      "whiteblack", "rotate90", "lightening",
-                                      "rgbtone", "rotate45"};
+                            "gaussnoise", "hflip", "vflip",
+                            "whiteblack", "rotate90", "lightening",
+                            "rgbtone", "rotate45", "convolution"};
 
 bool checkPositionalArgumentsCorrectness(const QCommandLineParser& parser) {
     //get all positionalArguments in a list
@@ -42,12 +42,6 @@ bool checkPositionalArgumentsCorrectness(const QCommandLineParser& parser) {
     QFileInfo source(args[0]);
     if (!source.exists()) {
         fprintf(stderr, "%s\n", qPrintable("Error: Invalid source file/directory"));
-        return false;
-    }
-
-    QFileInfo destination(args[1]);
-    if (!destination.exists()) {
-        fprintf(stderr, "%s\n", qPrintable("Error: Invalid destination directory."));
         return false;
     }
     return true;
@@ -105,6 +99,9 @@ void addNotDisabledAlgorithms(const QCommandLineParser& parser, GlobalRequest& r
     if (!disabledValues.contains("rgbtone")) {
         request.addRequest(std::make_shared<RGBToneRequest>());
     }
+    if (!disabledValues.contains("convolution")) {
+        request.addRequest(std::make_shared<MatrixConvolutionRequest>());
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -149,7 +146,7 @@ int main(int argc, char *argv[]) {
         //qPrintable(str) returns str as a const char*
         fprintf(stdout, "%s\n", qPrintable("crop | hflip | vflip | rotate90 | rotate45 |"
                                            "dithering | gaussnoise | kuwahara | lightening |"
-                                           "rgbtone | whiteblack"));
+                                           "rgbtone | whiteblack | convolution"));
         return 0;
     }
 

@@ -10,7 +10,7 @@ class AlgorithmManager {
 public:
     AlgorithmManager() {}
     void processRequests(GlobalRequest r);
-    //return preview picture or throws an exception if source picture is invalid
+    //return preview picture or throw an exception if source picture is invalid
     QImage preview(GlobalRequest r);
 private:
     Factory f;

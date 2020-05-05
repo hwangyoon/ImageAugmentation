@@ -17,6 +17,7 @@ ImageWriter::ImageWriter() {
     algoNames[rotate45] = "rotate45";
     algoNames[light] = "lightening";
     algoNames[rgb] = "rgb";
+    algoNames[convolution] = "matrixconvolution";
 }
 
 void ImageWriter::countFileNames(QDir directory,
@@ -47,6 +48,10 @@ void ImageWriter::saveToDirectory(QDir pathTo_,
                                     std::vector<std::pair<std::shared_ptr<QImage>, int>> images,
                                     QString format) {
     QMap<QString, int> fileNameNumber;
+    if (!pathTo_.exists()) {
+        QString filePath = pathTo_.absolutePath();
+        QDir().mkdir(filePath);
+    }
     countFileNames(pathTo_, fileNameNumber);
     for (auto i : images) {
         QString algoName = algoNames[i.second];

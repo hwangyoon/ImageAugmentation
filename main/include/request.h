@@ -5,7 +5,9 @@
 #include "rotate90.h"
 #include "rotate45.h"
 #include "rgbtone.h"
-enum algoType{crop, vflip, hflip, rotate90, rotate45, dithering, gaussiannoise, kuwahara, light, rgb, whiteblack};
+#include "matrixconvolution.h"
+enum algoType{crop, vflip, hflip, rotate90, rotate45, dithering,
+              gaussiannoise, kuwahara, light, rgb, whiteblack, convolution};
 
 class Request {
 public:
@@ -119,6 +121,23 @@ public:
 class WhiteBlackRequest : public Request {
 public:
     WhiteBlackRequest() : Request(whiteblack) {}
+};
+
+class MatrixConvolutionRequest : public Request {
+public:
+    MatrixConvolutionRequest() : Request(convolution) {}
+    void setWorkingMode(ConvolutionMode mode_) {
+        mode = mode_;
+        isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    ConvolutionMode mode;
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
 };
 
 class GaussianNoiseRequest : public Request {
