@@ -36,6 +36,19 @@ test_conf {
     TARGET = test_image
 }
 
+
+#gui_conf {
+#    SOURCES += \
+#                guidir/mainwindow/mainwindow.cpp \
+#                guidir/main.cpp \
+#                guidir/guicontroller/guicontroller.cpp
+#    HEADERS += guidir/mainwindow/mainwindow.h \
+#               guidir/guicontroller/guicontroller.h
+#    FORMS += \
+#        guidir/mainwindow/mainwindow.ui
+#    TARGET = gui
+#}
+
 terminal_conf {
     SOURCES += main_terminal/src/main.cpp
     TARGET = image_augmentation_terminal
