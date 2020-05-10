@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     view_algo();
     QString info = "Привет ^^ \nКак пользоваться этим приложением?.. (мотать вниз для ответа) \n\
-                     - Чтобы загрузить картику надо ввести в первое поле адрес загружаемой картинки и нажать на кнопку LOAD \n\
+                     - Чтобы загрузить картику надо ввести в первое поле адрес загружаемой директории(для загрузки всех изображений из директории) или ничего не вводить(для загрузки одного изображения) и нажать на кнопку LOAD \n\
                      - Чтобы начать обработку надо ввести во второе поле место для сохранения и нажать на кнопку PROCESS \n\
                      - Чтобы обработка не была пустым копированием надо выбрать алгоритмы в списке справа\
 (то, как они будут выглядеть можно посмотреть, нажав на кнопку PREVIEW)";
@@ -36,19 +36,22 @@ QString MainWindow::getFileName()
 void MainWindow::on_pushButton_load_clicked()
 {
     QTextEdit *text_path_in = ui->textEdit_path_in;
-    QString path_in = text_path_in->toPlainText();
+    QString path_in_text = text_path_in->toPlainText();
     //text_path_in->setText("");
     // Тут надо path передать как путь Controller'у, он даст QImage
     // Забили на это, сами загрузим
-    if (path_in.isEmpty())
-        path_in = getFileName();
+    QString path_in;
+    if (path_in_text.isEmpty()) {
+        path_in_text = getFileName();
+        path_in = path_in_text;
+    }
     else
         path_in = "samples/animal.jpg";
     QLabel *label = ui->label_image;
     QPixmap *p=new QPixmap(path_in);
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
-    controller.save_path_in(path_in);
+    controller.save_path_in(path_in_text);
     //text_path_in->setText("DONE");
 }
 
