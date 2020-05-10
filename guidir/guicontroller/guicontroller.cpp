@@ -38,15 +38,15 @@ void GuiController::make_request(QStringList algo_list)
     foreach (QString algo, algo_list) {
         std::shared_ptr<Request> request_ = get_request_from_str(algo);
         if (request_ != nullptr)
-            request.add_request(request_);
+            request.addRequest(request_);
     }
-    manager.process_requests(request);
+    manager.processRequests(request);
 }
 QImage GuiController::make_request_preview(QStringList algo_list)
 {
     foreach (QString algo, algo_list) {
         std::shared_ptr<Request> request_ = get_request_from_str(algo);
-        request.add_request(request_);
+        request.addRequest(request_);
     }
 
     return manager.preview(request);
@@ -54,10 +54,10 @@ QImage GuiController::make_request_preview(QStringList algo_list)
 
 void GuiController::save_path_in(QString new_path_in)
 {
-    request.set_load_directory(new_path_in);
+    request.setLoadDirectoryOrFile(new_path_in);
 }
 
 void GuiController::save_path_to(QString new_path_to)
 {
-    request.set_save_directory(new_path_to);
+    request.setSaveDirectory(new_path_to);
 }

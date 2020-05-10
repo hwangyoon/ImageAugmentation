@@ -39,23 +39,24 @@ test_conf {
 terminal_conf {
     SOURCES += main_terminal/src/main.cpp
     TARGET = image_augmentation_terminal
-} else {
-    gui_conf {
-        SOURCES += \
-                    guidir/mainwindow/mainwindow.cpp \
-                    guidir/main.cpp \
-                    guidir/guicontroller/guicontroller.cpp
-        HEADERS += guidir/mainwindow/mainwindow.h \
-                   guidir/guicontroller/guicontroller.h
-        FORMS += \
-            guidir/mainwindow/mainwindow.ui
-        TARGET = gui
-    } else {
-        SOURCES += \
-            main/src/main.cpp
-        TARGET = image_augmentation
-    }
 }
+gui_conf {
+    SOURCES += \
+        guidir/mainwindow/mainwindow.cpp \
+        guidir/main.cpp \
+        guidir/guicontroller/guicontroller.cpp
+    HEADERS += \
+        guidir/mainwindow/mainwindow.h \
+        guidir/guicontroller/guicontroller.h
+    FORMS += \
+        guidir/mainwindow/mainwindow.ui
+    TARGET = gui
+} else {
+    SOURCES += \
+        main/src/main.cpp
+    TARGET = image_augmentation
+}
+
 
 commands_conf {
     SOURCES += \
@@ -102,6 +103,7 @@ SOURCES += \
     main/src/rotate45.cpp \
     main/src/rotate90.cpp \
     main/src/imagewriter.cpp \
+    main/src/imageloader.cpp \
     main/src/rgbtone.cpp \
     main/src/whiteblack.cpp \
     main/src/kuwahara.cpp \

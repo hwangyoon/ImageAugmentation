@@ -34,6 +34,7 @@ private:
     QList<QListWidgetItem *> process_list(QListWidget &list);
     GuiController controller;
     QStringList make_txt_list(QList<QListWidgetItem*> list);
+    QString getFileName();
 };
 
 #endif // MAINWINDOW_H
