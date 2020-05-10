@@ -8,6 +8,7 @@ Cli::~Cli() {
     delete limitOption;
     delete depthOption;
 }
+
 void Cli::process(QCoreApplication& app) {
     //description that will be shown with -help option
     parser.setApplicationDescription("Application options description table");
@@ -147,7 +148,7 @@ bool Cli::checkDisabledOptionValueCorrectness() {
     const QStringList disabledValues = parser.values(*disableOption);
     for (auto algorithm : disabledValues) {
         if (algoNames.find(algorithm) == algoNames.end()) {
-            fprintf(stderr, "%s\n", qPrintable("Wrong option value" + algorithm));
+            fprintf(stderr, "%s\n", qPrintable("Wrong option value " + algorithm));
             return false;
         }
     }
