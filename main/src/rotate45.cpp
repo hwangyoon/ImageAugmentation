@@ -16,7 +16,13 @@ QImage Rotate45::processImage(const QImage *workingModel) {
             }
         }
     }
-    blur(rotatedPicture, QPoint(rows, 0), QPoint(cols + rows, cols), QPoint(cols, cols + rows), QPoint(0, rows));
+    if (direct == CLOCKWISE45) {
+         blur(rotatedPicture, QPoint(rows, 0), QPoint(cols + rows, cols),
+              QPoint(cols, cols + rows), QPoint(0, rows));
+    } else {
+         blur(rotatedPicture, QPoint(cols, 0), QPoint(cols + rows, rows),
+              QPoint(rows, cols + rows), QPoint(0, cols));
+    }
     return rotatedPicture;
 }
 

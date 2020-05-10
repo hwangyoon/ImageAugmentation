@@ -5,7 +5,10 @@
 #include "rotate90.h"
 #include "rotate45.h"
 #include "rgbtone.h"
-enum algoType{crop, vflip, hflip, rotate90, rotate45, dithering, gaussiannoise, kuwahara, light, rgb, whiteblack};
+#include "matrixconvolution.h"
+enum algoType{crop, vflip, hflip, rotate90, rotate45, dithering,
+              gaussiannoise, kuwahara, light, rgb, whiteblack,
+              convolution, combined};
 
 class Request {
 public:
@@ -121,6 +124,28 @@ public:
     WhiteBlackRequest() : Request(whiteblack) {}
 };
 
+class MatrixConvolutionRequest : public Request {
+public:
+    MatrixConvolutionRequest() : Request(convolution) {}
+    MatrixConvolutionRequest(int32_t degree_, ConvolutionMode mode_) :
+                                        Request(convolution), degree(degree_), mode(mode_) {
+        isSetWorkingDegree = true;
+        isSetWorkingMode = true;
+    }
+    void setWorkingMode(ConvolutionMode mode_) {
+        mode = mode_;
+        isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    ConvolutionMode mode;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
 class GaussianNoiseRequest : public Request {
 public:
     GaussianNoiseRequest(int32_t degreeOfNoise_, bool mono_) : Request(gaussiannoise),
@@ -148,6 +173,18 @@ public:
     GlobalRequest(QFileInfo pathFrom_, QFileInfo pathTo_) : pathFrom(pathFrom_), pathTo(pathTo_) {}
     GlobalRequest() = default;
     ~GlobalRequest() = default;
+    void setLimitOfPictures(int32_t limit_) {
+        limitOfPictures = limit_;
+    }
+    void setDepthOfOverlay(std::vector<int32_t> depth) {
+        depthOfOverlay = depth;
+    }
+    std::vector<int32_t> getDepthsOfOverlay() {
+        return depthOfOverlay;
+    }
+    int32_t getLimitOfPictures() {
+        return limitOfPictures;
+    }
     void setLoadDirectoryOrFile(QFileInfo pathFrom_) {
         pathFrom = pathFrom_;
     }
@@ -177,6 +214,8 @@ public:
     }
 
 private:
+    std::vector<int32_t> depthOfOverlay = {1};
+    int32_t limitOfPictures = 20;
     QFileInfo pathFrom;
     QFileInfo pathTo;
     QString fileFormat = "jpg";
