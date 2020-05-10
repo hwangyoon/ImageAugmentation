@@ -79,7 +79,9 @@ HEADERS += \
     main/include/pixel.h \
     main/include/matrixconvolution.h \
     main/include/enumconvolution.h \
-    main/include/randomcrop.h
+    main/include/jsonfileparser.h \
+    main/include/imageloader.h \
+    main/include/configfileexceptions.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -97,7 +99,8 @@ SOURCES += \
     main/src/gaussiannoise.cpp \
     main/src/dithering.cpp \
     main/src/matrixconvolution.cpp \
-    main/src/randomcrop.cpp
+    main/src/jsonfileparser.cpp \
+    main/src/imageloader.cpp
 
 RESOURCES += \
     resource.qrc
