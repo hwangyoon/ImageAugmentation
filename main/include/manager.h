@@ -21,6 +21,8 @@ private:
     std::vector<QString> getCombinationsOfAlgorithms(int32_t limit,
                                                      std::vector<int32_t> &depths,
                                                      int32_t numberOfAlgorithms);
+    void appendNewCombination(std::vector<QString>& allCombinations, int32_t depth,
+                              int32_t numberOfAlgorithms, int32_t current, QString overlay);
     ImageWriter imgwriter;
 };
 

@@ -9,8 +9,8 @@ void AlgorithmManager::processRequests(GlobalRequest r) {
     }
 }
 
-static void appendNewCombination(std::vector<QString>& allCombinations, int32_t depth,
-                                 int32_t numberOfAlgorithms, int32_t current, QString overlay) {
+void AlgorithmManager::appendNewCombination(std::vector<QString>& allCombinations, int32_t depth,
+                                            int32_t numberOfAlgorithms, int32_t current, QString overlay) {
     if (depth - current > numberOfAlgorithms - overlay.length()) {
         return;
     }
@@ -25,7 +25,7 @@ static void appendNewCombination(std::vector<QString>& allCombinations, int32_t 
 }
 
 std::vector<QString> AlgorithmManager::getCombinationsOfAlgorithms(int32_t limit,
-                                                   std::vector<int32_t> &depths,
+                                                   std::vector<int32_t>& depths,
                                                    int32_t numberOfAlgorithms) {
     std::vector<QString> allPossibleAlgorithms;
     for (auto depth : depths) {
@@ -33,8 +33,8 @@ std::vector<QString> AlgorithmManager::getCombinationsOfAlgorithms(int32_t limit
             appendNewCombination(allPossibleAlgorithms, depth, numberOfAlgorithms, 0, "");
         }
     }
-    std::random_device rd;
-    std::mt19937 g(rd());
+    std::random_device random;
+    std::mt19937 g(random());
     std::shuffle(allPossibleAlgorithms.begin(), allPossibleAlgorithms.end(), g);
     if (allPossibleAlgorithms.size() > limit) {
         allPossibleAlgorithms.resize(limit);
@@ -42,17 +42,17 @@ std::vector<QString> AlgorithmManager::getCombinationsOfAlgorithms(int32_t limit
     return allPossibleAlgorithms;
 }
 
-void AlgorithmManager::processSingleImage(GlobalRequest r) {
+void AlgorithmManager::processSingleImage(GlobalRequest request) {
     std::vector<std::pair<std::shared_ptr<QImage>, int>> images;
-    QString fileName = r.getLoadDirectoryOrFile().absoluteFilePath();
+    QString fileName = request.getLoadDirectoryOrFile().absoluteFilePath();
     QImage image(fileName);
     if (image.isNull()) {
         fprintf(stderr, "%s\n", qPrintable("Error: unable to process " + fileName));
         return;
     }
-    auto requests = r.getRequests();
-    auto depthsOfOverlay = r.getDepthsOfOverlay();
-    std::vector<QString> algoCombinations = getCombinationsOfAlgorithms(r.getLimitOfPictures(),
+    auto requests = request.getRequests();
+    auto depthsOfOverlay = request.getDepthsOfOverlay();
+    std::vector<QString> algoCombinations = getCombinationsOfAlgorithms(request.getLimitOfPictures(),
                                                                         depthsOfOverlay,
                                                                         requests.size());
     for (auto combination : algoCombinations) {
@@ -74,7 +74,9 @@ void AlgorithmManager::processSingleImage(GlobalRequest r) {
             images.push_back(std::make_pair(picture, combined));
         }
     }
-    imgwriter.saveToDirectory(r.getSaveDirectory().absoluteFilePath(), images, r.getFileFormat());
+    imgwriter.saveToDirectory(request.getSaveDirectory().absoluteFilePath(),
+                              images,
+                              request.getFileFormat());
 }
 
 void AlgorithmManager::processDirectory(GlobalRequest r) {
