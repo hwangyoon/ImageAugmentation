@@ -79,6 +79,7 @@ SOURCES += \
     main/src/rotate45.cpp \
     main/src/rotate90.cpp \
     main/src/imagewriter.cpp \
+    main/src/imageloader.cpp \
     main/src/rgbtone.cpp \
     main/src/whiteblack.cpp \
     main/src/kuwahara.cpp \

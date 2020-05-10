@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,13 +25,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+QString MainWindow::getFileName()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Address Book"), "",
+        tr("JPG (*.jpg);;All Files (*)"));
+    return fileName;
+}
+
 void MainWindow::on_pushButton_load_clicked()
 {
     QTextEdit *text_path_in = ui->textEdit_path_in;
     QString path_in = text_path_in->toPlainText();
-    text_path_in->setText("");
+    //text_path_in->setText("");
     // Тут надо path передать как путь Controller'у, он даст QImage
     // Забили на это, сами загрузим
+    if (path_in.isEmpty())
+        path_in = getFileName();
+    else
+        path_in = "samples/animal.jpg";
     QLabel *label = ui->label_image;
     QPixmap *p=new QPixmap(path_in);
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
