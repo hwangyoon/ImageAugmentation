@@ -6,9 +6,7 @@
 #include "rotate45.h"
 #include "rgbtone.h"
 #include "matrixconvolution.h"
-enum algoType{crop, vflip, hflip, rotate90, rotate45, dithering,
-              gaussiannoise, kuwahara, light, rgb, whiteblack,
-              convolution, combined};
+#include "algotype.h"
 
 class Request {
 public:
@@ -124,16 +122,13 @@ public:
     WhiteBlackRequest() : Request(whiteblack) {}
 };
 
-class MatrixConvolutionRequest : public Request {
+class BlurConvolutionRequest : public Request {
 public:
-    MatrixConvolutionRequest() : Request(convolution) {}
-    MatrixConvolutionRequest(int32_t degree_, ConvolutionMode mode_) :
-                                        Request(convolution), degree(degree_), mode(mode_) {
-        isSetWorkingDegree = true;
+    BlurConvolutionRequest() : Request(blurConvolution) {
         isSetWorkingMode = true;
     }
-    void setWorkingMode(ConvolutionMode mode_) {
-        mode = mode_;
+    BlurConvolutionRequest(int32_t degree_) : Request(blurConvolution), degree(degree_) {
+        isSetWorkingDegree = true;
         isSetWorkingMode = true;
     }
     void setWorkingDegree(int32_t degree_) {
@@ -141,10 +136,137 @@ public:
         isSetWorkingDegree = true;
     }
     int32_t degree;
-    ConvolutionMode mode;
     bool isSetWorkingMode = false;
     bool isSetWorkingDegree = false;
 };
+
+class NegativeConvolutionRequest : public Request {
+public:
+    NegativeConvolutionRequest() : Request(negativeConvolution) {
+        isSetWorkingMode = true;
+    }
+    NegativeConvolutionRequest(int32_t degree_) : Request(negativeConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
+class SharpenConvolutionRequest : public Request {
+public:
+    SharpenConvolutionRequest() : Request(sharpenConvolution) {
+        isSetWorkingMode = true;
+    }
+    SharpenConvolutionRequest(int32_t degree_) : Request(sharpenConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
+class EmbrossConvolutionRequest : public Request {
+public:
+    EmbrossConvolutionRequest() : Request(embrossConvolution) {
+        isSetWorkingMode = true;
+    }
+    EmbrossConvolutionRequest(int32_t degree_) : Request(embrossConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
+class LightBlurConvolutionRequest : public Request {
+public:
+    LightBlurConvolutionRequest() : Request(lightBlurConvolution) {
+        isSetWorkingMode = true;
+    }
+    LightBlurConvolutionRequest(int32_t degree_) : Request(lightBlurConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
+class LightSharpenConvolutionRequest : public Request {
+public:
+    LightSharpenConvolutionRequest() : Request(lightSharpenConvolution) {
+        isSetWorkingMode = true;
+    }
+    LightSharpenConvolutionRequest(int32_t degree_) : Request(lightSharpenConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
+
+class LightEmbrossConvolutionRequest : public Request {
+public:
+    LightEmbrossConvolutionRequest() : Request(lightEmbrossConvolution) {
+        isSetWorkingMode = true;
+    }
+    LightEmbrossConvolutionRequest(int32_t degree_) : Request(lightEmbrossConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
+class GaussBlurConvolutionRequest : public Request {
+public:
+    GaussBlurConvolutionRequest() : Request(gaussBlurConvolution) {
+        isSetWorkingMode = true;
+    }
+    GaussBlurConvolutionRequest(int32_t degree_) : Request(gaussBlurConvolution), degree(degree_) {
+         isSetWorkingDegree = true;
+         isSetWorkingMode = true;
+    }
+    void setWorkingDegree(int32_t degree_) {
+        degree = degree_;
+        isSetWorkingDegree = true;
+    }
+    int32_t degree;
+    bool isSetWorkingMode = false;
+    bool isSetWorkingDegree = false;
+};
+
 
 class GaussianNoiseRequest : public Request {
 public:
@@ -166,6 +288,21 @@ public:
     bool isSetMono = false;
     int32_t degreeOfNoise;
     bool mono;
+};
+
+class RandomCropRequest : public Request {
+public:
+    RandomCropRequest() : Request(randomcrop) {}
+    RandomCropRequest(int32_t width, int32_t height) : Request(randomcrop),
+                                                       widthInPercent(width),
+                                                       heightInPercent(height) {
+        isSetHeight = true;
+        isSetWidth = true;
+    }
+    int32_t widthInPercent;
+    int32_t heightInPercent;
+    bool isSetHeight = false;
+    bool isSetWidth = false;
 };
 
 class GlobalRequest {
@@ -215,7 +352,7 @@ public:
 
 private:
     std::vector<int32_t> depthOfOverlay = {1};
-    int32_t limitOfPictures = 20;
+    int32_t limitOfPictures = 25;
     QFileInfo pathFrom;
     QFileInfo pathTo;
     QString fileFormat = "jpg";

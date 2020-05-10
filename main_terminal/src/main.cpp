@@ -1,236 +1,27 @@
 #include <iostream>
-#include <set>
-#include <cassert>
-#include <QImage>
-#include <QString>
 #include <QTextStream>
-#include <QCommandLineParser>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
-#include "main/include/jsonfileparser.h"
-#include "main/include/configfileexceptions.h"
-#include "main/include/cropfrommiddle.h"
-#include "main/include/horizontalflip.h"
-#include "main/include/rotate90.h"
-#include "main/include/rotate45.h"
-#include "main/include/verticalflip.h"
-#include "main/include/request.h"
+#include "main/include/cli.h"
 #include "main/include/manager.h"
-#include "main/include/dithering.h"
-#include "main/include/kuwahara.h"
-#include "main/include/rgbtone.h"
-#include <memory>
 
 QTextStream cout(stdout);
 QTextStream cin(stdin);
-
-std::set<QString> algoNames{"crop", "dithering", "kuwahara",
-                            "gaussnoise", "hflip", "vflip",
-                            "whiteblack", "rotate90", "lightening",
-                            "rgbtone", "rotate45", "convolution"};
-
-bool checkPositionalArgumentsCorrectness(const QCommandLineParser& parser) {
-    //get all positionalArguments in a list
-    const QStringList args = parser.positionalArguments();
-
-    if (args.size() != 2) {
-        fprintf(stderr, "%s\n", qPrintable("Error: Must specify source file/directory and destination directory."));
-        return false;
-    }
-
-    QFileInfo source(args[0]);
-    if (!source.exists()) {
-        fprintf(stderr, "%s\n", qPrintable("Error: Invalid source file/directory"));
-        return false;
-    }
-    return true;
-}
-
-bool checkDisabledOptionValueCorrectness(const QCommandLineParser& parser) {
-    QCommandLineOption disableOption(QStringList() << "d" << "disable",
-                                     "Specify the algorithm which won't be used.",
-                                     "algorithm");
-    const QStringList disabledValues = parser.values(disableOption);
-    for (auto algorithm : disabledValues) {
-        if (algoNames.find(algorithm) == algoNames.end()) {
-            fprintf(stderr, "%s\n", qPrintable("Wrong option value"));
-            return false;
-        }
-    }
-    return true;
-}
-
-void addNotDisabledAlgorithms(const QCommandLineParser& parser, GlobalRequest& request) {
-    QCommandLineOption disableOption(QStringList() << "d" << "disable",
-                                     "Specify the algorithm which won't be used.",
-                                     "algorithm");
-    const QStringList disabledValues = parser.values(disableOption);
-    if (!disabledValues.contains("crop")) {
-        request.addRequest(std::make_shared<CropRequest>());
-    }
-    if (!disabledValues.contains("dithering")) {
-        request.addRequest(std::make_shared<DitheringRequest>());
-    }
-    if (!disabledValues.contains("kuwahara")) {
-        request.addRequest(std::make_shared<KuwaharaRequest>());
-    }
-    if (!disabledValues.contains("gaussnoise")) {
-        request.addRequest(std::make_shared<GaussianNoiseRequest>());
-        request.addRequest(std::make_shared<GaussianNoiseRequest>(40, true));
-    }
-    if (!disabledValues.contains("hflip")) {
-        request.addRequest(std::make_shared<FlipHRequest>());
-    }
-    if (!disabledValues.contains("vflip")) {
-        request.addRequest(std::make_shared<FlipVRequest>());
-    }
-    if (!disabledValues.contains("whiteblack")) {
-        request.addRequest(std::make_shared<WhiteBlackRequest>());
-    }
-    if (!disabledValues.contains("rotate90")) {
-        request.addRequest(std::make_shared<Rotate90Request>(CLOCKWISE90));
-        request.addRequest(std::make_shared<Rotate90Request>(COUNTERCLOCKWISE90));
-    }
-    if (!disabledValues.contains("rotate45")) {
-        request.addRequest(std::make_shared<Rotate45Request>(CLOCKWISE45));
-        request.addRequest(std::make_shared<Rotate45Request>(COUNTERCLOCKWISE45));
-    }
-    if (!disabledValues.contains("lightening")) {
-        request.addRequest(std::make_shared<LighteningRequest>());
-    }
-    if (!disabledValues.contains("convolution")) {
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, blur));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, negative));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, sharpen));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, embross));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, lightBlur));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, lightSharpen));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, lightEmbross));
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(30, gaussBlur));
-    }
-    if (!disabledValues.contains("rgbtone")) {
-        request.addRequest(std::make_shared<RGBToneRequest>(50, RED));
-        request.addRequest(std::make_shared<RGBToneRequest>(50, GREEN));
-        request.addRequest(std::make_shared<RGBToneRequest>(50, BLUE));
-    }
-}
 
 int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     QCoreApplication::setApplicationName("ImageAugmentation");
     QCoreApplication::setApplicationVersion("1.0");
-    QCommandLineParser parser;
 
-    //description that will be shown with -help option
-    parser.setApplicationDescription("Application options description table");
-    parser.addHelpOption();
-    parser.addVersionOption();
-
-    //set disableOption(key(s), description, arguments)
-    QCommandLineOption disableOption(QStringList() << "d" << "disable",
-                                     "Specify the algorithm which won't be used.",
-                                     "algorithm");
-    parser.addOption(disableOption);
-    //set config file option
-    QCommandLineOption configOption(QStringList() << "c" << "config",
-                                     "Config file",
-                                     "file");
-    parser.addOption(configOption);
-    //set option that shows names of all possible algorithms
-    QCommandLineOption algorithmsOption(QStringList() << "a" << "algorithms",
-                                     "Possible algorithms");
-    parser.addOption(algorithmsOption);
-    //set option that will allow user to define format of output file
-    QCommandLineOption formatOption(QStringList() << "f" << "format",
-                                     "Specify format of output images: png/jpg/gif/bmp/dib",
-                                     "format");
-    parser.addOption(formatOption);
-    //set option that will allow user to define maximum number of images made
-    QCommandLineOption limitOption(QStringList() << "l" << "limit",
-                                     "Specify maximum number of images made (default 20)", "number");
-    parser.addOption(limitOption);
-    //set option that will allow user to define possible depths of overlay
-    QCommandLineOption depthOption(QStringList() << "o" << "overlay",
-                                     "Specify possible depths of overlay (default 1)", "number");
-    parser.addOption(depthOption);
-
-    //addPositionalArgument(name, description)
-    parser.addPositionalArgument("source", "Source file.");
-    parser.addPositionalArgument("destination", "Destination directory.");
-
+    Cli parser;
     parser.process(app);
-
-    //check if such option was given
-    if (parser.isSet(algorithmsOption)) {
-        //qPrintable(str) returns str as a const char*
-        fprintf(stdout, "%s\n", qPrintable("crop | hflip | vflip | rotate90 | rotate45 |"
-                                           "dithering | gaussnoise | kuwahara | lightening |"
-                                           "rgbtone | whiteblack | convolution"));
+    if (parser.processAlgorithmsOption()) {
         return 0;
     }
+    parser.checkPositionalArgumentsCorrectness();
 
-    if (!checkPositionalArgumentsCorrectness(parser)) {
-        //displays the help information, and exits the application with exit code 1
-        parser.showHelp(1);
-    }
+    GlobalRequest request = parser.getGlobalRequest();
 
-    const QStringList args = parser.positionalArguments();
-
-    GlobalRequest request;
-    if (parser.isSet(configOption)) {
-        QFile file;
-        file.setFileName(parser.value(configOption));
-        JsonParser configFileParser;
-        try {
-            request = configFileParser.getInformationFromConfigFile(file);
-        } catch (std::exception& e) {
-            fprintf(stderr, "%s\n", e.what());
-            parser.showHelp(1);
-        }
-        request.setLoadDirectoryOrFile(QFileInfo(args[0]));
-        request.setSaveDirectory(QFileInfo(args[1]));
-        if (parser.isSet(formatOption)) {
-            const QString fileFormat = parser.value(formatOption);
-            request.setFileFormat(fileFormat);
-        }
-        if (parser.isSet(depthOption)) {
-            const QStringList depthValues = parser.values(depthOption);
-            std::vector<int32_t> allDepths;
-            for (auto depth : depthValues) {
-                allDepths.push_back(depth.toInt());
-            }
-            request.setDepthOfOverlay(allDepths);
-        }
-        AlgorithmManager m;
-        m.processRequests(request);
-        return 0;
-    }
-
-    request.setLoadDirectoryOrFile(QFileInfo(args[0]));
-    request.setSaveDirectory(QFileInfo(args[1]));
-    if (parser.isSet(formatOption)) {
-        const QString fileFormat = parser.value(formatOption);
-        request.setFileFormat(fileFormat);
-    }
-    if (parser.isSet(limitOption)) {
-        const QString limit = parser.value(limitOption);
-        request.setLimitOfPictures(limit.toInt());
-    }
-    if (parser.isSet(depthOption)) {
-        const QStringList depthValues = parser.values(depthOption);
-        std::vector<int32_t> allDepths;
-        for (auto depth : depthValues) {
-            allDepths.push_back(depth.toInt());
-        }
-        request.setDepthOfOverlay(allDepths);
-    }
-    if (!checkDisabledOptionValueCorrectness(parser)) {
-        parser.showHelp(1);
-    }
-    addNotDisabledAlgorithms(parser, request);
-    AlgorithmManager m;
-    m.processRequests(request);
+    AlgorithmManager manager;
+    manager.processRequests(request);
     return 0;
 }
 

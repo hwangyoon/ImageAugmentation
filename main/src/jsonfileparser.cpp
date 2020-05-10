@@ -56,45 +56,55 @@ GlobalRequest JsonParser::getInformationFromConfigFile(QFile& file) {
                                                           downRightXInPercent,
                                                           downRightYInPercent));
     }
+    if (data.contains("randomCrop")) {
+        QJsonObject randomcrop = data["randomCrop"].toObject();
+        int upperLeftXInPercent = getValue(randomcrop, "upperLeftXInPercent").toInt();
+        int upperLeftYInPercent = getValue(randomcrop, "upperLeftYInPercent").toInt();
+        if (randomcrop.size() != 2) {
+            throw WrongNumberOfArgumentsException("randomCrop");
+        }
+        request.addRequest(std::make_shared<RandomCropRequest>(upperLeftXInPercent,
+                                                               upperLeftYInPercent));
+    }
     if (data.contains("blur")) {
         QJsonObject blur_ = data["blur"].toObject();
         int degree = getValue(blur_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, blur));
+        request.addRequest(std::make_shared<BlurConvolutionRequest>(degree));
     }
     if (data.contains("negative")) {
         QJsonObject negative_ = data["negative"].toObject();
         int degree = getValue(negative_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, negative));
+        request.addRequest(std::make_shared<NegativeConvolutionRequest>(degree));
     }
     if (data.contains("sharpen")) {
         QJsonObject sharpen_ = data["sharpen"].toObject();
         int degree = getValue(sharpen_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, sharpen));
+        request.addRequest(std::make_shared<SharpenConvolutionRequest>(degree));
     }
     if (data.contains("embross")) {
         QJsonObject embross_ = data["embross"].toObject();
         int degree = getValue(embross_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, embross));
+        request.addRequest(std::make_shared<EmbrossConvolutionRequest>(degree));
     }
     if (data.contains("lightBlur")) {
         QJsonObject lightBlur_ = data["lightBlur"].toObject();
         int degree = getValue(lightBlur_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, lightBlur));
+        request.addRequest(std::make_shared<LightBlurConvolutionRequest>(degree));
     }
     if (data.contains("lightSharpen")) {
         QJsonObject lightSharpen_ = data["lightSharpen"].toObject();
         int degree = getValue(lightSharpen_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, lightSharpen));
+        request.addRequest(std::make_shared<LightSharpenConvolutionRequest>(degree));
     }
     if (data.contains("lightEmbross")) {
         QJsonObject lightEmbross_ = data["lightEmbross"].toObject();
         int degree = getValue(lightEmbross_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, lightEmbross));
+        request.addRequest(std::make_shared<LightEmbrossConvolutionRequest>(degree));
     }
     if (data.contains("gaussBlur")) {
         QJsonObject gaussBlur_ = data["gaussBlur"].toObject();
         int degree = getValue(gaussBlur_, "degree").toInt();
-        request.addRequest(std::make_shared<MatrixConvolutionRequest>(degree, gaussBlur));
+        request.addRequest(std::make_shared<GaussBlurConvolutionRequest>(degree));
     }
     if (data.contains("gaussiannoise")) {
         QJsonObject gaussnoise = data["gaussiannoise"].toObject();

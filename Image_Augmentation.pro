@@ -81,7 +81,10 @@ HEADERS += \
     main/include/enumconvolution.h \
     main/include/jsonfileparser.h \
     main/include/imageloader.h \
-    main/include/configfileexceptions.h
+    main/include/configfileexceptions.h \
+    main/include/algotype.h \
+    main/include/cli.h \
+    main/include/randomcrop.h
 
 SOURCES += \
     main/src/cropfrommiddle.cpp \
@@ -100,7 +103,9 @@ SOURCES += \
     main/src/dithering.cpp \
     main/src/matrixconvolution.cpp \
     main/src/jsonfileparser.cpp \
-    main/src/imageloader.cpp
+    main/src/imageloader.cpp \
+    main/src/cli.cpp \
+    main/src/randomcrop.cpp
 
 RESOURCES += \
     resource.qrc

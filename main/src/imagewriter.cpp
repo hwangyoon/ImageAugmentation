@@ -17,7 +17,15 @@ ImageWriter::ImageWriter() {
     algoNames[rotate45] = "rotate45";
     algoNames[light] = "lightening";
     algoNames[rgb] = "rgb";
-    algoNames[convolution] = "matrixconvolution";
+    algoNames[blurConvolution] = "blur";
+    algoNames[negativeConvolution] = "negative";
+    algoNames[sharpenConvolution] = "sharpen";
+    algoNames[embrossConvolution] = "embross";
+    algoNames[lightBlurConvolution] = "lightblur";
+    algoNames[lightSharpenConvolution] = "lightsharpen";
+    algoNames[lightEmbrossConvolution] = "lightembross";
+    algoNames[gaussBlurConvolution] = "gaussblur";
+    algoNames[randomcrop] = "randomcrop";
     algoNames[combined] = "combined";
 }
 

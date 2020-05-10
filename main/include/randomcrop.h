@@ -17,7 +17,7 @@ public:
 class RandomCropBuilder {
 private:
     QVariant widthInPercent, heightInPercent;
-    const int32_t DEFAULT_widthInPercent = 40, DEFAULT_heightInPercent = 70;
+    const int32_t DEFAULT_widthInPercent = 20, DEFAULT_heightInPercent = 30;
 public:
     RandomCropBuilder() = default;
     RandomCropBuilder setUpperLeftXInPercent(int widthInPercent);
