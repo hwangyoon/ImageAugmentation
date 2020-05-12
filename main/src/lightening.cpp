@@ -7,10 +7,13 @@ QImage Lightening::processImage(const QImage *workingModel) {
     for (int32_t i = 0; i < cols; i++) {
         for (int32_t j = 0; j < rows; j++) {
             QColor currentColor = workingModel->pixel(QPoint(i, j));
+            /*transformation RGB to HSL*/
             int lightening = currentColor.lightness();
             int hue = currentColor.hslHue();
             int saturation = currentColor.hslSaturation();
             int newLight;
+            /*case the sum of certain lightening component and the degre of lightening is more than 255:
+             * we set the lightening as 255*/
             if (lightening + degreeOfLightening > 255) {
                  newLight = 255;
                } else {

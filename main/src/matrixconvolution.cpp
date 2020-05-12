@@ -3,11 +3,15 @@
 #include "../include/gaussiannoise.h"
 #include "../include/pixel.h"
 
-Pixel MatrixConvolution::countPixel(const QImage* workingModel, const std::vector<std::vector<double>>& matrix, int x, int y, int cols,
-           int rows, int offset) {
+/*method of adding convolution matrix to a pixel*/
+Pixel MatrixConvolution::countPixel(const QImage* workingModel, const std::vector<std::vector<double>>& matrix,
+                                    int x, int y, int cols, int rows, int offset) {
     Pixel result;
+    /*adding on each step*/
     Pixel adding;
+    /*sum of the elems in matrix*/
     double div = 0;
+    /*set the offset for result Pixel*/
     if (offset) {
         result = Pixel(offset, offset, offset);
     }
@@ -15,20 +19,25 @@ Pixel MatrixConvolution::countPixel(const QImage* workingModel, const std::vecto
     int size = matrix.size();
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
+            /*move half of the matrix*/
             int i_tmp = x + i - size / 2, j_tmp = y + j - size / 2;
 
             i_tmp = std::min(std::max(0, i_tmp), cols - 1);
             j_tmp = std::min(std::max(0, j_tmp), rows - 1);
 
             adding = Pixel(workingModel->pixel(QPoint(i_tmp, j_tmp)));
+            /*changing the adding par of the pixel by convolution matrix*/
             adding *= matrix[i][j];
             result += adding;
             div += matrix[i][j];
         }
     }
+    /*in general, rounding down occurs:
+     *  avoid dividing by 0 in the case of a small amount of elements*/
     if (div < 1) {
         div = 1;
     }
+    /*save the brightness*/
     return result/div;
 }
 
@@ -47,6 +56,7 @@ QImage MatrixConvolution::processImage(const QImage* workingModel) {
 
 std::vector<std::vector<double>> MatrixConvolutionBuilder::getMatrix() {
     std::vector<std::vector<double>> matrix;
+    /*choose the constant matrix for convolution*/
     switch (mode_) {
         case ConvolutionMode::blur:
             matrix = {{1, 1, 1},
@@ -86,7 +96,7 @@ std::vector<std::vector<double>> MatrixConvolutionBuilder::getMatrix() {
             std::random_device rd;
             std::mt19937 gen(rd());
             std::binomial_distribution<> d(degree_-1, binom);
-
+            /*compiling a table of normal discrete binomial distributions*/
             matrix.assign(degree_, std::vector<double>(degree_, 0));
             for (int i = 0; i < maxIter; i++) {
                 int x = d(gen);

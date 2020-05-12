@@ -1,5 +1,6 @@
 #include "../include/cropfrommiddle.h"
 QImage CropGivenPiece::processImage(const QImage *workingModel) {
+    /*Converting relative sizes to pixels*/
     int upperLeftX = upperLeftXInPercent * workingModel->width() / 100.0;
     int upperLeftY = upperLeftYInPercent * workingModel->height() / 100.0;
     int width = downRightXInPercent * workingModel->width() / 100.0 - upperLeftX;
@@ -8,6 +9,9 @@ QImage CropGivenPiece::processImage(const QImage *workingModel) {
     QImage croppedImage(width - 1, height - 1, workingModel->format());
     for (int32_t i = 0; i < width - 1; i++) {
         for (int32_t j = 0; j < height - 1; j++) {
+            /*the returned image is filled only with the pixels of the cut-out piece:
+             *  a shift by the user-defined position of the upper left corner relative
+             *  to the overall image size is specified*/
             croppedImage.setPixel(i, j, workingModel->pixel(QPoint(i + upperLeftX, j + upperLeftY)));
         }
     }
@@ -35,6 +39,8 @@ CropGivenPieceBuilder CropGivenPieceBuilder::setDownRightYInPercent(int downRigh
 }
 
 CropGivenPiece CropGivenPieceBuilder::build() {
+    /*counter of the number of specified parameters
+     * - the user must specify either all values ​​or none*/
     int count = 0;
     if(this->upperLeftXInPercent.isNull())
         count++;
@@ -44,6 +50,7 @@ CropGivenPiece CropGivenPieceBuilder::build() {
         count++;
     if(this->downRightYInPercent.isNull())
         count++;
+    /*if the user has not set any parameters, they are set by default*/
     if(count == 4) {
         this->upperLeftXInPercent = this->DEFAULT_upperLeftXInPercent;
         this->upperLeftYInPercent = this->DEFAULT_upperLeftYInPercent;

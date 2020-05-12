@@ -2,7 +2,9 @@
 #ifndef ROTATE90CLOCKWISE_H
 #define ROTATE90CLOCKWISE_H
 #include "algo.h"
+/* the direction of rotate*/
 enum Direction90 {CLOCKWISE90,COUNTERCLOCKWISE90};
+/*the algorithm that rotates the start picture on 90 degrees in choosen diection*/
 class Rotate90: public Algorithm {
 public:
     QImage processImage(const QImage *workingModel);
@@ -12,12 +14,17 @@ private:
    Rotate90() = default;
 };
 
+/*A builder class that implements the phased construction of an algorithm object*/
+
 class Rotate90Builder {
 private:
+    /* by default is clockwise*/
     Direction90 direct;
 public:
     Rotate90Builder();
     Rotate90Builder setDirection(Direction90 d);
+    /*the method that builds the object of algorithm Dithering,
+     *  there are no checks for any parameters, since they are not set*/
     Rotate90 build();
 };
 #endif // ROTATE90CLOCKWISE_H
