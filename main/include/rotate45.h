@@ -3,11 +3,11 @@
 #include "algo.h"
 #include <cmath>
 
-/* the direction of rotate*/
+/* The direction of rotate */
 enum Direction45 {CLOCKWISE45,COUNTERCLOCKWISE45};
-/*algorithm that inscribes the image rotated by 45 degrees into a square
- *  with sides width+height of the start piture
- *  and blurring the corners of this square*/
+/* Algorithm that inscribes the image rotated by 45 degrees into a square
+ * with sides width+height of the start piture
+ * and blurring the corners of this square */
 class Rotate45: public Algorithm {
 public:
     QImage processImage(const QImage *workingModel);
@@ -30,17 +30,16 @@ private:
     Rotate45() = default;
 };
 
-/*A builder class that implements the phased construction of an algorithm object*/
-
+/* A builder class that implements the phased construction of an algorithm object */
 class Rotate45Builder {
 private:
-    /* by default is clockwise*/
+    /* By default is clockwise */
     Direction45 direct;
 public:
     Rotate45Builder();
     Rotate45Builder setDirection(Direction45 d);
-    /*the method that builds the object of algorithm Dithering,
-     *  there are no checks for any parameters, since they are not set*/
+    /* The method that builds the object of algorithm Dithering,
+     * there are no checks for any parameters, since they are not set */
     Rotate45 build();
 };
 #endif // ROTATE45_H

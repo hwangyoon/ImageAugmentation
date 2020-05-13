@@ -1,27 +1,26 @@
-
 #include <random>
 #include "../include/gaussiannoise.h"
 #include "../include/pixel.h"
 
-/*initializig of random*/
+/* Initializig of random */
 std::random_device rd;
 std::mt19937 gen(rd());
-/*the first parameter is mittelwert, the second - variance*/
+/* The first parameter is mittelwert, the second - variance */
 std::normal_distribution<> d(0, 1);
 
 Pixel::Pixel(int power, bool mono) {
-    /* if the mode is white and black:
+    /* If the mode is white and black:
      * RGB component of the pixel is set with the same normal distribution
-     *  multipled with the degree of noise*/
+     * multipled with the degree of noise */
     if (mono) {
         long long f = d(gen) * power;
         red = f;
         green = f;
         blue = f;
     }
-    /* if the mode is colored:
+    /* If the mode is colored:
      * RGB component of the pixel is set with the different normal distribution
-     *  multipled with the degree of noise*/
+     * multipled with the degree of noise */
     else {
         red = d(gen) * power;
         green = d(gen) * power;
@@ -35,7 +34,7 @@ QImage GaussianNoise::processImage(const QImage* workingModel) {
     QImage nosedPicture(cols, rows, workingModel->format());
     for (int32_t i = 0; i < cols; i++) {
         for (int32_t j = 0; j < rows; j++) {
-            /*initializing the new Pixel with parametres of noise*/
+            /* Initializing the new Pixel with parametres of noise */
             Pixel noise(degreeOfNoise, mono);
             noise += Pixel(workingModel->pixel(QPoint(i, j)));
             nosedPicture.setPixelColor(QPoint(i, j), noise.getRgb());
@@ -56,8 +55,8 @@ GaussianNoiseBuilder GaussianNoiseBuilder::setMono(bool mono) {
 }
 
 GaussianNoise GaussianNoiseBuilder::build() {
-    /*counter of the number of specified parameters
-     * - the user must specify either all values ​​or none*/
+    /* Counter of the number of specified parameters:
+     * the user must specify either all values ​​or none */
     int count = 0;
     if(this->degreeOfNoise.isNull()) {
         count++;
@@ -65,7 +64,7 @@ GaussianNoise GaussianNoiseBuilder::build() {
     if(this->mono.isNull()) {
         count++;
     }
-    /*if the user has not set any parameters, they are set by default*/
+    /* If the user has not set any parameters, they are set by default */
     if(count == 2) {
         this->degreeOfNoise = this->DEFAULT_degreeOfNoise;
         this->mono = this->DEFAULT_mono;

@@ -7,15 +7,15 @@ QImage Rotate45::processImage(const QImage *workingModel) {
     for (int32_t i = 0; i < cols; i++) {
         for (int32_t j = 0; j < rows; j++) {
             if (direct == CLOCKWISE45) {
-                /*the corners of the original image are on the sides of the square*/
+                /* The corners of the original image are on the sides of the square */
                 rotatedPicture.setPixel(i - j + rows, i + j, workingModel->pixel(QPoint(i,j)));
-                /*shift the image by 1 pixel to the right to close the holes formed during rotation*/
+                /* Shift the image by 1 pixel to the right to close the holes formed during rotation */
                 rotatedPicture.setPixel(i - j + rows - 1, i + j, workingModel->pixel(QPoint(i,j)));
             }
             else {
-                /*the corners of the original image are on the sides of the square*/
+                /* The corners of the original image are on the sides of the square */
                 rotatedPicture.setPixel(i + j, j - i + cols, workingModel->pixel(QPoint(i,j)));
-                /*shift the image by 1 pixel to the left to close the holes formed during rotation*/
+                /* Shift the image by 1 pixel to the left to close the holes formed during rotation */
                 rotatedPicture.setPixel(i + j, j - i + cols - 1, workingModel->pixel(QPoint(i,j)));
             }
         }
