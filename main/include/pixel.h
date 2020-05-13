@@ -3,7 +3,8 @@
 
 #include <QRgb>
 
-
+/* Auxiliary structure, which implements a number of obvious operators
+ * for each component from the RGB vector */
 struct Pixel {
     long long red = 0;
     long long green = 0;

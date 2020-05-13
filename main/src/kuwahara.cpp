@@ -1,12 +1,15 @@
-
 #include "../include/kuwahara.h"
 #include "../include/pixel.h"
 
-
+/* Auxiliary function for calculating the variance and average intensity
+ * for one of the four areas in the filter mask */
 std::pair<long long, QRgb> getVarianceMittelwert(const QImage* workingModel, int xUpperLeft, int yUpperLeft,
                                                   int xDownRight, int yDownRight) {
     Pixel variance, mittelwert;
+    /* Number of pixels in the area */
     int count = 0;
+    /* Calculation of the sum of the variance and the average intensity
+     * for all pixels in the region */
     for (int32_t i = xUpperLeft; i < xDownRight; i++) {
         for (int32_t j = yUpperLeft; j < yDownRight; j++) {
             variance = variance.powSquare((Pixel(workingModel->pixel(QPoint(i, j)))));
@@ -14,14 +17,17 @@ std::pair<long long, QRgb> getVarianceMittelwert(const QImage* workingModel, int
             count++;
         }
     }
+    /* If the area is the edge of the image,
+     * then return the stub in the form of infinitely large dispersion and white */
     if (count == 0) {
         return {INT64_MAX, qRgb(255, 255, 255)};
     }
-
+    /* Average */
     variance /= count;
     mittelwert /= count;
 
     variance -= mittelwert.getSquare();
+    /* Return the sum in all RGB components and color without shift */
     return std::make_pair(variance.getSum(), mittelwert.getRgbWithoutShift());
 }
 
@@ -31,8 +37,11 @@ QImage Kuwahara::processImage(const QImage* workingModel) {
     QImage bluredPicture(cols, rows, workingModel->format());
     for (int32_t i = 0; i < cols; i++) {
         for (int32_t j = 0; j < rows; j++) {
-            std::pair<long long, QRgb> leftUpperSector, rightUpperSector, leftDownSector, rightDownSector;
-
+            /* Four sectors of filter mask */
+            std::pair<long long, QRgb> leftUpperSector, rightUpperSector,
+                    leftDownSector, rightDownSector;
+        /* In each sector we transfer the corresponding borders
+         * taking into account the edges of the image */
             leftUpperSector = getVarianceMittelwert(workingModel, std::max(i - degreeOfBlur, 0),
                                                     std::max(j - degreeOfBlur, 0), i, j);
             rightUpperSector = getVarianceMittelwert(workingModel, i + 1, std::max(j - degreeOfBlur, 0),
@@ -41,7 +50,8 @@ QImage Kuwahara::processImage(const QImage* workingModel) {
                                                    i, std::min(j + degreeOfBlur + 1, rows));
             rightDownSector = getVarianceMittelwert(workingModel, i + 1, j + 1, std::min(i + degreeOfBlur + 1, cols),
                                              std::min(j + degreeOfBlur + 1, rows));
-
+        /* Assigning to the central pixel an average intensity value
+         * of the sector with the smallest dispersion */
             if (leftUpperSector.first <= rightUpperSector.first &&
                     leftUpperSector.first <= leftDownSector.first &&
                     leftUpperSector.first <= rightDownSector.first) {

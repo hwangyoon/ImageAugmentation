@@ -7,8 +7,10 @@ QImage Rotate90::processImage(const QImage *workingModel) {
     for (int32_t i = 0; i < rows; i++) {
         for (int32_t j = 0; j < cols; j++) {
             if(direct == CLOCKWISE90)
+                /* Moving angles taking into account the direction of rotation */
                 rotatedPicture.setPixel(i, j, workingModel->pixel(QPoint(j,rows - i - 1)));
             else
+                /* Moving angles taking into account the direction of rotation */
                 rotatedPicture.setPixel(i, j, workingModel->pixel(QPoint(cols - 1 - j, i)));
         }
     }

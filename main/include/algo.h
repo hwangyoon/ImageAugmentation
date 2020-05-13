@@ -11,6 +11,9 @@
 
 class Algorithm {
 public:
+    /* A base abstract class which works with object of library class QImage and
+     *  has one virtual method that takes an input image
+     *  and returns a modified copy of the image */
     virtual QImage processImage(const QImage *workingModel) = 0;
 };
 

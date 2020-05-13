@@ -2,6 +2,8 @@
 #define DITHERING_H
 
 #include "algo.h"
+
+/* An algorithm expressing unused colors in a palette through existing ones */
 class Dithering : public Algorithm {
 public:
     friend class DitheringBuilder;
@@ -13,6 +15,8 @@ private:
 class DitheringBuilder {
 public:
     DitheringBuilder() = default;
+    /* The method that builds the object of algorithm Dithering,
+     * there are no checks for any parameters, since they are not set */
     Dithering build();
 };
 

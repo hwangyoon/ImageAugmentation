@@ -1,5 +1,6 @@
 #include "../include/rgbtone.h"
 #include <iostream>
+
 QImage RGBTone::processImage(const QImage *workingModel) {
     int32_t cols = workingModel->width();
     int32_t rows = workingModel->height();
@@ -12,19 +13,24 @@ QImage RGBTone::processImage(const QImage *workingModel) {
             int blue = qBlue(currentColor);
             int newTone;
             if(colorForTone == RED) {
+                /* Checking that the color is not out of range */
                 if(red + degreeOfTone > 255) {
                     newTone = 255;
                 }
+                /* Increase the degree of the selected color */
                 else {
                     newTone = red + degreeOfTone;
                 }
                 QRgb newColor = qRgb(newTone, green, blue);
                 tonedPicture.setPixelColor(QPoint(i, j), newColor);
             }
+
             if(colorForTone == GREEN) {
+                /* Checking that the color is not out of range */
                 if(green + degreeOfTone > 255) {
                     newTone = 255;
                 }
+                /* Increase the degree of the selected color */
                 else {
                     newTone = green + degreeOfTone;
                 }
@@ -32,9 +38,11 @@ QImage RGBTone::processImage(const QImage *workingModel) {
                 tonedPicture.setPixelColor(QPoint(i, j), newColor);
             }
             if(colorForTone == BLUE) {
+                /* Checking that the color is not out of range */
                 if(blue + degreeOfTone > 255) {
                     newTone = 255;
                 }
+                /* Increase the degree of the selected color */
                 else {
                     newTone = blue + degreeOfTone;
                 }
