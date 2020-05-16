@@ -70,7 +70,6 @@ gui_conf {
     TARGET = image_augmentation
 }
 
-
 commands_conf {
     SOURCES += \
         main/src/main.cpp

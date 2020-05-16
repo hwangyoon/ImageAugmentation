@@ -145,6 +145,7 @@ void MainWindow::on_pushButtonPreview_clicked()
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
 }
 
+
 QList<QListWidgetItem *> MainWindow::findSelectedItems(QListWidget &list)
 {
     QList<QListWidgetItem *> result;
@@ -167,3 +168,4 @@ void MainWindow::on_pushButtonOverlay_clicked()
     else
         button->setText("Overlay Mode Off");
 }
+

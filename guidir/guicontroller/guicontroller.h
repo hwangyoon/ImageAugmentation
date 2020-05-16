@@ -17,9 +17,7 @@ private:
     std::shared_ptr<Request> getRequestFromString(QString name);
 public:
     GuiController();
-    /* Make request from string list */
     void makeRequest(QStringList algoList, bool overlay);
-    /*Make request from string list and return preview*/
     QImage makeRequestPreview(QStringList algoList);
     void savePathIn(QString newPathIn);
     void savePathTo(QString newPathTo);
