@@ -1,6 +1,5 @@
 #include "../include/factory.h"
 
-//to do: process wrong arguments
 std::unique_ptr<Algorithm> Factory::createCrop(std::shared_ptr<Request> request) {
     CropGivenPieceBuilder builder;
     std::shared_ptr<CropRequest> ptr = std::static_pointer_cast<CropRequest> (request);

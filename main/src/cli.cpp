@@ -31,25 +31,20 @@ void Cli::addOptions() {
                                      "Specify the algorithm which won't be used.",
                                      "algorithm");
     parser.addOption(*disableOption);
-    //set config file option
     configOption = new QCommandLineOption(QStringList() << "c" << "config",
                                      "Config file",
                                      "file");
     parser.addOption(*configOption);
-    //set option that shows names of all possible algorithms
     algorithmsOption = new QCommandLineOption(QStringList() << "a" << "algorithms",
                                      "Possible algorithms");
     parser.addOption(*algorithmsOption);
-    //set option that will allow user to define format of output file
     formatOption = new QCommandLineOption(QStringList() << "f" << "format",
                                      "Specify format of output images: png/jpg/gif/bmp/dib",
                                      "format");
     parser.addOption(*formatOption);
-    //set option that will allow user to define maximum number of images made
     limitOption = new QCommandLineOption(QStringList() << "l" << "limit",
                                      "Specify maximum number of images made (default 25)", "number");
     parser.addOption(*limitOption);
-    //set option that will allow user to define possible depths of overlay
     depthOption = new QCommandLineOption(QStringList() << "o" << "overlay",
                                      "Specify possible depths of overlay (default 1)", "number");
     parser.addOption(*depthOption);
@@ -74,6 +69,7 @@ void Cli::checkPositionalArgumentsCorrectness() {
 
     if (args.size() != 2) {
         fprintf(stderr, "%s\n", qPrintable("Error: Must specify source file/directory and destination directory."));
+        //shows help table and exists application with return code 1
         parser.showHelp(1);
     }
 
@@ -86,6 +82,7 @@ void Cli::checkPositionalArgumentsCorrectness() {
 
 void Cli:: processConfigFile(GlobalRequest& request) {
     QFile file;
+    // get config file path from configOption value
     file.setFileName(parser.value(*configOption));
     JsonParser configFileParser;
     try {
@@ -102,6 +99,7 @@ void Cli:: processConfigFile(GlobalRequest& request) {
         request.setFileFormat(fileFormat);
     }
     if (parser.isSet(*depthOption)) {
+        //get list of all possible numbers of overlay
         const QStringList depthValues = parser.values(*depthOption);
         std::vector<int32_t> allDepths;
         for (auto depth : depthValues) {
@@ -145,8 +143,10 @@ GlobalRequest Cli::getGlobalRequest() {
 }
 
 bool Cli::checkDisabledOptionValueCorrectness() {
+    //get all disabled values in a list
     const QStringList disabledValues = parser.values(*disableOption);
     for (auto algorithm : disabledValues) {
+        //make sure user provided correct algorithm name that will be disabled
         if (algoNames.find(algorithm) == algoNames.end()) {
             fprintf(stderr, "%s\n", qPrintable("Wrong option value " + algorithm));
             return false;

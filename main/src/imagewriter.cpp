@@ -1,8 +1,5 @@
 #include "../include/imagewriter.h"
-#include <cstdlib>
-#include <ctime>
-#include <memory>
-#include <cassert>
+
 
 ImageWriter::ImageWriter() {
     srand(time(NULL));
@@ -54,8 +51,8 @@ void ImageWriter::countFileNames(QDir directory,
 }
 
 void ImageWriter::saveToDirectory(QDir pathTo_,
-                                    std::vector<std::pair<std::shared_ptr<QImage>, int>> images,
-                                    QString format) {
+                                  std::vector<std::pair<std::shared_ptr<QImage>, int>> images,
+                                  QString format) {
     QMap<QString, int> fileNameNumber;
     if (!pathTo_.exists()) {
         QString filePath = pathTo_.absolutePath();

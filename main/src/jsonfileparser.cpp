@@ -1,5 +1,4 @@
 #include "../include/jsonfileparser.h"
-#include <cassert>
 
 void JsonParser::checkConfigFileCorrect(QFile& file) const {
     if (!file.exists()){
