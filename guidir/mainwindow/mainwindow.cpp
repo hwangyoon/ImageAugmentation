@@ -59,8 +59,25 @@ void MainWindow::view_algo() {
     QListWidget *algo_list = ui->listWidget_algo;
 
     static QStringList LIST_ITEMS =
-        QStringList() << "Crop from middle" << "Horizontal flip" << "Rotate 45 dg" << "Rotate 90 dg" << "Vertical flip" << "Dithering" << "GaussianNoise"
-                      << "Kuwahara" << "Lightening" << "RGBTone" << "WhiteBlack" ;
+        QStringList() << "Crop from middle"
+                      << "Horizontal flip"
+                      << "Rotate 45 dg"
+                      << "Rotate 90 dg"
+                      << "Vertical flip"
+                      << "Dithering"
+                      << "GaussianNoise"
+                      << "Kuwahara"
+                      << "Lightening"
+                      << "RGBTone"
+                      << "WhiteBlack"
+                      << "BlurConvolution"
+                      << "NegativeConvolution"
+                      << "SharpenConvolution"
+                      << "EmbrossConvolution"
+                      << "LightBlurConvolution"
+                      << "LightSharpenConvolution"
+                      << "LightEmbrossConvolution"
+                      << "GaussBlurConvolution";
 
     add_algo(LIST_ITEMS);
 

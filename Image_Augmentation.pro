@@ -88,7 +88,6 @@ SOURCES += \
     main/src/dithering.cpp \
     main/src/matrixconvolution.cpp \
     main/src/jsonfileparser.cpp \
-    main/src/imageloader.cpp \
     main/src/cli.cpp \
     main/src/randomcrop.cpp
 

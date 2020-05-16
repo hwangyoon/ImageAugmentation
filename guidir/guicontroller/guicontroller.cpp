@@ -4,6 +4,7 @@ GuiController::GuiController(): request()
 {
 }
 
+
 std::shared_ptr<Request> GuiController::get_request_from_str(QString name)
 {
     if (name == "Crop from middle") {
@@ -28,6 +29,22 @@ std::shared_ptr<Request> GuiController::get_request_from_str(QString name)
         return std::make_shared<RGBToneRequest>();
     } else if (name == "WhiteBlack") {
         return std::make_shared<WhiteBlackRequest>();
+    }  else if (name == "BlurConvolution") {
+        return std::make_shared<BlurConvolutionRequest>();
+    }  else if (name == "NegativeConvolution") {
+        return std::make_shared<NegativeConvolutionRequest>();
+    }  else if (name == "SharpenConvolution") {
+        return std::make_shared<SharpenConvolutionRequest>();
+    }  else if (name == "EmbrossConvolution") {
+        return std::make_shared<EmbrossConvolutionRequest>();
+    }  else if (name == "LightBlurConvolution") {
+        return std::make_shared<LightBlurConvolutionRequest>();
+    }  else if (name == "LightSharpenConvolution") {
+        return std::make_shared<LightSharpenConvolutionRequest>();
+    }  else if (name == "LightEmbrossConvolution") {
+        return std::make_shared<LightEmbrossConvolutionRequest>();
+    }  else if (name == "GaussBlurConvolution") {
+        return std::make_shared<GaussBlurConvolutionRequest>();
     } else {
         return nullptr;
     }
