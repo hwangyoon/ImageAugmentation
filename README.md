@@ -53,13 +53,16 @@ $ ./ImageAugmentation /home/user/Pictures /home/user/TempDir
 ``` 
 Console application is provided with several keys:
 
--l <number>
+-l 'number'
+
 set maximum number of pictures after processing(default is 25)
 
--d <algorithm name>
+-d 'algorithm name'
+
 restrict the use of an algorithm
 
 -a
+
 show names of all algorithms
 ```
 $ ./ImageAugmentation -a
@@ -68,15 +71,17 @@ lightening | rgbtone | whiteblack | blur | negative | sharpen | embross |
 lightblur | lightsharpen | lightembross | gaussblur | randomcrop
 
 ```
--f <format>
+-f 'format'
+
 set format of processed images (png, jpeg, jpg, JPG, JPEG, gif, bmp, dib)
 
 default is jpg
 
--o <number>
+-o 'number'
+
 set possible depths of overlay(default is 1)
 
--c <config file path>
+-c 'config file path'
 
 Example 1:
 ```
