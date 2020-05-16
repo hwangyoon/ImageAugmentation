@@ -2,18 +2,13 @@
 
 Image augmentation artificially creates training images through different ways of processing or combination of multiple processing, such as rotation, flips, random crop and gaussian noise, etc.
 
-Image augmentation искуственно генерирует датасет для машинного обучения используя различные методы обработки изображений, такие как поворот, зеркальное отражение, вырезание случайной части изображения, гауссовский шум и.т.д.
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine. 
 
-Следующие инструкции содержат все необходимые данные для создания и запуска копии проекта
-
 ### Prerequisites
 
 Use at least Qt version 4.x and C++17
-Необходимо использовать версию Qt хотя бы 4.x и C++17
 ```
 [Download Qt](https://www.qt.io/download)
 ```
