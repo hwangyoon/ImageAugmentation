@@ -29,7 +29,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,1">
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1">
       <item>
@@ -66,7 +66,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label_image">
+           <widget class="QLabel" name="labelImage">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -127,7 +127,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="100,1">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_info"/>
+         <widget class="QTextBrowser" name="textBrowserInfo"/>
         </item>
         <item>
          <spacer name="horizontalSpacer_2">
@@ -164,7 +164,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_preview">
+             <widget class="QPushButton" name="pushButtonPreview">
               <property name="text">
                <string>PREVIEW</string>
               </property>
@@ -214,7 +214,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QTextEdit" name="textEdit_path_in"/>
+             <widget class="QTextEdit" name="textEditPathIn"/>
             </item>
             <item>
              <spacer name="horizontalSpacer_4">
@@ -230,7 +230,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_load">
+             <widget class="QPushButton" name="pushButtonLoad">
               <property name="text">
                <string>LOAD</string>
               </property>
@@ -267,7 +267,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QTextEdit" name="textEdit_path_out"/>
+             <widget class="QTextEdit" name="textEditPathOut"/>
             </item>
             <item>
              <spacer name="horizontalSpacer_7">
@@ -283,7 +283,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_process">
+             <widget class="QPushButton" name="pushButtonProcess">
               <property name="text">
                <string>PROCESS</string>
               </property>
@@ -311,17 +311,28 @@
      </layout>
     </item>
     <item>
-     <widget class="QListWidget" name="listWidget_algo">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="cursor" stdset="0">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-     </widget>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QListWidget" name="listWidgetAlgo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="cursor" stdset="0">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonOverlay">
+        <property name="text">
+         <string>Overlay Mode Off</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

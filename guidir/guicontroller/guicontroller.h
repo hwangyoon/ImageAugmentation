@@ -7,19 +7,22 @@
 #include "../../main/include/request.h"
 #include "../../main/include/manager.h"
 
+
 class GuiController
 {
 private:
     GlobalRequest request;
     AlgorithmManager manager;
 
-    std::shared_ptr<Request> get_request_from_str(QString name);
+    std::shared_ptr<Request> getRequestFromString(QString name);
 public:
     GuiController();
-    void make_request(QStringList algo_list);
-    QImage make_request_preview(QStringList algo_list);
-    void save_path_in(QString new_path_in);
-    void save_path_to(QString new_path_to);
+    /* Make request from string list */
+    void makeRequest(QStringList algoList, bool overlay);
+    /*Make request from string list and return preview*/
+    QImage makeRequestPreview(QStringList algoList);
+    void savePathIn(QString newPathIn);
+    void savePathTo(QString newPathTo);
 };
 
 #endif // GUICONTROLLER_H

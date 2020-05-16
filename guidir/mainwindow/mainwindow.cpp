@@ -1,23 +1,25 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <unistd.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    view_algo();
+    viewAlgo();
     QString info = "Привет ^^ \nКак пользоваться этим приложением?.. (мотать вниз для ответа) \n\
                      - Чтобы загрузить картику надо ввести в первое поле адрес загружаемой директории(для загрузки всех изображений из директории) или ничего не вводить(для загрузки одного изображения) и нажать на кнопку LOAD \n\
                      - Чтобы начать обработку надо ввести во второе поле место для сохранения и нажать на кнопку PROCESS \n\
                      - Чтобы обработка не была пустым копированием надо выбрать алгоритмы в списке справа\
 (то, как они будут выглядеть можно посмотреть, нажав на кнопку PREVIEW)";
-    QTextBrowser *view_message = ui->textBrowser_info;
-    view_message->setText(info);
-    QLabel *label = ui->label_image;
-    QString what_printed = "Здесь появится Ваша картинка ^^ \n     (но сначала её стоит загрузить)";
-    label->setText(what_printed);
+    QTextBrowser *viewMessage = ui->textBrowserInfo;
+    viewMessage->setText(info);
+    QLabel *label = ui->labelImage;
+    QString whatPrinted = "Здесь появится Ваша картинка ^^ \n     (но сначала её стоит загрузить)";
+    label->setText(whatPrinted);
+    overlay = false;
 }
 
 MainWindow::~MainWindow()
@@ -33,30 +35,30 @@ QString MainWindow::getFileName()
     return fileName;
 }
 
-void MainWindow::on_pushButton_load_clicked()
+void MainWindow::on_pushButtonLoad_clicked()
 {
-    QTextEdit *text_path_in = ui->textEdit_path_in;
-    QString path_in_text = text_path_in->toPlainText();
-    //text_path_in->setText("");
+    QTextEdit *textPathIn = ui->textEditPathIn;
+    QString pathInText = textPathIn->toPlainText();
+    //textPathIn->setText("");
     // Тут надо path передать как путь Controller'у, он даст QImage
     // Забили на это, сами загрузим
-    QString path_in;
-    if (path_in_text.isEmpty()) {
-        path_in_text = getFileName();
-        path_in = path_in_text;
+    QString pathIn;
+    if (pathInText.isEmpty()) {
+        pathInText = getFileName();
+        pathIn = pathInText;
     }
     else
-        path_in = "samples/animal.jpg";
-    QLabel *label = ui->label_image;
-    QPixmap *p=new QPixmap(path_in);
+        pathIn = "samples/animal.jpg";
+    QLabel *label = ui->labelImage;
+    QPixmap *p=new QPixmap(pathIn);
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
-    controller.save_path_in(path_in_text);
-    //text_path_in->setText("DONE");
+    controller.savePathIn(pathInText);
+    //textPathIn->setText("DONE");
 }
 
-void MainWindow::view_algo() {
-    QListWidget *algo_list = ui->listWidget_algo;
+void MainWindow::viewAlgo() {
+    QListWidget *algoList = ui->listWidgetAlgo;
 
     static QStringList LIST_ITEMS =
         QStringList() << "Crop from middle"
@@ -79,13 +81,13 @@ void MainWindow::view_algo() {
                       << "LightEmbrossConvolution"
                       << "GaussBlurConvolution";
 
-    add_algo(LIST_ITEMS);
+    addAlgo(LIST_ITEMS);
 
-    algo_list->setSelectionMode( QListWidget::MultiSelection );
+    algoList->setSelectionMode( QListWidget::MultiSelection );
 
 }
 
-void MainWindow::add_algo(const QStringList& list)
+void MainWindow::addAlgo(const QStringList& list)
 {
     foreach( const QString& item, list ) {
         QListWidgetItem* listItem = new QListWidgetItem( item );
@@ -93,52 +95,57 @@ void MainWindow::add_algo(const QStringList& list)
         listItem->setFlags( Qt::ItemIsEditable | Qt::ItemIsEnabled );
         listItem->setFlags(listItem->flags() | Qt::ItemIsUserCheckable); // set checkable flag
         listItem->setCheckState(Qt::Unchecked); // AND initialize check state
-        ui->listWidget_algo->addItem( listItem );
+        ui->listWidgetAlgo->addItem( listItem );
     }
 }
 
-QList<QListWidgetItem *> MainWindow::process_list(QListWidget &list)
+QList<QListWidgetItem *> MainWindow::processList(QListWidget &list)
 {
-    QString what_printed("");
-    QList<QListWidgetItem *> selectedItems = find_selected_items(list);
+    QString whatPrinted("");
+    QList<QListWidgetItem *> selectedItems = findSelectedItems(list);
     foreach (const QListWidgetItem* item, selectedItems) {
-        what_printed += " " + item->text();
+        whatPrinted += " " + item->text();
     }
-    QTextBrowser *view_message = ui->textBrowser_info;
-    view_message->setText(what_printed);
+    QTextBrowser *viewMessage = ui->textBrowserInfo;
+    viewMessage->setText(whatPrinted);
     return selectedItems;
 }
 
-void MainWindow::on_pushButton_process_clicked()
+void MainWindow::on_pushButtonProcess_clicked()
 {
-    //передам process_list();
-    QTextEdit *text_path_to = ui->textEdit_path_out;
-    QString path_to = text_path_to->toPlainText();
-    controller.save_path_to(path_to);
-    text_path_to->setText("");
-    controller.make_request(make_txt_list(find_selected_items(*ui->listWidget_algo)));
-}
-
-QStringList MainWindow::make_txt_list(QList<QListWidgetItem*> list) {
-    QStringList txt_list;
-    foreach(QListWidgetItem* line, list) {
-        txt_list << line->text();
+    //передам processList();
+    QTextEdit *textPathTo = ui->textEditPathOut;
+    QString pathTo = textPathTo->toPlainText();
+    QString warningFieldEmpty = "Вы не ввели адрес сохранения";
+    if (pathTo == "" || pathTo == warningFieldEmpty) {
+        textPathTo->setText(warningFieldEmpty);
+        return;
     }
-    return txt_list;
+    controller.savePathTo(pathTo);
+    textPathTo->setText("");
+    controller.makeRequest(makeTxtList(findSelectedItems(*ui->listWidgetAlgo)), overlay);
 }
 
-void MainWindow::on_pushButton_preview_clicked()
+QStringList MainWindow::makeTxtList(QList<QListWidgetItem*> list) {
+    QStringList txtList;
+    foreach(QListWidgetItem* line, list) {
+        txtList << line->text();
+    }
+    return txtList;
+}
+
+void MainWindow::on_pushButtonPreview_clicked()
 {
-    //передам process_list();
-    QLabel *label = ui->label_image;
-    QStringList txt_algo = make_txt_list(find_selected_items(*ui->listWidget_algo));
-    QImage image = controller.make_request_preview(txt_algo);
+    //передам processList();
+    QLabel *label = ui->labelImage;
+    QStringList txtAlgo = makeTxtList(findSelectedItems(*ui->listWidgetAlgo));
+    QImage image = controller.makeRequestPreview(txtAlgo);
     QPixmap p = QPixmap::fromImage(image);
     QPixmap p1(p.scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
 }
 
-QList<QListWidgetItem *> MainWindow::find_selected_items(QListWidget &list)
+QList<QListWidgetItem *> MainWindow::findSelectedItems(QListWidget &list)
 {
     QList<QListWidgetItem *> result;
 
@@ -149,4 +156,14 @@ QList<QListWidgetItem *> MainWindow::find_selected_items(QListWidget &list)
                  result.push_back(item);
     }
     return result;
+}
+
+void MainWindow::on_pushButtonOverlay_clicked()
+{
+    overlay = !overlay;
+    QAbstractButton *button = ui->pushButtonOverlay;
+    if (overlay)
+        button->setText("Overlay Mode On");
+    else
+        button->setText("Overlay Mode Off");
 }
