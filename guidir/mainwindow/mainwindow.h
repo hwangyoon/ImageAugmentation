@@ -20,21 +20,24 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_load_clicked();
+    void on_pushButtonLoad_clicked();
 
-    void on_pushButton_process_clicked();
+    void on_pushButtonProcess_clicked();
 
-    void on_pushButton_preview_clicked();
+    void on_pushButtonPreview_clicked();
+
+    void on_pushButtonOverlay_clicked();
 
 private:
     Ui::MainWindow *ui;
-    void view_algo();
-    void add_algo(const QStringList& list);
-    QList<QListWidgetItem *> find_selected_items(QListWidget &list);
-    QList<QListWidgetItem *> process_list(QListWidget &list);
+    void viewAlgo();
+    void addAlgo(const QStringList& list);
+    QList<QListWidgetItem *> findSelectedItems(QListWidget &list);
+    QList<QListWidgetItem *> processList(QListWidget &list);
     GuiController controller;
-    QStringList make_txt_list(QList<QListWidgetItem*> list);
+    QStringList makeTxtList(QList<QListWidgetItem*> list);
     QString getFileName();
+    bool overlay;
 };
 
 #endif // MAINWINDOW_H

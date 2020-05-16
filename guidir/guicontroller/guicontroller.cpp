@@ -5,7 +5,7 @@ GuiController::GuiController(): request()
 }
 
 
-std::shared_ptr<Request> GuiController::get_request_from_str(QString name)
+std::shared_ptr<Request> GuiController::getRequestFromString(QString name)
 {
     if (name == "Crop from middle") {
         return std::make_shared<CropRequest>();
@@ -50,31 +50,36 @@ std::shared_ptr<Request> GuiController::get_request_from_str(QString name)
     }
 }
 
-void GuiController::make_request(QStringList algo_list)
+void GuiController::makeRequest(QStringList algoList, bool overlay)
 {
-    foreach (QString algo, algo_list) {
-        std::shared_ptr<Request> request_ = get_request_from_str(algo);
+    foreach (QString algo, algoList) {
+        std::shared_ptr<Request> request_ = getRequestFromString(algo);
         if (request_ != nullptr)
             request.addRequest(request_);
     }
+    if (overlay) {
+        request.setDepthOfOverlay({algoList.size()});
+    } else {
+        request.setDepthOfOverlay({1});
+    }
     manager.processRequests(request);
 }
-QImage GuiController::make_request_preview(QStringList algo_list)
+QImage GuiController::makeRequestPreview(QStringList algoList)
 {
-    foreach (QString algo, algo_list) {
-        std::shared_ptr<Request> request_ = get_request_from_str(algo);
+    foreach (QString algo, algoList) {
+        std::shared_ptr<Request> request_ = getRequestFromString(algo);
         request.addRequest(request_);
     }
 
     return manager.preview(request);
 }
 
-void GuiController::save_path_in(QString new_path_in)
+void GuiController::savePathIn(QString newPathIn)
 {
-    request.setLoadDirectoryOrFile(new_path_in);
+    request.setLoadDirectoryOrFile(newPathIn);
 }
 
-void GuiController::save_path_to(QString new_path_to)
+void GuiController::savePathTo(QString newPathTo)
 {
-    request.setSaveDirectory(new_path_to);
+    request.setSaveDirectory(newPathTo);
 }
