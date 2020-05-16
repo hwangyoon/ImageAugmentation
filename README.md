@@ -25,6 +25,12 @@ $ make clean
 $ qmake CONFIG+=consoleAppConf
 $ make
 ```
+Note that spaces are not allowed
+```
+$ make clean
+$ qmake CONFIG += consoleAppConf
+$ make
+```
 
 ## Running the tests
 
