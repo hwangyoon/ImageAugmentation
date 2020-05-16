@@ -1,8 +1,5 @@
 #include "../include/imagewriter.h"
-#include <cstdlib>
-#include <ctime>
-#include <memory>
-#include <cassert>
+
 
 ImageWriter::ImageWriter() {
     srand(time(NULL));
@@ -32,7 +29,7 @@ ImageWriter::ImageWriter() {
 void ImageWriter::countFileNames(QDir directory,
                                  QMap<QString, int>& fileNameNumber) {
     QStringList filter;
-    //QLatin1String is a very thin wrapper around a const char*
+    /* QLatin1String is a very thin wrapper around a const char* */
     filter << QLatin1String("*.png");
     filter << QLatin1String("*.jpeg");
     filter << QLatin1String("*.jpg");
@@ -45,7 +42,7 @@ void ImageWriter::countFileNames(QDir directory,
     for (auto imageInfo : files) {
         QString fileName = imageInfo.completeBaseName();
         int index = fileName.indexOf(QChar('_'));
-        // returns -1 if not found or file name starts with '_'
+        /* Returns -1 if not found or file name starts with '_' */
         if (index > 0) {
             QString algoName = fileName.mid(0, index);
             fileNameNumber[algoName] = fileNameNumber[algoName] + 1;
@@ -54,8 +51,8 @@ void ImageWriter::countFileNames(QDir directory,
 }
 
 void ImageWriter::saveToDirectory(QDir pathTo_,
-                                    std::vector<std::pair<std::shared_ptr<QImage>, int>> images,
-                                    QString format) {
+                                  std::vector<std::pair<std::shared_ptr<QImage>, int>> images,
+                                  QString format) {
     QMap<QString, int> fileNameNumber;
     if (!pathTo_.exists()) {
         QString filePath = pathTo_.absolutePath();

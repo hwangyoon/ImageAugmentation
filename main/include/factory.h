@@ -16,12 +16,15 @@
 #include "../include/whiteblack.h"
 #include "../include/randomcrop.h"
 
+/* A class that returns pointer to the algorithm that should be used according to the request */
 class Factory {
 public:
     Factory() {}
-    // returns pointer to the algorithm which should be used according to the request
+    /* Returns pointer to the algorithm with all arguments set
+     * according to information in given Request object */
     std::unique_ptr<Algorithm> getAlgo(std::shared_ptr<Request> r);
 private:
+    /* Set of methods that create and fill object of derived Algortihm class */
     std::unique_ptr<Algorithm> createCrop(std::shared_ptr<Request> request);
     std::unique_ptr<Algorithm> createGaussNoise(std::shared_ptr<Request> request);
     std::unique_ptr<Algorithm> createKuwahara(std::shared_ptr<Request> request);

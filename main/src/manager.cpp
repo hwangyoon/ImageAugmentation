@@ -1,7 +1,7 @@
 #include "../include/manager.h"
-#include <memory>
-#include <cassert>
+
 void AlgorithmManager::processRequests(GlobalRequest r) {
+    /* Check whether file or directory was provided */
     if (r.getLoadDirectoryOrFile().isFile()) {
         processSingleImage(r);
     } else {
@@ -30,12 +30,15 @@ std::vector<QString> AlgorithmManager::getCombinationsOfAlgorithms(int32_t limit
     std::vector<QString> allPossibleAlgorithms;
     for (auto depth : depths) {
         if (depth >= 1 && depth <= numberOfAlgorithms) {
+            /* Generate all possible bit strings with depth bit set */
             appendNewCombination(allPossibleAlgorithms, depth, numberOfAlgorithms, 0, "");
         }
     }
     std::random_device random;
     std::mt19937 g(random());
+    /* Randomly shuffle all bit string */
     std::shuffle(allPossibleAlgorithms.begin(), allPossibleAlgorithms.end(), g);
+    /* Take only first 'limit' images */
     if (allPossibleAlgorithms.size() > limit) {
         allPossibleAlgorithms.resize(limit);
     }
@@ -46,6 +49,7 @@ void AlgorithmManager::processSingleImage(GlobalRequest request) {
     std::vector<std::pair<std::shared_ptr<QImage>, int>> images;
     QString fileName = request.getLoadDirectoryOrFile().absoluteFilePath();
     QImage image(fileName);
+    /* User may provide file with the image format which in fact is not an image */
     if (image.isNull()) {
         fprintf(stderr, "%s\n", qPrintable("Error: unable to process " + fileName));
         return;

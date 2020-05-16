@@ -13,6 +13,8 @@ public:
     QImage processImage(const QImage *workingModel);
     friend class Rotate45Builder;
 private:
+    /* The set of methods that create pixel stretching effect,
+     * filling in the black corners left after rotation */
     QImage& blurLeftUpperAngle(QImage& image,
                                   int length, int height);
     QImage& blurRightUpperAngle(QImage& image,
@@ -21,6 +23,7 @@ private:
                                   int length, int height);
     QImage& blurRightBottomAngle(QImage& image,
                                   int length, int height);
+    /* The method that fills in all the black corners */
     QImage& blur(QImage& image,
                  QPoint leftUpperAngle,
                  QPoint rightUpperAngle,
