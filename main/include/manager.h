@@ -25,7 +25,7 @@ private:
     /* Uses the processSingleImage method on each picture in the directory */
     void processDirectory(GlobalRequest r);
     /* Creates vector of random algorithm combinations according to user's request */
-    std::vector<QString> getCombinationsOfAlgorithms(int32_t limit,
+    std::vector<QString> getCombinationsOfAlgorithms(std::size_t limit,
                                                      std::vector<int32_t> &depths,
                                                      int32_t numberOfAlgorithms);
     /* Creates algorithm combination and saves it to vector

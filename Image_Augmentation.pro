@@ -45,15 +45,10 @@ gui_conf {
     TARGET = gui
 }
 
-terminal_conf {
-    SOURCES += main_terminal/src/main.cpp
-    TARGET = image_augmentation_terminal
-}
-
-commands_conf {
+consoleAppConf {
     SOURCES += \
         main/src/main.cpp
-    TARGET = image_augmentation
+    TARGET = ImageAugmentation
 }
 
 DISTFILES += \
