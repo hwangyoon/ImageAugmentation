@@ -73,9 +73,7 @@ lightblur | lightsharpen | lightembross | gaussblur | randomcrop
 ```
 * -f 'format'
 
-set format of processed images (png, jpeg, jpg, JPG, JPEG, gif, bmp, dib)
-
-default is jpg
+set format of processed images (png, jpeg, jpg, JPG, JPEG, gif, bmp, dib), default is jpg
 
 * -o 'number'
 
