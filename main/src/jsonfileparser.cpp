@@ -1,12 +1,11 @@
 #include "../include/jsonfileparser.h"
-
 void JsonParser::checkConfigFileCorrect(QFile& file) const {
     if (!file.exists()){
         throw FileNotFoundException();
     }
     QFileDevice::FileError err = QFileDevice::NoError;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        //specify error
+        /* Specify error */
         err = file.error();
         throw FileNotReadableException(QString(err));
     }

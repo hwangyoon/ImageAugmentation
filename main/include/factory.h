@@ -21,7 +21,7 @@ class Factory {
 public:
     Factory() {}
     /* Returns pointer to the algorithm with all arguments set
-     * according to information in given Request object*/
+     * according to information in given Request object */
     std::unique_ptr<Algorithm> getAlgo(std::shared_ptr<Request> r);
 private:
     /* Set of methods that create and fill object of derived Algortihm class */

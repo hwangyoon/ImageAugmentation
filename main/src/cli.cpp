@@ -10,7 +10,7 @@ Cli::~Cli() {
 }
 
 void Cli::process(QCoreApplication& app) {
-    //description that will be shown with -help option
+    /* Description that will be shown with -help option */
     parser.setApplicationDescription("Application options description table");
     parser.addHelpOption();
     parser.addVersionOption();
@@ -20,13 +20,13 @@ void Cli::process(QCoreApplication& app) {
 }
 
 void Cli::addPositionalArguments() {
-    //addPositionalArgument(name, description)
+    /* AddPositionalArgument(name, description) */
     parser.addPositionalArgument("source", "Source file.");
     parser.addPositionalArgument("destination", "Destination directory.");
 }
 
 void Cli::addOptions() {
-    //set disableOption(key(s), description, arguments)
+    /* Set disableOption(key(s), description, arguments) */
     disableOption = new QCommandLineOption(QStringList() << "d" << "disable",
                                      "Specify the algorithm which won't be used.",
                                      "algorithm");
@@ -52,7 +52,7 @@ void Cli::addOptions() {
 
 bool Cli::processAlgorithmsOption() {
     if (parser.isSet(*algorithmsOption)) {
-        //qPrintable(str) returns str as a const char*
+        /* qPrintable(str) returns str as a const char* */
         fprintf(stdout, "%s\n", qPrintable("crop | hflip | vflip | rotate90 | rotate45 | "
                                            "dithering | gaussnoise | kuwahara | lightening | "
                                            "rgbtone | whiteblack | blur | negative | sharpen | "
@@ -64,7 +64,7 @@ bool Cli::processAlgorithmsOption() {
 }
 
 void Cli::checkPositionalArgumentsCorrectness() {
-    //get all positionalArguments in a list
+    /* Get all positionalArguments in a list */
     const QStringList args = parser.positionalArguments();
 
     if (args.size() != 2) {
@@ -82,7 +82,7 @@ void Cli::checkPositionalArgumentsCorrectness() {
 
 void Cli:: processConfigFile(GlobalRequest& request) {
     QFile file;
-    // get config file path from configOption value
+    /* Get config file path from configOption value */
     file.setFileName(parser.value(*configOption));
     JsonParser configFileParser;
     try {
@@ -99,7 +99,7 @@ void Cli:: processConfigFile(GlobalRequest& request) {
         request.setFileFormat(fileFormat);
     }
     if (parser.isSet(*depthOption)) {
-        //get list of all possible numbers of overlay
+        /* Get list of all possible numbers of overlay */
         const QStringList depthValues = parser.values(*depthOption);
         std::vector<int32_t> allDepths;
         for (auto depth : depthValues) {
@@ -143,10 +143,10 @@ GlobalRequest Cli::getGlobalRequest() {
 }
 
 bool Cli::checkDisabledOptionValueCorrectness() {
-    //get all disabled values in a list
+    /* Get all disabled values in a list */
     const QStringList disabledValues = parser.values(*disableOption);
     for (auto algorithm : disabledValues) {
-        //make sure user provided correct algorithm name that will be disabled
+        /* Make sure user provided correct algorithm name that will be disabled */
         if (algoNames.find(algorithm) == algoNames.end()) {
             fprintf(stderr, "%s\n", qPrintable("Wrong option value " + algorithm));
             return false;

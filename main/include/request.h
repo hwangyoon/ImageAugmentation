@@ -402,17 +402,17 @@ public:
     }
 
 private:
-    /*  vector of possible numbers of overlay */
+    /* Vector of possible numbers of overlay */
     std::vector<int32_t> depthOfOverlay = {1};
-    /* maximum number of pictures generated */
+    /* Maximum number of pictures generated */
     int32_t limitOfPictures = 25;
-    /* source file/directory */
+    /* Source file/directory */
     QFileInfo pathFrom;
-    /* destination directory */
+    /* Destination directory */
     QFileInfo pathTo;
-    /* format of output file */
+    /* Format of output file */
     QString fileFormat = "jpg";
-    /* vector of all requests  */
+    /* Vector of all requests  */
     std::vector<std::shared_ptr<Request>> requests;
 };
 

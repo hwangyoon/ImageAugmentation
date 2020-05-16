@@ -9,7 +9,7 @@
 #include "imagewriter.h"
 #include "imageloader.h"
 
-/* A class that handles user's requests*/
+/* A class that handles user's requests */
 class AlgorithmManager {
 public:
     AlgorithmManager() {}

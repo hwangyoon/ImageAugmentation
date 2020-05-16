@@ -8,21 +8,21 @@
 #include "jsonfileparser.h"
 #include "configfileexceptions.h"
 
-/*A class that parses command line in console application*/
+/* A class that parses command line in console application */
 
 class Cli {
 public:
     Cli() {}
     ~Cli();
-    /* adds application description, options and positional variables */
+    /* Adds application description, options and positional variables */
     void process(QCoreApplication& app);
-    /* returns false if AlgorithmOption was not given
-     * returns true and processes the option if given */
+    /* Returns false if AlgorithmOption was not given
+     * Returns true and processes the option if given */
     bool processAlgorithmsOption();
-    /* verifies number of arguments
-     * verifies source file/directory exists */
+    /* Verifies number of arguments
+     * Verifies source file/directory exists */
     void checkPositionalArgumentsCorrectness();
-    /* returns GlobalRequest object filled in accordance with user's request */
+    /* Returns GlobalRequest object filled in accordance with user's request */
     GlobalRequest getGlobalRequest();
 private:
     QCommandLineParser parser;
