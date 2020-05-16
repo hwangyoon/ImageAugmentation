@@ -9,9 +9,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 Use at least Qt version 4.x and C++17
-```
 [Download Qt](https://www.qt.io/download)
-```
+
 
 ### Installing
 
