@@ -25,7 +25,7 @@ $ make clean
 $ qmake CONFIG+=consoleAppConf
 $ make
 ```
-Note that spaces are not allowed
+Note that spaces are not allowed, so the following won't work
 ```
 $ make clean
 $ qmake CONFIG += consoleAppConf
