@@ -138,4 +138,79 @@ But it will process all the other pictures in the directory.
 ## Built With
 
 * [QtCreator](https://www.qt.io/)
+## Description of the algorithms 
+Source Image
 
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/animal.jpg)
+### Crop
+The algorithm that cuts out part of the image: the user sets the relative size of the imageand the location of the upper left corner of the cropped image as a percentage of the size of the entire image
+
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/animal_crop.jpg)
+### Random crop 
+An algorithm that randomly selects the position of the black square of a given relative size that covers part of the image
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/cleverCrop.jpg)
+
+### Dithering 
+An algorithm that expresses colors that do not exist in a given palette through errors already known with dispersion
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/ditheredAnimal.jpg)
+
+### Gaussian Noise
+An algorithm that applies color or black and white noise with given degree (from 0 to 100) to an image depending on the mode selected by the user
+
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/Gauss.jpg)
+
+### Horizontal Flip
+Algorithm that reflects the transmitted image relative to the y-axis
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/HorizontalFlip.jpg)
+
+### Kuwahara
+An algorithm that applies a blur filter to an image with given degree (from 0 to 30), creating the effect of a picture drawn in rough strokes
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/Kuwahara.jpg)
+
+### Lightening
+The algorithm that brightens the image with given degree (from 0 to 255)
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/Lightening.jpg)
+
+### Matrix Convolution
+A series of matrix convolution algorithms that passes through the image with a filter matrix and overlays one of the filters selected by the user: blur, negative, sharpen, embross, lightBlur, lightSharpen, lightEmbross, gaussBlur. Also user can tune the degree of Gauss Blur from 0 to 70
+
+Embross
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/ConvolutionEmbross.jpg)
+
+Gaussian Blur
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/GaussianBlur.jpg)
+
+Negative
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/Negative.jpg)
+
+### RGB Tone
+An algorithm that increments with given degree one of the components of an RGB vector. Thus, the image becomes more reddish, greenish or bluish
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/RGBTone.jpg)
+
+### Rotate 45
+An algorithm that rotates an image 45 degrees clockwise or counterclockwise, depending on the user's choice. Pixel stretching is applied to the corners of the image. Thus, the picture looks holistic.
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/Rotate45.jpg)
+
+### Rotate 90
+An algorithm that rotates an image 90 degrees clockwise or counterclockwise, depending on the user's choice.
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/Rotate90.jpg)
+
+### Vertical Flip
+Algorithm that reflects the transmitted image relative to the x-axis
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/VerticalFlip.jpg)
+
+### White Black
+An algorithm that converts an image to black and white palette
+
+![Image alt](https://github.com/hwanglight/ImageAugmentation/raw/master/samples/SamplesGit/WhiteBlack.jpg)
