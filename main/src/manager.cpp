@@ -24,7 +24,7 @@ void AlgorithmManager::appendNewCombination(std::vector<QString>& allCombination
     }
 }
 
-std::vector<QString> AlgorithmManager::getCombinationsOfAlgorithms(int32_t limit,
+std::vector<QString> AlgorithmManager::getCombinationsOfAlgorithms(std::size_t limit,
                                                    std::vector<int32_t>& depths,
                                                    int32_t numberOfAlgorithms) {
     std::vector<QString> allPossibleAlgorithms;
