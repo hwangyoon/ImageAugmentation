@@ -247,7 +247,5 @@ std::unique_ptr<Algorithm> Factory::getAlgo(std::shared_ptr<Request> request) {
     if (request->type == gaussBlurConvolution) {
         return createGaussBlur(request);
     }
-    if (request->type == randomcrop) {
-        return createRandomCrop(request);
-    }
+    return createRandomCrop(request);
 }

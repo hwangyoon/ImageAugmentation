@@ -23,18 +23,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-test_conf {
-    SOURCES += \
-        tests/src/Test_Image.cpp \
-    tests/src/test_algo.cpp
-    HEADERS += \
-    tests/include/test_algo.h
-    RESOURCES += \
-        resource.qrc
-    DISTFILES += \
-        img/hello.png
-    TARGET = test_image
-}
 gui_conf {
     SOURCES += \
                 guidir/mainwindow.cpp \
@@ -45,15 +33,10 @@ gui_conf {
     TARGET = gui
 }
 
-terminal_conf {
-    SOURCES += main_terminal/src/main.cpp
-    TARGET = image_augmentation_terminal
-}
-
-commands_conf {
+consoleAppConf {
     SOURCES += \
         main/src/main.cpp
-    TARGET = image_augmentation
+    TARGET = ImageAugmentation
 }
 
 DISTFILES += \
