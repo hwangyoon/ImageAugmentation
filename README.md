@@ -31,16 +31,6 @@ $ make clean
 $ qmake CONFIG += consoleAppConf
 $ make
 ```
-
-## Running the tests
-
-On command line, type in the following commands:
-```
-$ make clean
-$ qmake CONFIG+=testConf
-$ make
-$ ./test
-```
 ## Usage Tutorial
 Provide source image which has one of the following formats: png, jpeg, jpg, JPG, JPEG, gif, bmp, dib
 
