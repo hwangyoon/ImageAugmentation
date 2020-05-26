@@ -211,7 +211,7 @@ void Cli::addNotDisabledAlgorithms(GlobalRequest& request) {
     if (!disabledValues.contains("lightembross")) {
         request.addRequest(std::make_shared<LightEmbrossConvolutionRequest>());
     }
-    if (!disabledValues.contains("gausselur")) {
+    if (!disabledValues.contains("gaussblur")) {
         request.addRequest(std::make_shared<GaussBlurConvolutionRequest>());
     }
     if (!disabledValues.contains("randomcrop")) {
