@@ -23,14 +23,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-gui_conf {
+GUIConf {
     SOURCES += \
-                guidir/mainwindow.cpp \
+                guidir/mainwindow/mainwindow.cpp \
+                guidir/guicontroller/guicontroller.cpp \
                 guidir/main.cpp
-    HEADERS += guidir/mainwindow.h
+    HEADERS += \
+                guidir/mainwindow/mainwindow.h \
+                guidir/guicontroller/guicontroller.h
     FORMS += \
         guidir/mainwindow.ui
-    TARGET = gui
+    TARGET = ImageAugmentationGUI
 }
 
 consoleAppConf {
@@ -78,6 +81,7 @@ SOURCES += \
     main/src/rotate45.cpp \
     main/src/rotate90.cpp \
     main/src/imagewriter.cpp \
+    main/src/imageloader.cpp \
     main/src/rgbtone.cpp \
     main/src/whiteblack.cpp \
     main/src/kuwahara.cpp \
@@ -86,7 +90,6 @@ SOURCES += \
     main/src/dithering.cpp \
     main/src/matrixconvolution.cpp \
     main/src/jsonfileparser.cpp \
-    main/src/imageloader.cpp \
     main/src/cli.cpp \
     main/src/randomcrop.cpp
 
