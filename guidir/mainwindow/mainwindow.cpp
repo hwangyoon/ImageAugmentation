@@ -44,9 +44,9 @@ void MainWindow::on_pushButtonLoad_clicked() {
     else
         pathIn = "samples/animal.jpg";
     QLabel *label = ui->labelImage;
-    QPixmap *p=new QPixmap(pathIn);
+    QPixmap *p = new QPixmap(pathIn);
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
-    label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
+    label->setPixmap(p1);
     controller.savePathIn(pathInText);
 }
 
@@ -76,17 +76,17 @@ void MainWindow::viewAlgo() {
 
     addAlgo(LIST_ITEMS);
 
-    algoList->setSelectionMode( QListWidget::MultiSelection );
+    algoList->setSelectionMode(QListWidget::MultiSelection);
 
 }
 
 void MainWindow::addAlgo(const QStringList& list) {
-    foreach ( const QString& item, list ) {
-        QListWidgetItem* listItem = new QListWidgetItem( item );
-        listItem->setFlags( Qt::ItemIsEditable | Qt::ItemIsEnabled );
+    foreach (const QString& item, list) {
+        QListWidgetItem* listItem = new QListWidgetItem(item);
+        listItem->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled);
         listItem->setFlags(listItem->flags() | Qt::ItemIsUserCheckable);
         listItem->setCheckState(Qt::Unchecked);
-        ui->listWidgetAlgo->addItem( listItem );
+        ui->listWidgetAlgo->addItem(listItem);
     }
 }
 
