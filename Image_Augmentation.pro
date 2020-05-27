@@ -32,7 +32,7 @@ GUIConf {
                 guidir/mainwindow/mainwindow.h \
                 guidir/guicontroller/guicontroller.h
     FORMS += \
-        guidir/mainwindow.ui
+        guidir/mainwindow/mainwindow.ui
     TARGET = ImageAugmentationGUI
 }
 
