@@ -90,6 +90,7 @@ void MainWindow::addAlgo(const QStringList& list) {
     }
 }
 
+
 QList<QListWidgetItem *> MainWindow::processList(QListWidget &list) {
     QString whatPrinted("");
     QList<QListWidgetItem *> selectedItems = findSelectedItems(list);
@@ -136,8 +137,7 @@ void MainWindow::on_pushButtonPreview_clicked() {
 QList<QListWidgetItem *> MainWindow::findSelectedItems(QListWidget &list) {
     QList<QListWidgetItem *> result;
 
-    for (int row = 0; row < list.count(); row++)
-    {
+    for (int row = 0; row < list.count(); row++) {
              QListWidgetItem *item = list.item(row);
              if (item->checkState() != Qt::Unchecked)
                  result.push_back(item);

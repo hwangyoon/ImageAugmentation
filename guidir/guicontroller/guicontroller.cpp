@@ -61,6 +61,7 @@ void GuiController::makeRequest(QStringList algoList, bool overlay) {
     }
     manager.processRequests(request);
 }
+
 QImage GuiController::makeRequestPreview(QStringList algoList) {
     foreach (QString algo, algoList) {
         std::shared_ptr<Request> request_ = getRequestFromString(algo);
