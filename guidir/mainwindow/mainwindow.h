@@ -8,11 +8,11 @@
 #include "../guicontroller/guicontroller.h"
 
 namespace Ui {
+/*class with GUI implementation*/
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:

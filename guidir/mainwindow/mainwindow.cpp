@@ -22,26 +22,20 @@ MainWindow::MainWindow(QWidget *parent) :
     overlay = false;
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-QString MainWindow::getFileName()
-{
+QString MainWindow::getFileName() {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open Address Book"), "",
         tr("JPG (*.jpg);;All Files (*)"));
     return fileName;
 }
 
-void MainWindow::on_pushButtonLoad_clicked()
-{
+void MainWindow::on_pushButtonLoad_clicked() {
     QTextEdit *textPathIn = ui->textEditPathIn;
     QString pathInText = textPathIn->toPlainText();
-    //textPathIn->setText("");
-    // Тут надо path передать как путь Controller'у, он даст QImage
-    // Забили на это, сами загрузим
     QString pathIn;
     if (pathInText.isEmpty()) {
         pathInText = getFileName();
@@ -54,7 +48,6 @@ void MainWindow::on_pushButtonLoad_clicked()
     QPixmap p1(p->scaled ( 300,300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ));
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
     controller.savePathIn(pathInText);
-    //textPathIn->setText("DONE");
 }
 
 void MainWindow::viewAlgo() {
@@ -87,20 +80,17 @@ void MainWindow::viewAlgo() {
 
 }
 
-void MainWindow::addAlgo(const QStringList& list)
-{
-    foreach( const QString& item, list ) {
+void MainWindow::addAlgo(const QStringList& list) {
+    foreach ( const QString& item, list ) {
         QListWidgetItem* listItem = new QListWidgetItem( item );
-        // listItem->setIcon( QPixmap( item + ".png" ) );
         listItem->setFlags( Qt::ItemIsEditable | Qt::ItemIsEnabled );
-        listItem->setFlags(listItem->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-        listItem->setCheckState(Qt::Unchecked); // AND initialize check state
+        listItem->setFlags(listItem->flags() | Qt::ItemIsUserCheckable);
+        listItem->setCheckState(Qt::Unchecked);
         ui->listWidgetAlgo->addItem( listItem );
     }
 }
 
-QList<QListWidgetItem *> MainWindow::processList(QListWidget &list)
-{
+QList<QListWidgetItem *> MainWindow::processList(QListWidget &list) {
     QString whatPrinted("");
     QList<QListWidgetItem *> selectedItems = findSelectedItems(list);
     foreach (const QListWidgetItem* item, selectedItems) {
@@ -111,8 +101,7 @@ QList<QListWidgetItem *> MainWindow::processList(QListWidget &list)
     return selectedItems;
 }
 
-void MainWindow::on_pushButtonProcess_clicked()
-{
+void MainWindow::on_pushButtonProcess_clicked() {
     //передам processList();
     QTextEdit *textPathTo = ui->textEditPathOut;
     QString pathTo = textPathTo->toPlainText();
@@ -128,14 +117,13 @@ void MainWindow::on_pushButtonProcess_clicked()
 
 QStringList MainWindow::makeTxtList(QList<QListWidgetItem*> list) {
     QStringList txtList;
-    foreach(QListWidgetItem* line, list) {
+    foreach (QListWidgetItem* line, list) {
         txtList << line->text();
     }
     return txtList;
 }
 
-void MainWindow::on_pushButtonPreview_clicked()
-{
+void MainWindow::on_pushButtonPreview_clicked() {
     //передам processList();
     QLabel *label = ui->labelImage;
     QStringList txtAlgo = makeTxtList(findSelectedItems(*ui->listWidgetAlgo));
@@ -145,11 +133,10 @@ void MainWindow::on_pushButtonPreview_clicked()
     label->setPixmap(p1); // Здесь картинка включилась (надеюсь)
 }
 
-QList<QListWidgetItem *> MainWindow::findSelectedItems(QListWidget &list)
-{
+QList<QListWidgetItem *> MainWindow::findSelectedItems(QListWidget &list) {
     QList<QListWidgetItem *> result;
 
-    for(int row = 0; row < list.count(); row++)
+    for (int row = 0; row < list.count(); row++)
     {
              QListWidgetItem *item = list.item(row);
              if (item->checkState() != Qt::Unchecked)
@@ -158,8 +145,7 @@ QList<QListWidgetItem *> MainWindow::findSelectedItems(QListWidget &list)
     return result;
 }
 
-void MainWindow::on_pushButtonOverlay_clicked()
-{
+void MainWindow::on_pushButtonOverlay_clicked() {
     overlay = !overlay;
     QAbstractButton *button = ui->pushButtonOverlay;
     if (overlay)

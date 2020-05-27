@@ -1,12 +1,10 @@
 #include "guicontroller.h"
 
-GuiController::GuiController(): request()
-{
+GuiController::GuiController(): request() {
 }
 
 
-std::shared_ptr<Request> GuiController::getRequestFromString(QString name)
-{
+std::shared_ptr<Request> GuiController::getRequestFromString(QString name) {
     if (name == "Crop from middle") {
         return std::make_shared<CropRequest>();
     } else if (name == "Horizontal flip") {
@@ -50,8 +48,7 @@ std::shared_ptr<Request> GuiController::getRequestFromString(QString name)
     }
 }
 
-void GuiController::makeRequest(QStringList algoList, bool overlay)
-{
+void GuiController::makeRequest(QStringList algoList, bool overlay) {
     foreach (QString algo, algoList) {
         std::shared_ptr<Request> request_ = getRequestFromString(algo);
         if (request_ != nullptr)
@@ -64,8 +61,7 @@ void GuiController::makeRequest(QStringList algoList, bool overlay)
     }
     manager.processRequests(request);
 }
-QImage GuiController::makeRequestPreview(QStringList algoList)
-{
+QImage GuiController::makeRequestPreview(QStringList algoList) {
     foreach (QString algo, algoList) {
         std::shared_ptr<Request> request_ = getRequestFromString(algo);
         request.addRequest(request_);
@@ -74,12 +70,10 @@ QImage GuiController::makeRequestPreview(QStringList algoList)
     return manager.preview(request);
 }
 
-void GuiController::savePathIn(QString newPathIn)
-{
+void GuiController::savePathIn(QString newPathIn) {
     request.setLoadDirectoryOrFile(newPathIn);
 }
 
-void GuiController::savePathTo(QString newPathTo)
-{
+void GuiController::savePathTo(QString newPathTo) {
     request.setSaveDirectory(newPathTo);
 }

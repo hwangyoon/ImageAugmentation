@@ -8,8 +8,7 @@
 #include "../../main/include/manager.h"
 
 
-class GuiController
-{
+class GuiController {
 private:
     GlobalRequest request;
     AlgorithmManager manager;
@@ -21,7 +20,9 @@ public:
     void makeRequest(QStringList algoList, bool overlay);
     /*Make request from string list and return preview*/
     QImage makeRequestPreview(QStringList algoList);
+    /*Save picture source path*/
     void savePathIn(QString newPathIn);
+    /*Save picture result path*/
     void savePathTo(QString newPathTo);
 };
 

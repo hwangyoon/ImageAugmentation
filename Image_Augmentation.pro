@@ -23,15 +23,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-
-gui_conf {
+GUIConf {
     SOURCES += \
-                guidir/mainwindow.cpp \
+                guidir/mainwindow/mainwindow.cpp \
+                guidir/guicontroller/guicontroller.cpp \
                 guidir/main.cpp
-    HEADERS += guidir/mainwindow.h
+    HEADERS += \
+                guidir/mainwindow/mainwindow.h \
+                guidir/guicontroller/guicontroller.h
     FORMS += \
         guidir/mainwindow.ui
-    TARGET = gui
+    TARGET = ImageAugmentationGUI
 }
 
 consoleAppConf {
