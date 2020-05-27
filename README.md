@@ -25,6 +25,16 @@ $ make clean
 $ qmake CONFIG+=consoleAppConf
 $ make
 ```
+
+Graphic application
+
+On command line, type in the following commands:
+```
+$ make clean
+$ qmake CONFIG+=GUIConf
+$ make
+```
+
 Note that spaces are not allowed, so the following won't work
 ```
 $ make clean
