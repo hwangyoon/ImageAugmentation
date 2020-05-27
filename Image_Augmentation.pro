@@ -42,9 +42,6 @@ consoleAppConf {
     TARGET = ImageAugmentation
 }
 
-DISTFILES += \
-    img/hello.png
-
 HEADERS += \
     main/include/algo.h \
     main/include/verticalflip.h \
@@ -92,6 +89,3 @@ SOURCES += \
     main/src/jsonfileparser.cpp \
     main/src/cli.cpp \
     main/src/randomcrop.cpp
-
-RESOURCES += \
-    resource.qrc
