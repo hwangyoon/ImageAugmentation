@@ -205,6 +205,10 @@ Example:
 ### Note
 If source directory contains files in (png, jpeg, jpg, JPG, JPEG, gif, bmp, dib) format that are not images, application won't be able process to them (corresponding message will appear on the screen). 
 But it will process all the other pictures in the directory.
+
+Gaussian Blur and Kuwahara take a long time to be processed.
+
+Some algorithms are not compatible with small pictures (less than 100 pixels in width or height)
 ## Built With
 
 * [QtCreator](https://www.qt.io/)
