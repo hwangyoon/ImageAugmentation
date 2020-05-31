@@ -132,6 +132,76 @@ This will
 
 For example if config file contained 4 distinct algorithms, this will create 4*3 = 12 images in total
 
+### Config File
+Example:
+```
+{
+	"crop": {
+		"upperLeftXInPercent": 10,
+                "upperLeftYInPercent": 15,
+                "downRightXInPercent": 30,
+		"downRightYInPercent": 40
+        },
+	"blur": {
+		"degree": 15
+	},
+	"negative": {
+		"degree": 15
+	},
+	"sharpen": {
+		"degree": 10
+	},
+	"embross": {
+		"degree": 30
+	},
+        "lightBlur": {
+		"degree": 15
+	},
+	"lightSharpen": {
+		"degree": 15
+	},
+	"lightEmbross": {
+		"degree": 15
+	},
+        "gaussBlur": {
+		"degree": 15
+	},
+	"kuwahara": {
+		"degreeOfBlur": 12
+	},
+	"lightening": {
+		"degreeOfLightening": 40
+	},
+	"randomCrop": {
+		"upperLeftXInPercent": 10,
+                "upperLeftYInPercent": 15
+        },
+	"gaussiannoise": {
+		"degreeOfNoise": 70,
+		"mono": true
+	},
+	"blueRGBTone": {
+		"degreeOfTone": 60
+	},
+	"redRGBTone": {
+		"degreeOfTone": 50
+	},
+        "greenRGBTone": {
+		"degreeOfTone": 40
+	},
+	"enable": [
+		"dithering",
+		"whiteblack",
+		"vflip",
+		"hflip",
+		"rotate90Clockwise",
+                "rotate90Counterclockwise",
+                "rotate45Clockwise",
+                "rotate45Counterclockwise"
+	]
+}
+```
+
 ### Note
 If source directory contains files in (png, jpeg, jpg, JPG, JPEG, gif, bmp, dib) format that are not images, application won't be able process to them (corresponding message will appear on the screen). 
 But it will process all the other pictures in the directory.
